@@ -42,7 +42,11 @@ Plans:
   3. Admin can add an art piece with title, medium, description, and tags, then see it appear in the piece list
   4. Admin can edit piece metadata, replace the image, delete a piece, and reorder pieces — all changes persist after page reload
   5. Admin can update bio text and photo, manage social links, and download a scannable QR code pointing to the production URL
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 02-01-PLAN.md — ArtPieces collection, Media image pipeline (WebP + blur), Vercel Blob storage, migrations
+- [ ] 02-02-PLAN.md — About/Contact global extensions, QR code admin view, featured warning component
+- [ ] 02-03-PLAN.md — Human verification of all Phase 2 admin functionality
 
 ### Phase 3: Public Site
 **Goal**: Visitors who scan the QR code experience a complete portfolio — animated intro, browsable gallery with filtering, full-resolution lightbox, about page, and working contact form
@@ -64,5 +68,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 0/2 | Planned | - |
-| 2. Admin + Image Pipeline | 0/TBD | Not started | - |
+| 2. Admin + Image Pipeline | 0/3 | Planned | - |
 | 3. Public Site | 0/TBD | Not started | - |
