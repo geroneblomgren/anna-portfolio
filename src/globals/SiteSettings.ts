@@ -34,5 +34,13 @@ export const SiteSettings: GlobalConfig = {
         },
       ],
     },
+    {
+      name: 'qrUrl',
+      type: 'text',
+      label: 'QR Code URL',
+      admin: {
+        description: 'The custom domain URL the QR code will encode (e.g., https://darkartsbyana.com)',
+      },
+    },
   ],
 }

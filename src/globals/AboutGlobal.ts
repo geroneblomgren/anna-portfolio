@@ -22,5 +22,15 @@ export const AboutGlobal: GlobalConfig = {
       type: 'textarea',
       label: 'Artist Statement',
     },
+    {
+      name: 'contactEmail',
+      type: 'email',
+      label: 'Contact Email',
+    },
+    {
+      name: 'contactPhone',
+      type: 'text',
+      label: 'Contact Phone',
+    },
   ],
 }
