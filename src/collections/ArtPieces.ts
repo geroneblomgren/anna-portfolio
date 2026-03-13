@@ -34,6 +34,11 @@ export const ArtPieces: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
       label: 'Featured (pinned first in gallery)',
+      admin: {
+        components: {
+          afterInput: ['/src/components/admin/FeaturedWarning#FeaturedWarning'],
+        },
+      },
     },
   ],
 }

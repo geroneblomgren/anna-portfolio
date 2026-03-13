@@ -19,7 +19,16 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
-      baseDir: path.resolve(dirname),
+      baseDir: path.resolve(dirname, '..'),
+    },
+    components: {
+      views: {
+        qrCode: {
+          Component: '/src/components/admin/QRCodeView#QRCodeView',
+          path: '/qr-code',
+        },
+      },
+      afterNavLinks: ['/src/components/admin/QRNavLink#QRNavLink'],
     },
   },
   collections: [Users, Media, ArtPieces],
