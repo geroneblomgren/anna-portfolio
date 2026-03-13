@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  /* Color system — warm dark palette */
-  --color-bg: #1a1614;
-  --color-surface: #252220;
-  --color-border: #3d3633;
+  /* Color system — cold dark palette inspired by graphite & ink */
+  --color-bg: #0a0a0a;
+  --color-surface: #141416;
+  --color-border: #2a2a2e;
 
-  /* Text */
-  --color-text-heading: #f0ebe6;
-  --color-text-body: #d4ccc4;
-  --color-text-muted: #8a7e76;
-  --color-text-muted-on-surface: #9a8e86;
+  /* Text — cool whites and steel grays */
+  --color-text-heading: #f0f0f0;
+  --color-text-body: #c8c8cc;
+  --color-text-muted: #707078;
+  --color-text-muted-on-surface: #828288;
 
-  /* Accent — amber/gold */
-  --color-accent: #c8956c;
-  --color-accent-hover: #d4a67d;
-  --color-accent-muted: #8b6b4a;
+  /* Accent — cold white with a single piercing highlight */
+  --color-accent: #e0e0e0;
+  --color-accent-hover: #ffffff;
+  --color-accent-muted: #5a5a60;
 
   /* Functional */
-  --color-error: #d45e4d;
-  --color-success: #7a9a6e;
+  --color-error: #dc4040;
+  --color-success: #5a9a5a;
 
   /* Typography */
   --font-heading: var(--font-bodoni-moda), Georgia, serif;

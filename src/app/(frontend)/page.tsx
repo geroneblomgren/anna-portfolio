@@ -1,14 +1,14 @@
-// Design system smoke test — replaced in Phase 3
+{/* Design system smoke test — replaced in Phase 3 */}
 
 export default function HomePage() {
   return (
     <div className="py-16 space-y-12">
       {/* Heading in Bodoni Moda */}
       <section>
-        <h1 className="font-heading text-text-heading text-5xl md:text-7xl leading-tight">
+        <h1 className="font-heading text-text-heading text-5xl md:text-7xl leading-tight tracking-tight">
           Anna Blomgren
         </h1>
-        <p className="font-heading text-accent text-xl italic mt-2">Artist & Illustrator</p>
+        <p className="font-heading text-accent text-xl italic mt-2">Artist &amp; Illustrator</p>
       </section>
 
       {/* Body text in DM Sans */}
@@ -18,7 +18,7 @@ export default function HomePage() {
           typography, colors, and layout tokens are wired correctly.
         </p>
         <p className="text-text-muted text-sm">
-          Muted text on background (bg: #1a1614 — contrast ~4.56:1 passes AA)
+          Muted text on background — cold graphite palette
         </p>
       </section>
 
@@ -29,7 +29,7 @@ export default function HomePage() {
           Body text on surface background. Readable at all sizes.
         </p>
         <p className="text-text-muted-on-surface text-sm">
-          Muted text on surface (bg: #252220 — contrast ~4.8:1 passes AA)
+          Muted text on surface — steel gray on ink black
         </p>
       </section>
 
@@ -45,19 +45,19 @@ export default function HomePage() {
       <section className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="bg-bg border border-border p-4 text-center">
           <p className="text-text-muted text-xs">bg</p>
-          <p className="text-text-body text-xs font-mono">#1a1614</p>
+          <p className="text-text-body text-xs font-mono">#0a0a0a</p>
         </div>
         <div className="bg-surface border border-border p-4 text-center">
           <p className="text-text-muted-on-surface text-xs">surface</p>
-          <p className="text-text-body text-xs font-mono">#252220</p>
+          <p className="text-text-body text-xs font-mono">#141416</p>
         </div>
         <div className="bg-accent p-4 text-center">
           <p className="text-bg text-xs">accent</p>
-          <p className="text-bg text-xs font-mono">#c8956c</p>
+          <p className="text-bg text-xs font-mono">#e0e0e0</p>
         </div>
         <div className="bg-error p-4 text-center">
           <p className="text-bg text-xs">error</p>
-          <p className="text-bg text-xs font-mono">#d45e4d</p>
+          <p className="text-bg text-xs font-mono">#dc4040</p>
         </div>
       </section>
     </div>
