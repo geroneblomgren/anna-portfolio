@@ -4,9 +4,10 @@
   "description": "Anna Blomgren Artist Portfolio",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "payload generate:importmap && payload generate:types && next build",
     "start": "next start",
     "lint": "next lint",
+    "generate:importmap": "payload generate:importmap",
     "generate:types": "payload generate:types"
   },
   "keywords": [],

@@ -40,3 +40,5 @@ next-env.d.ts
 payload-dev.db
 payload-dev.db-shm
 payload-dev.db-wal
+
+.vercel
