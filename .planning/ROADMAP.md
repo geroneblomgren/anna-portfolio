@@ -27,7 +27,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The database (Turso/SQLite) is connected and Payload CMS admin route is accessible at /admin
   3. Every color token in the design system has a documented contrast ratio — body text passes 7:1, UI text passes 4.5:1 — verified against actual hex values
   4. The layout is visibly mobile-first: on a 375px viewport, content is readable and nothing overflows
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 01-01-PLAN.md — Scaffold project, configure Turso, install Tailwind v4 design tokens, fonts, and layout shell
+- [ ] 01-02-PLAN.md — Deploy to Vercel, verify design system, admin, contrast ratios, and mobile layout
 
 ### Phase 2: Admin + Image Pipeline
 **Goal**: Anna can log into a secure admin panel, upload and manage all her artwork with automatic image processing, edit her bio and contact details, and download the QR code
@@ -60,6 +63,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/2 | Planned | - |
 | 2. Admin + Image Pipeline | 0/TBD | Not started | - |
 | 3. Public Site | 0/TBD | Not started | - |
