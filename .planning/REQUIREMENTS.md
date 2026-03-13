@@ -24,13 +24,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Admin
 
-- [ ] **ADM-01**: Admin panel is protected by password authentication with server-side validation
-- [ ] **ADM-02**: Admin can add new art pieces with image upload, title, medium, description, and tags
-- [ ] **ADM-03**: Admin can edit existing art piece metadata and replace images
-- [ ] **ADM-04**: Admin can delete art pieces
+- [x] **ADM-01**: Admin panel is protected by password authentication with server-side validation
+- [x] **ADM-02**: Admin can add new art pieces with image upload, title, medium, description, and tags
+- [x] **ADM-03**: Admin can edit existing art piece metadata and replace images
+- [x] **ADM-04**: Admin can delete art pieces
 - [ ] **ADM-05**: Admin can edit the about section (bio text, photo, artist statement)
 - [ ] **ADM-06**: Admin can manage contact info and social media links
-- [ ] **ADM-07**: Admin can reorder gallery pieces (set display order / pin favorites)
+- [x] **ADM-07**: Admin can reorder gallery pieces (set display order / pin favorites)
 - [ ] **ADM-08**: Admin can view and download a QR code pointing to the site
 
 ### Public Pages
@@ -41,7 +41,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Infrastructure
 
-- [ ] **INF-01**: Images are processed on upload (resize, compress, convert to WebP)
+- [x] **INF-01**: Images are processed on upload (resize, compress, convert to WebP)
 - [ ] **INF-02**: Site deploys on Vercel free tier with zero monthly cost
 - [x] **INF-03**: Database stores art piece metadata, about content, and admin credentials
 
@@ -85,18 +85,18 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PRES-02 | Phase 3 | Pending |
 | PRES-03 | Phase 1 | Complete |
 | PRES-04 | Phase 1 | Complete |
-| ADM-01 | Phase 2 | Pending |
-| ADM-02 | Phase 2 | Pending |
-| ADM-03 | Phase 2 | Pending |
-| ADM-04 | Phase 2 | Pending |
+| ADM-01 | Phase 2 | Complete |
+| ADM-02 | Phase 2 | Complete |
+| ADM-03 | Phase 2 | Complete |
+| ADM-04 | Phase 2 | Complete |
 | ADM-05 | Phase 2 | Pending |
 | ADM-06 | Phase 2 | Pending |
-| ADM-07 | Phase 2 | Pending |
+| ADM-07 | Phase 2 | Complete |
 | ADM-08 | Phase 2 | Pending |
 | PUB-01 | Phase 3 | Pending |
 | PUB-02 | Phase 3 | Pending |
 | PUB-03 | Phase 3 | Pending |
-| INF-01 | Phase 2 | Pending |
+| INF-01 | Phase 2 | Complete |
 | INF-02 | Phase 1 | Pending |
 | INF-03 | Phase 1 | Complete |
 

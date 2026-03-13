@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-last_updated: "2026-03-13T23:01:14.906Z"
+status: in_progress
+last_updated: "2026-03-13T23:42:00.000Z"
 progress:
-  total_phases: 1
+  total_phases: 3
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 7
+  completed_plans: 3
 ---
 
 # Project State
@@ -18,33 +18,34 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** When someone scans Anna's QR code, the site must make an immediate, powerful visual impression that communicates versatility, personal voice, and professional seriousness.
-**Current focus:** Phase 1 — Foundation
+**Current focus:** Phase 2 — Admin Image Pipeline
 
 ## Current Position
 
-Phase: 1 of 3 (Foundation)
-Plan: 1 of 2 in current phase
+Phase: 2 of 3 (Admin Image Pipeline)
+Plan: 1 of 3 in current phase (02-01 complete)
 Status: In progress
-Last activity: 2026-03-13 — Plan 01-01 complete: Payload CMS + Turso + Tailwind v4 + fonts + layout shell
+Last activity: 2026-03-13 — Plan 02-01 complete: ArtPieces collection + Media image pipeline + Vercel Blob storage
 
-Progress: [█░░░░░░░░░] 10%
+Progress: [███░░░░░░░] 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 16 min
-- Total execution time: 0.27 hours
+- Total plans completed: 3
+- Average duration: ~10 min
+- Total execution time: ~0.5 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1. Foundation | 1 | 16 min | 16 min |
+| 1. Foundation | 2 | 32 min | 16 min |
+| 2. Admin Image Pipeline | 1 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (16 min)
-- Trend: baseline established
+- Last 5 plans: 01-01 (16 min), 01-02 (~16 min), 02-01 (4 min)
+- Trend: accelerating
 
 *Updated after each plan completion*
 
@@ -63,6 +64,10 @@ Recent decisions affecting current work:
 - [01-01]: Scaffolded manually — create-payload-app requires TTY, unavailable in Claude Code shell
 - [01-01]: importMap.ts is an empty stub — Payload withPayload() auto-generates full map at build time
 - [01-01]: text-muted-on-surface (#9a8e86) added as separate token for muted text on surface backgrounds (~4.8:1 AA)
+- [02-01]: vercelBlobStorage wrapped in conditional spread so dev builds work without BLOB_READ_WRITE_TOKEN set
+- [02-01]: blurDataURL hook uses setTimeout(100ms) to avoid SQLite transaction race in afterChange
+- [02-01]: Removed staticDir from Media upload config — Vercel Blob adapter manages storage
+- [02-01]: Vercel Blob confirmed: use clientUploads:true to bypass 4.5MB serverless body limit; no prefix option (known bug #12541)
 
 ### Pending Todos
 
@@ -70,11 +75,11 @@ None yet.
 
 ### Blockers/Concerns
 
-- [Phase 2]: Payload 3.x + Vercel Blob storage adapter config should be verified against current Payload docs at implementation time — API is actively evolving
+- [Phase 2]: BLOB_READ_WRITE_TOKEN must be set in Vercel project settings before deploying — see user_setup in 02-01-PLAN.md
 - [Phase 3]: Framer Motion AnimatePresence + App Router sessionStorage skip pattern has limited battle-tested reference implementations; consider a targeted spike before building the intro
 
 ## Session Continuity
 
 Last session: 2026-03-13
-Stopped at: Completed 01-01-PLAN.md — Payload CMS + Tailwind v4 + fonts + layout shell. Ready for 01-02 (deploy + verify).
+Stopped at: Completed 02-01-PLAN.md — ArtPieces collection + Media image pipeline + Vercel Blob storage.
 Resume file: None

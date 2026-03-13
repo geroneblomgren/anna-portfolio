@@ -12,7 +12,7 @@ Three phases take the project from zero to a deployed, self-managed portfolio. P
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Next.js + Payload CMS + Turso scaffolded, deploying to Vercel, dark design tokens verified for contrast
+- [x] **Phase 1: Foundation** - Next.js + Payload CMS + Turso scaffolded, deploying to Vercel, dark design tokens verified for contrast
 - [ ] **Phase 2: Admin + Image Pipeline** - Password-protected admin panel with image processing, full art CRUD, about/contact management, and QR code
 - [ ] **Phase 3: Public Site** - Gallery, animated intro, about page, and contact form — the complete viewer experience
 
@@ -44,7 +44,7 @@ Plans:
   5. Admin can update bio text and photo, manage social links, and download a scannable QR code pointing to the production URL
 **Plans**: 3 plans
 Plans:
-- [ ] 02-01-PLAN.md — ArtPieces collection, Media image pipeline (WebP + blur), Vercel Blob storage, migrations
+- [x] 02-01-PLAN.md — ArtPieces collection, Media image pipeline (WebP + blur), Vercel Blob storage, migrations
 - [ ] 02-02-PLAN.md — About/Contact global extensions, QR code admin view, featured warning component
 - [ ] 02-03-PLAN.md — Human verification of all Phase 2 admin functionality
 
@@ -67,6 +67,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Planned | - |
-| 2. Admin + Image Pipeline | 0/3 | Planned | - |
+| 1. Foundation | 2/2 | Complete | 2026-03-13 |
+| 2. Admin + Image Pipeline | 1/3 | In progress | - |
 | 3. Public Site | 0/TBD | Not started | - |
