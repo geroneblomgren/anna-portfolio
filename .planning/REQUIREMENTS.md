@@ -19,8 +19,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **PRES-01**: Site opens with a dark, moody animated intro that transitions into the gallery
 - [ ] **PRES-02**: Intro animation is skippable and respects prefers-reduced-motion
-- [ ] **PRES-03**: Site uses a dark/moody aesthetic with WCAG-compliant contrast ratios
-- [ ] **PRES-04**: Layout is mobile-first responsive (QR code → phone is primary entry)
+- [x] **PRES-03**: Site uses a dark/moody aesthetic with WCAG-compliant contrast ratios
+- [x] **PRES-04**: Layout is mobile-first responsive (QR code → phone is primary entry)
 
 ### Admin
 
@@ -43,7 +43,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **INF-01**: Images are processed on upload (resize, compress, convert to WebP)
 - [ ] **INF-02**: Site deploys on Vercel free tier with zero monthly cost
-- [ ] **INF-03**: Database stores art piece metadata, about content, and admin credentials
+- [x] **INF-03**: Database stores art piece metadata, about content, and admin credentials
 
 ## v2 Requirements
 
@@ -83,8 +83,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GAL-05 | Phase 3 | Pending |
 | PRES-01 | Phase 3 | Pending |
 | PRES-02 | Phase 3 | Pending |
-| PRES-03 | Phase 1 | Pending |
-| PRES-04 | Phase 1 | Pending |
+| PRES-03 | Phase 1 | Complete |
+| PRES-04 | Phase 1 | Complete |
 | ADM-01 | Phase 2 | Pending |
 | ADM-02 | Phase 2 | Pending |
 | ADM-03 | Phase 2 | Pending |
@@ -98,7 +98,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PUB-03 | Phase 3 | Pending |
 | INF-01 | Phase 2 | Pending |
 | INF-02 | Phase 1 | Pending |
-| INF-03 | Phase 1 | Pending |
+| INF-03 | Phase 1 | Complete |
 
 **Coverage:**
 - v1 requirements: 23 total

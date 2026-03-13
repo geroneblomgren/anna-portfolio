@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-03-13)
 ## Current Position
 
 Phase: 1 of 3 (Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-13 — Roadmap created; phases derived from 23 v1 requirements
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-03-13 — Plan 01-01 complete: Payload CMS + Turso + Tailwind v4 + fonts + layout shell
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 10%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: 16 min
+- Total execution time: 0.27 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 1. Foundation | 1 | 16 min | 16 min |
 
 **Recent Trend:**
-- Last 5 plans: —
-- Trend: —
+- Last 5 plans: 01-01 (16 min)
+- Trend: baseline established
 
 *Updated after each plan completion*
 
@@ -46,6 +46,10 @@ Recent decisions affecting current work:
 - [Pre-phase]: Image strategy — Sharp processes every upload to WebP ≤300KB at ingest time; no reliance on Vercel image optimization quota
 - [Pre-phase]: Auth pattern — dual-layer (middleware redirect + requireAuth() in every write Server Action) per CVE-2025-29927
 - [Pre-phase]: Vercel Blob vs Cloudinary decision deferred to Phase 2 implementation
+- [01-01]: Used Next.js 15.3.9 (not 16.x — not yet published); satisfies @payloadcms/next peer dep >=15.3.9 <15.4.0
+- [01-01]: Scaffolded manually — create-payload-app requires TTY, unavailable in Claude Code shell
+- [01-01]: importMap.ts is an empty stub — Payload withPayload() auto-generates full map at build time
+- [01-01]: text-muted-on-surface (#9a8e86) added as separate token for muted text on surface backgrounds (~4.8:1 AA)
 
 ### Pending Todos
 
@@ -59,5 +63,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-13
-Stopped at: Roadmap created, REQUIREMENTS.md traceability updated. Ready to plan Phase 1.
+Stopped at: Completed 01-01-PLAN.md — Payload CMS + Tailwind v4 + fonts + layout shell. Ready for 01-02 (deploy + verify).
 Resume file: None
