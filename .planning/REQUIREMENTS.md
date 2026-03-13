@@ -28,10 +28,10 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **ADM-02**: Admin can add new art pieces with image upload, title, medium, description, and tags
 - [x] **ADM-03**: Admin can edit existing art piece metadata and replace images
 - [x] **ADM-04**: Admin can delete art pieces
-- [ ] **ADM-05**: Admin can edit the about section (bio text, photo, artist statement)
-- [ ] **ADM-06**: Admin can manage contact info and social media links
+- [x] **ADM-05**: Admin can edit the about section (bio text, photo, artist statement)
+- [x] **ADM-06**: Admin can manage contact info and social media links
 - [x] **ADM-07**: Admin can reorder gallery pieces (set display order / pin favorites)
-- [ ] **ADM-08**: Admin can view and download a QR code pointing to the site
+- [x] **ADM-08**: Admin can view and download a QR code pointing to the site
 
 ### Public Pages
 
@@ -89,10 +89,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ADM-02 | Phase 2 | Complete |
 | ADM-03 | Phase 2 | Complete |
 | ADM-04 | Phase 2 | Complete |
-| ADM-05 | Phase 2 | Pending |
-| ADM-06 | Phase 2 | Pending |
+| ADM-05 | Phase 2 | Complete |
+| ADM-06 | Phase 2 | Complete |
 | ADM-07 | Phase 2 | Complete |
-| ADM-08 | Phase 2 | Pending |
+| ADM-08 | Phase 2 | Complete |
 | PUB-01 | Phase 3 | Pending |
 | PUB-02 | Phase 3 | Pending |
 | PUB-03 | Phase 3 | Pending |

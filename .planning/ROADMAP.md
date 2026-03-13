@@ -68,5 +68,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-03-13 |
-| 2. Admin + Image Pipeline | 1/3 | In progress | - |
+| 2. Admin + Image Pipeline | 2/3 | In Progress|  |
 | 3. Public Site | 0/TBD | Not started | - |

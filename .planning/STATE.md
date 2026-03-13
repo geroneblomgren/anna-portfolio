@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in_progress
-last_updated: "2026-03-13T23:42:00.000Z"
+status: unknown
+last_updated: "2026-03-13T23:53:25.205Z"
 progress:
-  total_phases: 3
+  total_phases: 2
   completed_phases: 1
-  total_plans: 7
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 4
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-13)
 ## Current Position
 
 Phase: 2 of 3 (Admin Image Pipeline)
-Plan: 1 of 3 in current phase (02-01 complete)
+Plan: 2 of 3 in current phase (02-02 complete)
 Status: In progress
-Last activity: 2026-03-13 — Plan 02-01 complete: ArtPieces collection + Media image pipeline + Vercel Blob storage
+Last activity: 2026-03-13 — Plan 02-02 complete: About/SiteSettings globals extended, branded QR code admin view, featured warning
 
-Progress: [███░░░░░░░] 30%
+Progress: [████░░░░░░] 43%
 
 ## Performance Metrics
 
@@ -41,10 +41,10 @@ Progress: [███░░░░░░░] 30%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation | 2 | 32 min | 16 min |
-| 2. Admin Image Pipeline | 1 | 4 min | 4 min |
+| 2. Admin Image Pipeline | 2 | 12 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (16 min), 01-02 (~16 min), 02-01 (4 min)
+- Last 5 plans: 01-01 (16 min), 01-02 (~16 min), 02-01 (4 min), 02-02 (8 min)
 - Trend: accelerating
 
 *Updated after each plan completion*
@@ -68,6 +68,8 @@ Recent decisions affecting current work:
 - [02-01]: blurDataURL hook uses setTimeout(100ms) to avoid SQLite transaction race in afterChange
 - [02-01]: Removed staticDir from Media upload config — Vercel Blob adapter manages storage
 - [02-01]: Vercel Blob confirmed: use clientUploads:true to bypass 4.5MB serverless body limit; no prefix option (known bug #12541)
+- [Phase 02-admin-image-pipeline]: importMap baseDir must be project root (not src/) for correct relative path generation in Payload 3.x when payload.config.ts lives in src/
+- [Phase 02-admin-image-pipeline]: QRCodeView uses getPayload({ config }) Server Component pattern — avoids auth complexity vs client-side REST fetch
 
 ### Pending Todos
 
@@ -81,5 +83,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-13
-Stopped at: Completed 02-01-PLAN.md — ArtPieces collection + Media image pipeline + Vercel Blob storage.
+Stopped at: Completed 02-02-PLAN.md — About/SiteSettings globals extended, branded QR code admin view with download, featured warning component.
 Resume file: None
