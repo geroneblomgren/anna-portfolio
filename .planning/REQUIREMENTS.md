@@ -81,34 +81,34 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ATMO-01 | — | Pending |
-| ATMO-02 | — | Pending |
-| ATMO-03 | — | Pending |
-| INTR-01 | — | Pending |
-| INTR-02 | — | Pending |
-| INTR-03 | — | Pending |
-| GLRY-01 | — | Pending |
-| GLRY-02 | — | Pending |
-| GLRY-03 | — | Pending |
-| GLRY-04 | — | Pending |
-| LBOX-01 | — | Pending |
-| PAGE-01 | — | Pending |
-| PAGE-02 | — | Pending |
-| PAGE-03 | — | Pending |
-| PAGE-04 | — | Pending |
-| DECR-01 | — | Pending |
-| DECR-02 | — | Pending |
-| PERF-01 | — | Pending |
-| PERF-02 | — | Pending |
-| PERF-03 | — | Pending |
-| PERF-04 | — | Pending |
-| PERF-05 | — | Pending |
+| ATMO-01 | Phase 4 | Pending |
+| ATMO-02 | Phase 4 | Pending |
+| ATMO-03 | Phase 4 | Pending |
+| INTR-03 | Phase 4 | Pending |
+| GLRY-01 | Phase 5 | Pending |
+| GLRY-02 | Phase 5 | Pending |
+| INTR-01 | Phase 5 | Pending |
+| INTR-02 | Phase 5 | Pending |
+| PERF-03 | Phase 5 | Pending |
+| PERF-04 | Phase 5 | Pending |
+| GLRY-03 | Phase 6 | Pending |
+| GLRY-04 | Phase 6 | Pending |
+| LBOX-01 | Phase 6 | Pending |
+| PAGE-01 | Phase 6 | Pending |
+| PAGE-02 | Phase 6 | Pending |
+| DECR-01 | Phase 6 | Pending |
+| DECR-02 | Phase 6 | Pending |
+| PERF-01 | Phase 6 | Pending |
+| PERF-02 | Phase 6 | Pending |
+| PAGE-03 | Phase 7 | Pending |
+| PAGE-04 | Phase 7 | Pending |
+| PERF-05 | Phase 7 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 22 total
-- Mapped to phases: 0
-- Unmapped: 22
+- Mapped to phases: 22
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-14 after initial definition*
+*Last updated: 2026-03-14 — traceability complete after roadmap creation*
