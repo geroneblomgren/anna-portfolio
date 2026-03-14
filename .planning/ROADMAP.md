@@ -62,7 +62,7 @@ Plans:
 Plans:
 - [ ] 03-01-PLAN.md — Install dependencies, navigation shell, gallery masonry grid with tag filtering
 - [ ] 03-02-PLAN.md — Ink-bleed intro animation and full-screen lightbox with piece details
-- [ ] 03-03-PLAN.md — About page with CMS content and contact form with Resend email
+- [x] 03-03-PLAN.md — About page with CMS content and contact form with Resend email
 - [ ] 03-04-PLAN.md — Human verification of complete Phase 3 public site
 
 ## Progress
@@ -74,4 +74,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-03-13 |
 | 2. Admin + Image Pipeline | 2/3 | In Progress|  |
-| 3. Public Site | 2/4 | In Progress|  |
+| 3. Public Site | 3/4 | In Progress|  |

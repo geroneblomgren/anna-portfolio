@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-14T02:36:53.211Z"
+last_updated: "2026-03-14T02:37:00.000Z"
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 9
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-13)
 ## Current Position
 
 Phase: 3 of 3 (Public Site)
-Plan: 2 of 4 in current phase (03-02 complete)
+Plan: 3 of 4 in current phase (03-03 complete)
 Status: In progress
-Last activity: 2026-03-13 — Plan 03-02 complete: IntroAnimation ink-bleed SVG, GalleryLightbox with YARL Captions plugin, keyboard/swipe nav, blur placeholders
+Last activity: 2026-03-14 — Plan 03-03 complete: About page with CMS hero photo/rich text/social links; Contact page with Zod-validated Server Action + Resend email delivery
 
-Progress: [███████░░░] 78%
+Progress: [████████░░] 89%
 
 ## Performance Metrics
 
@@ -42,10 +42,10 @@ Progress: [███████░░░] 78%
 |-------|-------|-------|----------|
 | 1. Foundation | 2 | 32 min | 16 min |
 | 2. Admin Image Pipeline | 2 | 12 min | 6 min |
-| 3. Public Site | 1 | 5 min | 5 min |
+| 3. Public Site | 3 | 17 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (16 min), 01-02 (~16 min), 02-01 (4 min), 02-02 (8 min), 03-02 (8 min)
+- Last 5 plans: 02-01 (4 min), 02-02 (8 min), 03-01 (5 min), 03-02 (8 min), 03-03 (4 min)
 - Trend: accelerating
 
 *Updated after each plan completion*
@@ -75,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 03-public-site]: react-masonry-css used with 3/3/2/1 column breakpoints for responsive masonry without CSS columns complexity
 - [Phase 03-public-site]: IntroAnimation uses showIntro=false default (not true) to prevent SSR hydration mismatch
 - [Phase 03-public-site]: YARL styles.root uses SlotCSSProperties — cast to React.CSSProperties causes TS errors; omit cast
+- [03-03]: Manual Tailwind [&_p] attribute selectors used for rich text bio (no @tailwindcss/typography plugin installed)
+- [03-03]: useActionState from react (React 19 API) used in ContactForm; onboarding@resend.dev sender for testing
 
 ### Pending Todos
 
@@ -87,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-13
-Stopped at: Completed 03-02-PLAN.md — IntroAnimation ink-bleed SVG intro, GalleryLightbox with YARL Captions, keyboard/swipe nav.
+Last session: 2026-03-14
+Stopped at: Completed 03-03-PLAN.md — About page (hero photo, rich text bio, artist statement, social links); Contact page (Zod validation, Server Action, Resend delivery).
 Resume file: None

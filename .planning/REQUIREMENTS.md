@@ -35,9 +35,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Public Pages
 
-- [ ] **PUB-01**: About page displays Anna's bio, photo, and story of pursuing tattooing
-- [ ] **PUB-02**: Contact form sends email notification to Anna on submission
-- [ ] **PUB-03**: Social media links displayed (Instagram minimum)
+- [x] **PUB-01**: About page displays Anna's bio, photo, and story of pursuing tattooing
+- [x] **PUB-02**: Contact form sends email notification to Anna on submission
+- [x] **PUB-03**: Social media links displayed (Instagram minimum)
 
 ### Infrastructure
 
@@ -93,9 +93,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ADM-06 | Phase 2 | Complete |
 | ADM-07 | Phase 2 | Complete |
 | ADM-08 | Phase 2 | Complete |
-| PUB-01 | Phase 3 | Pending |
-| PUB-02 | Phase 3 | Pending |
-| PUB-03 | Phase 3 | Pending |
+| PUB-01 | Phase 3 | Complete |
+| PUB-02 | Phase 3 | Complete |
+| PUB-03 | Phase 3 | Complete |
 | INF-01 | Phase 2 | Complete |
 | INF-02 | Phase 1 | Pending |
 | INF-03 | Phase 1 | Complete |
