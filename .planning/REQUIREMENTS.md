@@ -10,10 +10,10 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Gallery
 
 - [ ] **GAL-01**: User can view art pieces in a full-screen lightbox with high-quality images
-- [ ] **GAL-02**: User can filter gallery by category/style tags (drawings, paintings, tattoo designs, digital, etc.)
+- [x] **GAL-02**: User can filter gallery by category/style tags (drawings, paintings, tattoo designs, digital, etc.)
 - [ ] **GAL-03**: Each piece displays title, medium/style, description, and category tags
-- [ ] **GAL-04**: Gallery loads with optimized images (WebP, lazy loading, responsive srcset)
-- [ ] **GAL-05**: Gallery displays pieces in admin-defined sort order with featured pieces first
+- [x] **GAL-04**: Gallery loads with optimized images (WebP, lazy loading, responsive srcset)
+- [x] **GAL-05**: Gallery displays pieces in admin-defined sort order with featured pieces first
 
 ### Presentation
 
@@ -77,10 +77,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | GAL-01 | Phase 3 | Pending |
-| GAL-02 | Phase 3 | Pending |
+| GAL-02 | Phase 3 | Complete |
 | GAL-03 | Phase 3 | Pending |
-| GAL-04 | Phase 3 | Pending |
-| GAL-05 | Phase 3 | Pending |
+| GAL-04 | Phase 3 | Complete |
+| GAL-05 | Phase 3 | Complete |
 | PRES-01 | Phase 3 | Pending |
 | PRES-02 | Phase 3 | Pending |
 | PRES-03 | Phase 1 | Complete |

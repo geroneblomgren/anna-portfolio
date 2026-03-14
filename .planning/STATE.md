@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-14T02:17:24.138Z"
+last_updated: "2026-03-14T02:28:25.840Z"
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 9
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** When someone scans Anna's QR code, the site must make an immediate, powerful visual impression that communicates versatility, personal voice, and professional seriousness.
-**Current focus:** Phase 2 — Admin Image Pipeline
+**Current focus:** Phase 3 — Public Site
 
 ## Current Position
 
-Phase: 2 of 3 (Admin Image Pipeline)
-Plan: 2 of 3 in current phase (02-02 complete)
+Phase: 3 of 3 (Public Site)
+Plan: 1 of 4 in current phase (03-01 complete)
 Status: In progress
-Last activity: 2026-03-13 — Plan 02-02 complete: About/SiteSettings globals extended, branded QR code admin view, featured warning
+Last activity: 2026-03-13 — Plan 03-01 complete: NavBar with mobile hamburger, GalleryGrid with masonry + tag filter, gallery page with Payload Local API
 
-Progress: [████░░░░░░] 43%
+Progress: [██████░░░░] 67%
 
 ## Performance Metrics
 
@@ -42,6 +42,7 @@ Progress: [████░░░░░░] 43%
 |-------|-------|-------|----------|
 | 1. Foundation | 2 | 32 min | 16 min |
 | 2. Admin Image Pipeline | 2 | 12 min | 6 min |
+| 3. Public Site | 1 | 5 min | 5 min |
 
 **Recent Trend:**
 - Last 5 plans: 01-01 (16 min), 01-02 (~16 min), 02-01 (4 min), 02-02 (8 min)
@@ -70,6 +71,8 @@ Recent decisions affecting current work:
 - [02-01]: Vercel Blob confirmed: use clientUploads:true to bypass 4.5MB serverless body limit; no prefix option (known bug #12541)
 - [Phase 02-admin-image-pipeline]: importMap baseDir must be project root (not src/) for correct relative path generation in Payload 3.x when payload.config.ts lives in src/
 - [Phase 02-admin-image-pipeline]: QRCodeView uses getPayload({ config }) Server Component pattern — avoids auth complexity vs client-side REST fetch
+- [Phase 03-public-site]: Tag filtering state lives in GalleryGrid (not page) to keep server component stateless and cacheable
+- [Phase 03-public-site]: react-masonry-css used with 3/3/2/1 column breakpoints for responsive masonry without CSS columns complexity
 
 ### Pending Todos
 
@@ -83,5 +86,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-13
-Stopped at: Completed 02-02-PLAN.md — About/SiteSettings globals extended, branded QR code admin view with download, featured warning component.
+Stopped at: Completed 03-01-PLAN.md — NavBar, GalleryGrid, TagFilter, gallery page with Payload Local API.
 Resume file: None
