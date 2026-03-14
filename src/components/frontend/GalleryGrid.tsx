@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Masonry from 'react-masonry-css'
 import { TagFilter } from './TagFilter'
+import { GalleryLightbox } from './GalleryLightbox'
 import type { ArtPiece, Media } from '@/payload-types'
 
 type Tag = 'drawings' | 'paintings' | 'tattoo-designs' | 'digital-art' | 'mixed-media'
@@ -21,6 +22,8 @@ interface GalleryGridProps {
 
 export function GalleryGrid({ pieces }: GalleryGridProps) {
   const [activeTag, setActiveTag] = useState<Tag | null>(null)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
 
   const filtered =
     activeTag === null
@@ -47,7 +50,7 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
         className="masonry-grid"
         columnClassName="masonry-grid_column"
       >
-        {sorted.map((piece) => {
+        {sorted.map((piece, idx) => {
           const media =
             typeof piece.image === 'object' ? (piece.image as Media) : null
           if (!media) return null
@@ -60,7 +63,7 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
             <div
               key={piece.id}
               className="relative group cursor-pointer overflow-hidden rounded-sm"
-              onClick={() => console.log('Open lightbox for piece', piece.id)}
+              onClick={() => { setLightboxIndex(idx); setLightboxOpen(true) }}
             >
               <Image
                 src={src}
@@ -87,6 +90,13 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
           )
         })}
       </Masonry>
+
+      <GalleryLightbox
+        pieces={sorted}
+        open={lightboxOpen}
+        index={lightboxIndex}
+        onClose={() => setLightboxOpen(false)}
+      />
     </div>
   )
 }
