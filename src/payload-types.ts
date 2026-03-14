@@ -446,6 +446,8 @@ export interface About {
   } | null;
   photoId?: (number | null) | Media;
   artistStatement?: string | null;
+  contactEmail?: string | null;
+  contactPhone?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -464,6 +466,10 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  /**
+   * The custom domain URL the QR code will encode (e.g., https://darkartsbyana.com)
+   */
+  qrUrl?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -475,6 +481,8 @@ export interface AboutSelect<T extends boolean = true> {
   bioText?: T;
   photoId?: T;
   artistStatement?: T;
+  contactEmail?: T;
+  contactPhone?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -493,6 +501,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  qrUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
