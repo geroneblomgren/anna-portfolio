@@ -24,6 +24,28 @@
   display: none;
 }
 
+/* Compound hover shadow — compositor-safe pseudo-element (GLRY-02) */
+/* Gated to hover-capable devices to prevent touch flicker (PERF-04) */
+@media (hover: hover) and (pointer: fine) {
+  .gallery-card {
+    position: relative;
+  }
+  .gallery-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .gallery-card:hover::after {
+    opacity: 1;
+  }
+}
+
 /* Vignette overlay — darkens screen edges on every page */
 body::before {
   content: '';

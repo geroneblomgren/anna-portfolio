@@ -66,6 +66,7 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
               className="gallery-card relative group cursor-pointer overflow-hidden rounded-sm"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.025 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.55, ease: 'easeOut', delay: Math.min(idx, 12) * 0.07 }}
               onClick={() => { setLightboxIndex(idx); setLightboxOpen(true) }}
