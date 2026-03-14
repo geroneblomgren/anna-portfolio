@@ -103,7 +103,7 @@ export function IntroAnimation({ children }: IntroAnimationProps) {
         {/* Text reveal */}
         <div className="relative z-10 text-center">
           <motion.h1
-            className="font-heading text-text-heading text-5xl md:text-7xl"
+            className="font-heading text-text-heading text-5xl md:text-8xl tracking-brand-wide"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.5 }}
@@ -111,7 +111,7 @@ export function IntroAnimation({ children }: IntroAnimationProps) {
             Anna Blomgren
           </motion.h1>
           <motion.p
-            className="font-heading text-accent text-xl italic mt-3"
+            className="font-heading text-accent text-xl italic tracking-brand-widest mt-3 uppercase"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 2.0 }}

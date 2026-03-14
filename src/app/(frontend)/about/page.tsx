@@ -50,7 +50,7 @@ export default async function AboutPage() {
 
       {/* Bio text */}
       {about.bioText && (
-        <div className="mt-8 font-body text-text-body [&_p]:leading-relaxed [&_p]:mb-4 [&_h2]:text-text-heading [&_h2]:font-heading [&_h2]:text-2xl [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-text-heading [&_h3]:font-heading [&_h3]:text-xl [&_h3]:mt-6 [&_h3]:mb-3 [&_a]:text-accent [&_a]:underline [&_a]:hover:text-accent-hover [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_li]:mb-1 [&_strong]:text-text-heading [&_em]:italic">
+        <div className="mt-8 font-body text-text-body [&_p]:leading-relaxed [&_p]:mb-4 [&_h2]:text-text-heading [&_h2]:font-heading [&_h2]:text-3xl md:[&_h2]:text-4xl [&_h2]:tracking-brand-wide [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-text-heading [&_h3]:font-heading [&_h3]:text-2xl [&_h3]:tracking-brand-wide [&_h3]:mt-6 [&_h3]:mb-3 [&_a]:text-accent [&_a]:underline [&_a]:hover:text-accent-hover [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_li]:mb-1 [&_strong]:text-text-heading [&_em]:italic">
           <RichText data={about.bioText} />
         </div>
       )}
@@ -58,7 +58,7 @@ export default async function AboutPage() {
       {/* Artist statement */}
       {about.artistStatement && (
         <div className="mt-10">
-          <h2 className="font-heading text-text-heading text-2xl mb-4">Artist Statement</h2>
+          <h2 className="font-heading text-text-heading text-3xl md:text-4xl tracking-brand-wide mb-4">Artist Statement</h2>
           <blockquote className="pl-4 border-l-2 border-accent">
             <p className="text-text-body italic font-body text-lg leading-relaxed">
               {about.artistStatement}
@@ -70,7 +70,7 @@ export default async function AboutPage() {
       {/* Contact info */}
       {(about.contactEmail || about.contactPhone) && (
         <div className="mt-12">
-          <h2 className="font-heading text-text-heading text-2xl mb-4">Contact</h2>
+          <h2 className="font-heading text-text-heading text-3xl md:text-4xl tracking-brand-wide mb-4">Contact</h2>
           <div className="flex flex-col gap-2">
             {about.contactEmail && (
               <a

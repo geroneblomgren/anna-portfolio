@@ -13,7 +13,7 @@ export default async function ContactPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-4">
-      <h1 className="font-heading text-text-heading text-4xl md:text-5xl mb-4">
+      <h1 className="font-heading text-text-heading text-5xl md:text-7xl tracking-brand-wide mb-4">
         Get in Touch
       </h1>
       <p className="text-text-muted font-body mb-8">

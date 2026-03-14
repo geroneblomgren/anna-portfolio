@@ -90,4 +90,9 @@ body::after {
   /* Typography */
   --font-heading: var(--font-bodoni-moda), Georgia, serif;
   --font-body: var(--font-dm-sans), system-ui, sans-serif;
+
+  /* Typography attitude — commanding letter-spacing */
+  --tracking-brand-tight: -0.02em;
+  --tracking-brand-wide: 0.12em;
+  --tracking-brand-widest: 0.2em;
 }
