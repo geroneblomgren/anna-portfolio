@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-14T02:28:25.840Z"
+last_updated: "2026-03-14T02:36:53.211Z"
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 9
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-13)
 ## Current Position
 
 Phase: 3 of 3 (Public Site)
-Plan: 1 of 4 in current phase (03-01 complete)
+Plan: 2 of 4 in current phase (03-02 complete)
 Status: In progress
-Last activity: 2026-03-13 — Plan 03-01 complete: NavBar with mobile hamburger, GalleryGrid with masonry + tag filter, gallery page with Payload Local API
+Last activity: 2026-03-13 — Plan 03-02 complete: IntroAnimation ink-bleed SVG, GalleryLightbox with YARL Captions plugin, keyboard/swipe nav, blur placeholders
 
-Progress: [██████░░░░] 67%
+Progress: [███████░░░] 78%
 
 ## Performance Metrics
 
@@ -45,7 +45,7 @@ Progress: [██████░░░░] 67%
 | 3. Public Site | 1 | 5 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (16 min), 01-02 (~16 min), 02-01 (4 min), 02-02 (8 min)
+- Last 5 plans: 01-01 (16 min), 01-02 (~16 min), 02-01 (4 min), 02-02 (8 min), 03-02 (8 min)
 - Trend: accelerating
 
 *Updated after each plan completion*
@@ -73,6 +73,8 @@ Recent decisions affecting current work:
 - [Phase 02-admin-image-pipeline]: QRCodeView uses getPayload({ config }) Server Component pattern — avoids auth complexity vs client-side REST fetch
 - [Phase 03-public-site]: Tag filtering state lives in GalleryGrid (not page) to keep server component stateless and cacheable
 - [Phase 03-public-site]: react-masonry-css used with 3/3/2/1 column breakpoints for responsive masonry without CSS columns complexity
+- [Phase 03-public-site]: IntroAnimation uses showIntro=false default (not true) to prevent SSR hydration mismatch
+- [Phase 03-public-site]: YARL styles.root uses SlotCSSProperties — cast to React.CSSProperties causes TS errors; omit cast
 
 ### Pending Todos
 
@@ -86,5 +88,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-13
-Stopped at: Completed 03-01-PLAN.md — NavBar, GalleryGrid, TagFilter, gallery page with Payload Local API.
+Stopped at: Completed 03-02-PLAN.md — IntroAnimation ink-bleed SVG intro, GalleryLightbox with YARL Captions, keyboard/swipe nav.
 Resume file: None
