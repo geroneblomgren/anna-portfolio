@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { GalleryGrid } from '@/components/frontend/GalleryGrid'
+import { IntroAnimation } from '@/components/frontend/IntroAnimation'
 
 export const metadata = {
   title: 'Anna Blomgren — Artist & Illustrator',
@@ -18,8 +19,10 @@ export default async function HomePage() {
   })
 
   return (
-    <div className="max-w-7xl mx-auto py-8">
-      <GalleryGrid pieces={docs} />
-    </div>
+    <IntroAnimation>
+      <div className="max-w-7xl mx-auto py-8">
+        <GalleryGrid pieces={docs} />
+      </div>
+    </IntroAnimation>
   )
 }
