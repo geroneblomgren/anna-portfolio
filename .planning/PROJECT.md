@@ -29,7 +29,15 @@ When someone scans Anna's QR code, the site must make an immediate, powerful vis
 
 ### Active
 
-(None — next milestone requirements defined via `/gsd:new-milestone`)
+<!-- Current scope: v1.1 Dark & Dangerous -->
+
+- [ ] Full visual/UX overhaul — dark, dangerous, immersive atmosphere
+- [ ] Ink & smoke effects — particles, drips, fog textures
+- [ ] Dramatic gallery interactions — scroll reveals, parallax hover, cinematic lightbox
+- [ ] Motion system — page transitions, micro-interactions, nothing static
+- [ ] Texture layer — grain, vignette, ink splatter, depth
+- [ ] Enhanced intro animation
+- [ ] Branded navigation and interaction design
 
 ### Out of Scope
 
@@ -70,5 +78,18 @@ Deployed to Vercel free tier at anna-portfolio-blush.vercel.app.
 | react-masonry-css for gallery | Simple masonry without CSS columns complexity | ✓ Good — 3/3/2/1 column breakpoints work responsively |
 | YARL for lightbox | Full-featured with captions, keyboard nav, swipe | ✓ Good — custom next/image render for blur placeholders |
 
+## Current Milestone: v1.1 Dark & Dangerous
+
+**Goal:** Transform the portfolio's visual experience from polished-but-safe to dark, dangerous, and immersive — the kind of site that makes a tattoo master stop and lean in.
+
+**Target features:**
+- Ink & smoke particle effects, drip textures, fog atmosphere
+- Dramatic scroll-triggered gallery reveals with parallax hover
+- Cinematic page transitions and micro-interactions throughout
+- Film grain, vignette, depth textures across all pages
+- Enhanced intro animation with more drama
+- Branded, edgy navigation and interaction design
+- No new pages/features — pure visual/UX transformation
+
 ---
-*Last updated: 2026-03-14 after v1.0 milestone*
+*Last updated: 2026-03-14 after v1.1 milestone started*
