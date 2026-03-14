@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Masonry from 'react-masonry-css'
+import { motion } from 'motion/react'
 import { TagFilter } from './TagFilter'
 import { GalleryLightbox } from './GalleryLightbox'
 import type { ArtPiece, Media } from '@/payload-types'
@@ -60,9 +61,13 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
           const height = media.sizes?.gallery?.height ?? media.height ?? 800
 
           return (
-            <div
+            <motion.div
               key={piece.id}
-              className="relative group cursor-pointer overflow-hidden rounded-sm"
+              className="gallery-card relative group cursor-pointer overflow-hidden rounded-sm"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.55, ease: 'easeOut', delay: Math.min(idx, 12) * 0.07 }}
               onClick={() => { setLightboxIndex(idx); setLightboxOpen(true) }}
             >
               <Image
@@ -86,7 +91,7 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
                   </p>
                 )}
               </div>
-            </div>
+            </motion.div>
           )
         })}
       </Masonry>
