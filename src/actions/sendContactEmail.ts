@@ -10,8 +10,6 @@ const schema = z.object({
   message: z.string().min(1, 'Message is required').max(5000),
 })
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 type FormState = {
   success?: boolean
   error?: string
@@ -36,7 +34,13 @@ export async function sendContactEmail(prevState: FormState, formData: FormData)
 
   const { name, email, message } = result.data
 
+  if (!process.env.RESEND_API_KEY) {
+    console.error('RESEND_API_KEY is not set')
+    return { error: 'Email service is not configured. Please contact Anna directly.' }
+  }
+
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
     const { error } = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: [process.env.ANNA_EMAIL ?? 'test@example.com'],

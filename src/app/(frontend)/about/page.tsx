@@ -25,7 +25,9 @@ export default async function AboutPage() {
     )
   }
 
-  const photo = about.photoId && typeof about.photoId === 'object' ? (about.photoId as Media) : null
+  const photoData = about.photoId && typeof about.photoId === 'object' ? (about.photoId as Media) : null
+  const photoSrc = photoData?.sizes?.gallery?.url ?? photoData?.url
+  const photo = photoData && photoSrc ? photoData : null
   const socialLinks = siteSettings.socialLinks ?? []
 
   return (
@@ -34,7 +36,7 @@ export default async function AboutPage() {
       {photo && (
         <div className="mb-10">
           <Image
-            src={(photo.sizes?.gallery?.url ?? photo.url) as string}
+            src={photoSrc!}
             alt={photo.alt}
             width={photo.sizes?.gallery?.width ?? photo.width ?? 1200}
             height={photo.sizes?.gallery?.height ?? photo.height ?? 800}
