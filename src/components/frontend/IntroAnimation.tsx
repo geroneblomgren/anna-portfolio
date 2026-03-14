@@ -58,12 +58,41 @@ export function IntroAnimation({ children }: IntroAnimationProps) {
           preserveAspectRatio="xMidYMid slice"
           aria-hidden="true"
         >
+          <defs>
+            <filter
+              id="ink-bleed"
+              x="-10%"
+              y="-10%"
+              width="120%"
+              height="120%"
+              colorInterpolationFilters="sRGB"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.04 0.08"
+                numOctaves={3}
+                seed={2}
+                result="noise"
+              />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="noise"
+                scale={6}
+                xChannelSelector="R"
+                yChannelSelector="G"
+                result="displaced"
+              />
+              <feGaussianBlur in="displaced" stdDeviation={1.2} />
+            </filter>
+          </defs>
           {/* Stroke 1 — sweeping diagonal */}
           <motion.path
             d="M -50 300 Q 200 100 500 250 T 900 150"
             stroke="#c8c8cc"
-            strokeWidth="2.5"
+            strokeWidth="8"
+            strokeLinecap="round"
             fill="none"
+            filter="url(#ink-bleed)"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.6 }}
             transition={{ duration: 1.2, ease: 'easeInOut', delay: 0 }}
@@ -72,8 +101,10 @@ export function IntroAnimation({ children }: IntroAnimationProps) {
           <motion.path
             d="M 100 50 C 250 -30 550 200 700 80 S 900 300 1000 200"
             stroke="#c8c8cc"
-            strokeWidth="2"
+            strokeWidth="6"
+            strokeLinecap="round"
             fill="none"
+            filter="url(#ink-bleed)"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.4 }}
             transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.3 }}
@@ -82,8 +113,10 @@ export function IntroAnimation({ children }: IntroAnimationProps) {
           <motion.path
             d="M -20 380 Q 150 280 400 320 C 550 350 650 200 850 300"
             stroke="#c8c8cc"
-            strokeWidth="3"
+            strokeWidth="10"
+            strokeLinecap="round"
             fill="none"
+            filter="url(#ink-bleed)"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.5 }}
             transition={{ duration: 1.3, ease: 'easeInOut', delay: 0.6 }}
@@ -92,8 +125,10 @@ export function IntroAnimation({ children }: IntroAnimationProps) {
           <motion.path
             d="M 200 400 C 300 200 500 350 600 150 Q 700 50 900 180"
             stroke="#c8c8cc"
-            strokeWidth="1.5"
+            strokeWidth="5"
+            strokeLinecap="round"
             fill="none"
+            filter="url(#ink-bleed)"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.35 }}
             transition={{ duration: 1.1, ease: 'easeInOut', delay: 0.9 }}
