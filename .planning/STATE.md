@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 4 of 7 (Atmospheric Foundation)
-Plan: 2 of TBD in current phase (Plan 02 checkpoint — awaiting human visual verification)
+Plan: 2 of TBD in current phase (Plan 02 complete — human visual verification approved)
 Status: In progress
-Last activity: 2026-03-14 — Plan 04-02 Task 1 complete: brand tracking tokens + commanding typography across all pages
+Last activity: 2026-03-14 — Plan 04-02 complete: brand tracking tokens, commanding typography, and background #121212 adjustment all human-verified
 
-Progress: [████░░░░░░] 40% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 done pending verification)
+Progress: [████░░░░░░] 40% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 verified complete)
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Recent decisions affecting v1.1:
 - [Phase 04-atmospheric-foundation]: AnimatePresence removed from IntroAnimation in Phase 4; exit fade-out restored in Phase 7 via layout-level AnimatePresence
 - [Phase 04-atmospheric-foundation]: Film grain opacity 0.035 (hard cap 0.05) to avoid dirty-noise on OLED displays
 - [Phase 04-atmospheric-foundation]: tracking-brand-wide (0.12em) for headings; tracking-brand-widest (0.2em) for uppercase subtitle labels
+- [Phase 04-atmospheric-foundation]: --color-bg #121212 not #0a0a0a — near-pure black hides grain/vignette; #121212 makes both visible without losing dark mood
 
 ### Pending Todos
 
@@ -75,5 +76,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: 04-02 checkpoint — Task 2 human-verify (full atmospheric foundation visual check)
+Stopped at: Completed 04-02-PLAN.md — Phase 4 Plan 02 fully complete, ready for Plan 03
 Resume file: None

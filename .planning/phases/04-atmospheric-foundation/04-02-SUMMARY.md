@@ -40,6 +40,7 @@ key-decisions:
   - "tracking-brand-wide (0.12em) applied to all primary headings; tracking-brand-widest (0.2em) reserved for uppercase subtitle label"
   - "IntroAnimation subtitle changed to uppercase + tracking-brand-widest — spaced-out label effect, not italic heading"
   - "RichText [&_h2]: arbitrary variant chain kept in single className string — no component wrapping needed"
+  - "--color-bg lightened from #0a0a0a to #121212 — near-pure black hid grain/vignette overlays; #121212 makes both visible without losing dark mood"
 
 patterns-established:
   - "tracking-brand-* tokens: use tracking-brand-wide for headings, tracking-brand-widest for uppercase labels, tracking-brand-tight for tight display cases"
@@ -62,7 +63,7 @@ completed: 2026-03-14
 - **Duration:** ~8 min
 - **Started:** 2026-03-14T18:37:44Z
 - **Completed:** 2026-03-14T18:45:44Z
-- **Tasks:** 1 of 2 (Task 2 is a human-verify checkpoint)
+- **Tasks:** 2 of 2 (Task 2 human-verify checkpoint approved)
 - **Files modified:** 4
 
 ## Accomplishments
@@ -78,12 +79,15 @@ completed: 2026-03-14
 Each task was committed atomically:
 
 1. **Task 1: Add typography tokens and upgrade all headings** - `b662341` (feat)
+2. **Task 2: Visual verification of full Phase 4 atmosphere** - human-verify checkpoint approved, no code commit needed
 
-**Plan metadata:** (to be added after human verification)
+**Deviation commit:** `78b36c3` (style: lighten background to #121212 for visible grain and vignette)
+
+**Plan metadata:** `1825d0f` (docs: complete brand typography plan)
 
 ## Files Created/Modified
 
-- `src/app/globals.css` - Added --tracking-brand-tight/wide/widest to @theme block
+- `src/app/globals.css` - Added --tracking-brand-tight/wide/widest to @theme block; --color-bg changed from #0a0a0a to #121212
 - `src/components/frontend/IntroAnimation.tsx` - h1 text-8xl tracking-brand-wide; subtitle uppercase tracking-brand-widest
 - `src/app/(frontend)/contact/page.tsx` - h1 text-5xl md:text-7xl tracking-brand-wide
 - `src/app/(frontend)/about/page.tsx` - h2 direct + RichText [&_h2]: chain upgraded to text-3xl md:text-4xl tracking-brand-wide; h3 to text-2xl tracking-brand-wide
@@ -96,7 +100,20 @@ Each task was committed atomically:
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+### Auto-fixed Issues
+
+**1. [Rule 1 - Bug] Lightened --color-bg from #0a0a0a to #121212 for grain/vignette visibility**
+- **Found during:** Task 1 (post-build visual check before verification checkpoint)
+- **Issue:** Film grain and vignette overlays from Plan 01 were invisible against the near-pure-black #0a0a0a background — the core atmospheric effects were effectively hidden
+- **Fix:** Changed `--color-bg: #0a0a0a` to `--color-bg: #121212` in globals.css @theme block
+- **Files modified:** src/app/globals.css
+- **Verification:** Grain texture and darkened screen edges visible in dev server; human-verified in Task 2 checkpoint
+- **Committed in:** `78b36c3` (separate style commit, before verification checkpoint)
+
+---
+
+**Total deviations:** 1 auto-fixed (Rule 1 — visibility bug)
+**Impact on plan:** Essential fix — the atmospheric effects from Plan 01 were undetectable without this adjustment. No scope creep.
 
 ## Issues Encountered
 
@@ -109,8 +126,9 @@ None - no external service configuration required.
 ## Next Phase Readiness
 
 - All four files modified. Build verified clean.
-- Awaiting human visual verification (Task 2 checkpoint) of full atmospheric foundation: grain + vignette + commanding typography together
-- Once approved, Phase 4 atmospheric foundation is complete; Phase 5 can begin
+- Full Phase 4 atmospheric foundation is complete and human-verified: film grain, vignette, AnimatePresence refactor, and commanding typography are all live together
+- Phase 5 (gallery experience or next planned phase) can begin
+- Concern remains: Phase 7 entrance-only AnimatePresence template.tsx pattern should be smoke-tested against live layout.tsx before committing to full Phase 7 plan design
 
 ---
 *Phase: 04-atmospheric-foundation*
