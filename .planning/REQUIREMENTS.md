@@ -15,14 +15,14 @@ Requirements for Dark & Dangerous visual/UX overhaul. Each maps to roadmap phase
 
 ### Intro
 
-- [ ] **INTR-01**: Intro animation uses thicker ink strokes (5-12px) with SVG turbulence filter for bleed/feathered edges — feels like actual mark-making
-- [ ] **INTR-02**: Name reveal uses letter-by-letter stagger animation instead of block fade
+- [x] **INTR-01**: Intro animation uses thicker ink strokes (5-12px) with SVG turbulence filter for bleed/feathered edges — feels like actual mark-making
+- [x] **INTR-02**: Name reveal uses letter-by-letter stagger animation instead of block fade
 - [x] **INTR-03**: Intro maintains skip, localStorage memory, and prefers-reduced-motion support from v1.0
 
 ### Gallery
 
-- [ ] **GLRY-01**: Gallery cards fade and slide in on scroll with staggered timing per card — curated reveal, not static dump
-- [ ] **GLRY-02**: Gallery cards gain compound hover effect with scale, shadow, and gradient depth
+- [x] **GLRY-01**: Gallery cards fade and slide in on scroll with staggered timing per card — curated reveal, not static dump
+- [x] **GLRY-02**: Gallery cards gain compound hover effect with scale, shadow, and gradient depth
 - [ ] **GLRY-03**: Gallery cards respond to cursor position with 3D tilt parallax (perspective transform) — like holding physical art
 - [ ] **GLRY-04**: 3D tilt replaces compound hover on desktop; compound hover remains as mobile/touch fallback
 
@@ -46,8 +46,8 @@ Requirements for Dark & Dangerous visual/UX overhaul. Each maps to roadmap phase
 
 - [ ] **PERF-01**: All animations respect prefers-reduced-motion — effects disabled or simplified for users who request it
 - [ ] **PERF-02**: All overlay effects use pointer-events: none — no blocking of user interaction
-- [ ] **PERF-03**: Gallery scroll-reveal uses whileInView (not mount-all) to prevent GPU layer explosion on mobile
-- [ ] **PERF-04**: 3D tilt and cursor effects are desktop-only — gated by @media (hover: hover) and (pointer: fine)
+- [x] **PERF-03**: Gallery scroll-reveal uses whileInView (not mount-all) to prevent GPU layer explosion on mobile
+- [x] **PERF-04**: 3D tilt and cursor effects are desktop-only — gated by @media (hover: hover) and (pointer: fine)
 - [ ] **PERF-05**: Total new bundle size stays under 5KB gzip (lenis is the only new dependency)
 
 ## v1.2 Requirements
@@ -85,12 +85,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ATMO-02 | Phase 4 | Complete |
 | ATMO-03 | Phase 4 | Complete |
 | INTR-03 | Phase 4 | Complete |
-| GLRY-01 | Phase 5 | Pending |
-| GLRY-02 | Phase 5 | Pending |
-| INTR-01 | Phase 5 | Pending |
-| INTR-02 | Phase 5 | Pending |
-| PERF-03 | Phase 5 | Pending |
-| PERF-04 | Phase 5 | Pending |
+| GLRY-01 | Phase 5 | Complete |
+| GLRY-02 | Phase 5 | Complete |
+| INTR-01 | Phase 5 | Complete |
+| INTR-02 | Phase 5 | Complete |
+| PERF-03 | Phase 5 | Complete |
+| PERF-04 | Phase 5 | Complete |
 | GLRY-03 | Phase 6 | Pending |
 | GLRY-04 | Phase 6 | Pending |
 | LBOX-01 | Phase 6 | Pending |

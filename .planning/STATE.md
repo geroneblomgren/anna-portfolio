@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Dark & Dangerous
 status: unknown
-last_updated: "2026-03-14T21:33:34.422Z"
+last_updated: "2026-03-14T23:32:46.272Z"
 progress:
-  total_phases: 1
-  completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_phases: 2
+  completed_phases: 2
+  total_plans: 4
+  completed_plans: 4
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** When someone scans Anna's QR code, the site makes an immediate, powerful visual impression — versatility, personal voice, dead serious about this career.
-**Current focus:** Phase 4 — Atmospheric Foundation (v1.1 Dark & Dangerous)
+**Current focus:** Phase 5 — Gallery Interactions (v1.1 Dark & Dangerous)
 
 ## Current Position
 
-Phase: 4 of 7 (Atmospheric Foundation)
-Plan: 2 of TBD in current phase (Plan 02 complete — human visual verification approved)
+Phase: 5 of 7 (Gallery Interactions)
+Plan: 2 of TBD in current phase (Plan 02 complete)
 Status: In progress
-Last activity: 2026-03-14 — Plan 04-02 complete: brand tracking tokens, commanding typography, and background #121212 adjustment all human-verified
+Last activity: 2026-03-14 — Plan 05-02 complete: SVG ink-bleed filter on thickened strokes and letter-by-letter name reveal in IntroAnimation
 
-Progress: [████░░░░░░] 40% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 verified complete)
+Progress: [█████░░░░░] 50% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 verified; Phase 5 Plans 01-02 complete)
 
 ## Performance Metrics
 
@@ -47,6 +47,8 @@ Progress: [████░░░░░░] 40% (v1.0 phases 1-3 complete; v1.1 P
 *Updated after each plan completion*
 | Phase 04-atmospheric-foundation P01 | 3 | 2 tasks | 2 files |
 | Phase 04-atmospheric-foundation P02 | 8 | 1 tasks | 4 files |
+| Phase 05-gallery-interactions P01 | 7 | 2 tasks | 2 files |
+| Phase 05-gallery-interactions P02 | 7 | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -63,6 +65,8 @@ Recent decisions affecting v1.1:
 - [Phase 04-atmospheric-foundation]: Film grain opacity 0.035 (hard cap 0.05) to avoid dirty-noise on OLED displays
 - [Phase 04-atmospheric-foundation]: tracking-brand-wide (0.12em) for headings; tracking-brand-widest (0.2em) for uppercase subtitle labels
 - [Phase 04-atmospheric-foundation]: --color-bg #121212 not #0a0a0a — near-pure black hides grain/vignette; #121212 makes both visible without losing dark mood
+- [Phase 05-gallery-interactions]: ease: 'easeOut' as const required in letterVariants — TypeScript motion/react types need explicit const assertion on string literals
+- [Phase 05-gallery-interactions]: Auto-complete timer (3500ms) unchanged — total letter stagger duration (~2.7s) fits within existing window
 
 ### Pending Todos
 
@@ -76,5 +80,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: Completed 04-02-PLAN.md — Phase 4 Plan 02 fully complete, ready for Plan 03
+Stopped at: Completed 05-02-PLAN.md — Phase 5 Plan 02 fully complete, ready for Plan 03
 Resume file: None

@@ -23,7 +23,7 @@ Full details archived: `.planning/milestones/v1.0-ROADMAP.md`
 **Milestone Goal:** Transform the portfolio from polished-but-safe to dark, dangerous, and immersive — the kind of site that makes a tattoo master stop and lean in.
 
 - [x] **Phase 4: Atmospheric Foundation** — CSS texture overlays, typography attitude, and AnimatePresence audit (completed 2026-03-14)
-- [ ] **Phase 5: Gallery Interactions** — Scroll-reveal stagger, compound hover, and enhanced intro animation
+- [x] **Phase 5: Gallery Interactions** — Scroll-reveal stagger, compound hover, and enhanced intro animation (completed 2026-03-14)
 - [ ] **Phase 6: Signature Effects** — 3D tilt parallax, lightbox atmosphere, stagger reveals, ink-stain dividers
 - [ ] **Phase 7: Cinematic Layer** — Ink-bleed page transitions and ambient particle canvas
 
@@ -54,7 +54,7 @@ Plans:
   3. Intro animation SVG strokes are visibly thicker with feathered/bleed edges and the name "Anna Blomgren" reveals letter-by-letter, not as a block
   4. On a throttled mobile profile, scrolling through the full gallery does not stutter — GPU layers stay bounded because off-screen cards are deactivated
   5. Cursor-based (hover: hover) effects are absent on touch-only devices — no broken parallax flicker on phone
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 05-01-PLAN.md — Scroll-reveal stagger and compound hover effects on gallery cards
@@ -93,6 +93,6 @@ Phases execute in numeric order: 4 → 5 → 6 → 7
 | 2. Admin + Image Pipeline | v1.0 | 3/3 | Complete | 2026-03-13 |
 | 3. Public Site | v1.0 | 4/4 | Complete | 2026-03-14 |
 | 4. Atmospheric Foundation | 2/2 | Complete   | 2026-03-14 | - |
-| 5. Gallery Interactions | v1.1 | 0/2 | Planned | - |
+| 5. Gallery Interactions | 2/2 | Complete   | 2026-03-14 | - |
 | 6. Signature Effects | v1.1 | 0/TBD | Not started | - |
 | 7. Cinematic Layer | v1.1 | 0/TBD | Not started | - |
