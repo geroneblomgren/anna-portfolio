@@ -68,7 +68,7 @@ body::after {
 
 @theme {
   /* Color system — cold dark palette inspired by graphite & ink */
-  --color-bg: #0a0a0a;
+  --color-bg: #121212;
   --color-surface: #141416;
   --color-border: #2a2a2e;
 
