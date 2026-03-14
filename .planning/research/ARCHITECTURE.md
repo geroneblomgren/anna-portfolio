@@ -1,371 +1,471 @@
 # Architecture Research
 
-**Domain:** Artist portfolio web app with admin panel (single user)
-**Researched:** 2026-03-13
-**Confidence:** HIGH
+**Domain:** Visual/UX effects integration — Next.js 15 App Router + Motion + Tailwind v4
+**Researched:** 2026-03-14
+**Confidence:** HIGH (Motion official docs + Next.js docs + verified patterns)
+
+> v1.1 update: This file replaces the v1.0 general architecture with a focused integration
+> map for the Dark & Dangerous milestone. The v1.0 architecture (auth, CMS, image pipeline,
+> admin) is unchanged and not repeated here.
 
 ## Standard Architecture
 
-### System Overview
+### System Overview — v1.1 Effect Layer Integration
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     Browser (Client)                         │
-├──────────────────────────┬──────────────────────────────────┤
-│   Public Pages           │   Admin Pages (/admin/*)         │
-│  ┌────────┐ ┌─────────┐  │  ┌──────────┐  ┌────────────┐   │
-│  │ Intro  │ │ Gallery │  │  │  Login   │  │ Dashboard  │   │
-│  └────────┘ └─────────┘  │  └──────────┘  └────────────┘   │
-│  ┌────────┐ ┌─────────┐  │  ┌──────────┐  ┌────────────┐   │
-│  │ About  │ │Contact  │  │  │Art CRUD  │  │About Edit  │   │
-│  └────────┘ └─────────┘  │  └──────────┘  └────────────┘   │
-├──────────────────────────┴──────────────────────────────────┤
-│               Next.js App Router (Server Layer)              │
-│  ┌──────────────────┐  ┌───────────────────────────────┐    │
-│  │  Middleware.ts   │  │       Server Actions           │    │
-│  │  (Auth guard on  │  │  (CRUD, email, image upload)   │    │
-│  │  /admin/* routes)│  └───────────────────────────────┘    │
-│  └──────────────────┘                                        │
-├─────────────────────────────────────────────────────────────┤
-│                     Data / Services Layer                     │
-│  ┌────────────┐  ┌──────────────┐  ┌─────────────────────┐  │
-│  │  Postgres  │  │  Cloudinary  │  │  Resend (Email)     │  │
-│  │  (Neon /   │  │  (Image CDN  │  │  (Contact form)     │  │
-│  │  Supabase) │  │   + upload)  │  └─────────────────────┘  │
-│  └────────────┘  └──────────────┘                            │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                    GLOBAL EFFECT LAYER (new)                      │
+│  ┌──────────────────┐  ┌──────────────────┐                       │
+│  │  TextureOverlay  │  │  ParticleCanvas  │  (fixed, z-0/1, no ptr) │
+│  └──────────────────┘  └──────────────────┘                       │
+├──────────────────────────────────────────────────────────────────┤
+│                   NAVIGATION LAYER (modified)                     │
+│  ┌────────────────────────────────────────────────────────────┐   │
+│  │  NavBar.tsx — add Motion entrance + link micro-interactions │   │
+│  └────────────────────────────────────────────────────────────┘   │
+├──────────────────────────────────────────────────────────────────┤
+│               PAGE TRANSITION LAYER (new)                         │
+│  ┌────────────────────────────────────────────────────────────┐   │
+│  │  template.tsx — (frontend) route group — Motion entrance   │   │
+│  └────────────────────────────────────────────────────────────┘   │
+├──────────────────────────────────────────────────────────────────┤
+│                   PAGE CONTENT LAYER                              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐            │
+│  │  HomePage    │  │  AboutPage   │  │  ContactPage │            │
+│  │  (server)    │  │  (server)    │  │  (server)    │            │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘            │
+│         │                 │                  │                    │
+├─────────┴─────────────────┴──────────────────┴────────────────────┤
+│                  CLIENT COMPONENT LAYER                           │
+│  ┌────────────────┐  ┌─────────────────┐  ┌──────────────────┐   │
+│  │ IntroAnimation │  │  GalleryGrid    │  │  GalleryLightbox │   │
+│  │  (MODIFIED)    │  │  (MODIFIED)     │  │  (MODIFIED)      │   │
+│  └────────────────┘  └────────┬────────┘  └──────────────────┘   │
+│                               │                                   │
+│                      ┌────────┴────────┐                          │
+│                      │  GalleryCard    │  (NEW — extracted)       │
+│                      │  w/ parallax    │                          │
+│                      └─────────────────┘                          │
+├──────────────────────────────────────────────────────────────────┤
+│                   DESIGN TOKEN LAYER (modified)                   │
+│  ┌────────────────────────────────────────────────────────────┐   │
+│  │  globals.css — @theme tokens + grain keyframe + z-index    │   │
+│  └────────────────────────────────────────────────────────────┘   │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 ### Component Responsibilities
 
-| Component | Responsibility | Typical Implementation |
-|-----------|----------------|------------------------|
-| Animated Intro | Full-screen dark landing, transitions to gallery | Client Component, Framer Motion AnimatePresence |
-| Gallery Page | Display art grid with category/tag filtering | Server Component (fetch) + Client Component (filter state) |
-| Art Piece Card | Individual artwork display (image, title, tags) | Server or Client Component |
-| About Page | Bio, photo, story — static-ish content | Server Component, editable via admin |
-| Contact Form | Collect name/email/message, send email | Client Component (form state) + Server Action (send email) |
-| QR Code Display | Render QR linking to the site URL | Client Component (qrcode.react renders to canvas/SVG) |
-| Admin Login | Password form, sets secure HttpOnly cookie | Client Component form + Server Action auth |
-| Admin Dashboard | Navigation hub for all admin tasks | Server Component (auth-gated) |
-| Art CRUD Panel | Add/edit/delete pieces, upload images | Client Component (form state) + Server Actions |
-| About Editor | Edit bio copy and photo | Client Component (form) + Server Action |
-| middleware.ts | Block unauthenticated access to /admin/* | Edge middleware, reads session cookie |
+| Component | Status | Responsibility | Modification Scope |
+|-----------|--------|----------------|-------------------|
+| `globals.css` | MODIFIED | Design tokens, grain animation keyframe, z-index scale | Add `@keyframes grain`, z-index CSS vars |
+| `(frontend)/layout.tsx` | MODIFIED | Frontend shell — add TextureOverlay, ParticleCanvas as siblings to NavBar | Mount global effect components |
+| `(frontend)/template.tsx` | NEW | Page transition wrapper — remounts on every navigation | `motion.div` with fade/slide entrance |
+| `IntroAnimation.tsx` | MODIFIED | Cinematic intro — enhance SVG strokes, more dramatic exit | More dramatic exit, particle trigger on skip() |
+| `GalleryGrid.tsx` | MODIFIED | Masonry gallery — extract GalleryCard, add stagger, AnimatePresence on filter | Use GalleryCard, keep filter/lightbox state |
+| `GalleryCard.tsx` | NEW | Single gallery item — owns parallax hover, whileInView entrance | Extracted from GalleryGrid for isolation |
+| `GalleryLightbox.tsx` | MODIFIED | Lightbox — cinematic open animation via CSS override on `.yarl__portal` | CSS-only entrance scale + opacity |
+| `NavBar.tsx` | MODIFIED | Navigation — Motion entrance, AnimatePresence mobile menu, active indicator | Wrap menu in AnimatePresence |
+| `TagFilter.tsx` | MODIFIED | Filter pills — layoutId shared background for active pill sliding animation | `motion.button` with `layoutId` |
+| `ContactForm.tsx` | MODIFIED | Contact form — field focus micro-interactions, submit feedback animation | Local `motion.div` on submit state |
+| `TextureOverlay.tsx` | NEW | Fixed grain + vignette layer — CSS animated noise, pointer-events none | Pure CSS, zero JS animation |
+| `ParticleCanvas.tsx` | NEW | Canvas-based ambient ink/smoke particles — useRef + requestAnimationFrame | Client component, reduced-motion aware |
+| `useParallaxHover.ts` | NEW | Reusable hook — useMotionValue + useSpring for mouse parallax | Used by GalleryCard |
 
 ## Recommended Project Structure
 
 ```
 src/
-├── app/                          # Next.js App Router pages
-│   ├── page.tsx                  # Intro page (animated entry)
-│   ├── layout.tsx                # Root layout (fonts, global providers)
-│   ├── gallery/
-│   │   └── page.tsx              # Gallery with filter UI
-│   ├── about/
-│   │   └── page.tsx              # About / bio page
-│   ├── contact/
-│   │   └── page.tsx              # Contact form page
-│   ├── qr/
-│   │   └── page.tsx              # QR code display/download page
-│   └── admin/
-│       ├── layout.tsx            # Admin shell (auth check wrapper)
-│       ├── page.tsx              # Admin dashboard
-│       ├── login/
-│       │   └── page.tsx          # Login form
-│       ├── art/
-│       │   ├── page.tsx          # Art pieces list
-│       │   ├── new/page.tsx      # Add new piece
-│       │   └── [id]/page.tsx     # Edit existing piece
-│       └── about/
-│           └── page.tsx          # Edit about/bio section
+├── app/
+│   ├── globals.css               # MODIFIED — add @keyframes grain, z-index CSS vars
+│   ├── layout.tsx                # root layout (unchanged)
+│   └── (frontend)/
+│       ├── layout.tsx            # MODIFIED — add TextureOverlay, ParticleCanvas
+│       ├── template.tsx          # NEW — page transition AnimatePresence wrapper
+│       ├── page.tsx              # unchanged (server component)
+│       ├── about/page.tsx        # unchanged (server component)
+│       └── contact/page.tsx      # unchanged (server component)
 ├── components/
-│   ├── gallery/
-│   │   ├── GalleryGrid.tsx       # Masonry/grid layout
-│   │   ├── ArtCard.tsx           # Individual piece card
-│   │   └── FilterBar.tsx         # Category/tag filter UI
-│   ├── intro/
-│   │   └── AnimatedIntro.tsx     # Dark animated landing
-│   ├── admin/
-│   │   ├── ImageUpload.tsx       # Drag-drop upload UI
-│   │   ├── ArtForm.tsx           # Add/edit artwork form
-│   │   └── AboutForm.tsx         # Edit bio form
-│   ├── contact/
-│   │   └── ContactForm.tsx       # Public contact form
-│   └── ui/                       # Shared primitives (buttons, inputs)
-├── lib/
-│   ├── actions/                  # Server Actions
-│   │   ├── art.ts                # CRUD for art pieces
-│   │   ├── about.ts              # Update about section
-│   │   ├── contact.ts            # Send contact email
-│   │   └── auth.ts               # Login / logout
-│   ├── db/
-│   │   ├── schema.ts             # Drizzle schema definitions
-│   │   └── index.ts              # DB client
-│   ├── auth.ts                   # Session validation helper
-│   └── cloudinary.ts             # Cloudinary upload helpers
-├── middleware.ts                 # Route protection for /admin/*
-└── public/
-    └── og-image.jpg              # Open Graph image for sharing
+│   └── frontend/
+│       ├── IntroAnimation.tsx    # MODIFIED — more dramatic ink reveal
+│       ├── GalleryGrid.tsx       # MODIFIED — use GalleryCard, AnimatePresence on filter
+│       ├── GalleryCard.tsx       # NEW — whileInView, parallax hover, overlay animation
+│       ├── GalleryLightbox.tsx   # MODIFIED — cinematic CSS entrance override
+│       ├── NavBar.tsx            # MODIFIED — Motion entrance, animated mobile menu
+│       ├── TagFilter.tsx         # MODIFIED — layoutId shared pill background
+│       ├── ContactForm.tsx       # MODIFIED — field focus micro-interactions
+│       ├── TextureOverlay.tsx    # NEW — fixed grain + vignette
+│       └── ParticleCanvas.tsx    # NEW — canvas ink particle loop
+└── hooks/
+    └── useParallaxHover.ts       # NEW — reusable mouse parallax spring hook
 ```
 
 ### Structure Rationale
 
-- **app/admin/:** Collocated admin routes under a single prefix, making middleware matching trivial (`/admin/:path*`)
-- **lib/actions/:** All Server Actions in one place, separated by domain — easy to audit for auth checks
-- **lib/db/:** Drizzle schema co-located with the client so types are always in sync
-- **components/gallery/ vs components/admin/:** Hard separation prevents accidentally importing admin UI into public pages
-- **middleware.ts at root:** Next.js requires this at the project root for App Router edge middleware
+- **`template.tsx` over `layout.tsx` for transitions:** `layout.tsx` persists between routes and does NOT remount, so AnimatePresence exit animations never fire. `template.tsx` remounts on every navigation, giving each page a fresh key — the App Router pattern for page transitions (HIGH confidence — Next.js official docs confirmed this).
+- **`GalleryCard.tsx` extracted:** Parallax hover requires `useMotionValue` + `useSpring` + mouse event handlers. That is too much local state to inline in a `.map()` inside GalleryGrid. Extraction also lets `whileInView` live at card level instead of wrapping masonry columns.
+- **`TextureOverlay.tsx` separate component:** Film grain runs as a CSS `@keyframes` animation — no JS. Isolating it in its own component keeps the `position: fixed` stacking context out of layout.tsx and makes it trivially removable or adjustable.
+- **`ParticleCanvas.tsx` separate from TextureOverlay:** Canvas RAF loop requires cleanup via `cancelAnimationFrame`. A dedicated component with its own `useEffect` is safer than combining with CSS overlay. Also allows disabling particles independently on low-power devices.
+- **`hooks/useParallaxHover.ts`:** The `useMotionValue` / `useSpring` / `useTransform` parallax pattern is reusable. Extract once, reference in GalleryCard.
 
 ## Architectural Patterns
 
-### Pattern 1: Server Components for Data Fetching, Client Components for Interactivity
+### Pattern 1: Global Fixed Overlay (Texture and Grain)
 
-**What:** Gallery pages and admin lists use Server Components to fetch data directly from the database. Filter UI, forms, and animations are Client Components.
-**When to use:** Always — this is the Next.js App Router default model.
-**Trade-offs:** Server Components cannot use hooks or browser APIs; Client Components add JavaScript to the bundle. Keep the split clean.
+**What:** A client component mounted in `(frontend)/layout.tsx` renders a `div` with `position: fixed; inset: 0; pointer-events: none; z-index: var(--z-texture)` and a CSS `@keyframes grain` animation that shifts a noise SVG background.
+**When to use:** Any always-on atmospheric effect covering the full viewport regardless of scroll position and must NOT intercept clicks.
+**Trade-offs:** CSS-only grain is cheaper than canvas noise. The `pointer-events: none` is mandatory — omitting it silently breaks all interactivity with no obvious error.
 
 **Example:**
 ```typescript
-// app/gallery/page.tsx — Server Component, fetches at request time
-import { db } from '@/lib/db'
-import { GalleryGrid } from '@/components/gallery/GalleryGrid'
-
-export default async function GalleryPage() {
-  const pieces = await db.query.artPieces.findMany({ orderBy: desc(artPieces.createdAt) })
-  return <GalleryGrid initialPieces={pieces} />
-}
-
-// components/gallery/GalleryGrid.tsx — Client Component owns filter state
+// TextureOverlay.tsx
 'use client'
-export function GalleryGrid({ initialPieces }) {
-  const [activeTag, setActiveTag] = useState<string | null>(null)
-  const filtered = activeTag
-    ? initialPieces.filter(p => p.tags.includes(activeTag))
-    : initialPieces
-  // render...
+export function TextureOverlay() {
+  return (
+    <div
+      aria-hidden="true"
+      className="fixed inset-0 pointer-events-none"
+      style={{
+        zIndex: 'var(--z-texture)',
+        backgroundImage: 'url(/noise.svg)',
+        opacity: 0.04,
+        animation: 'grain 0.5s steps(2) infinite',
+      }}
+    />
+  )
 }
+// globals.css:
+// @keyframes grain {
+//   0%, 100% { transform: translate(0, 0) }
+//   50%       { transform: translate(-2%, -3%) }
+// }
 ```
 
-### Pattern 2: Server Actions for All Mutations
+### Pattern 2: Canvas Particle Loop (Ambient Ink/Smoke)
 
-**What:** Every write operation (create/update/delete art, update about, send email, authenticate) is a Server Action marked with `'use server'`.
-**When to use:** All form submissions and admin operations. No dedicated API routes needed.
-**Trade-offs:** Built-in CSRF protection; no separate API layer to maintain. Slightly harder to test than REST endpoints.
+**What:** A `'use client'` component uses `useRef` to hold a `<canvas>` element and runs a `requestAnimationFrame` loop in `useEffect`. Ink-smoke particles drift upward with opacity fade. The loop is cancelled on unmount and skipped entirely when `prefers-reduced-motion` is `reduce`.
+**When to use:** Ambient background particles needing organic movement — CSS cannot produce this.
+**Trade-offs:** requestAnimationFrame is cheap when particle count is low (under 40). DO NOT use tsParticles here — the full library is over 200kb and cannot easily produce a custom ink aesthetic. A hand-written hook is under 50 lines and adds zero dependencies.
 
 **Example:**
 ```typescript
-// lib/actions/art.ts
-'use server'
-import { requireAuth } from '@/lib/auth'
-import { db } from '@/lib/db'
+// ParticleCanvas.tsx (structural outline)
+'use client'
+import { useEffect, useRef } from 'react'
 
-export async function createArtPiece(formData: FormData) {
-  await requireAuth()  // always verify, never trust middleware alone
-  const title = formData.get('title') as string
-  // validate, upload image, insert to db...
+export function ParticleCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) return
+
+    const canvas = canvasRef.current!
+    const ctx = canvas.getContext('2d')!
+    // init particles[], start RAF loop, return cleanup cancelAnimationFrame(frameId)
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none"
+      style={{ zIndex: 'var(--z-particles)' }}
+      aria-hidden="true"
+    />
+  )
 }
 ```
 
-### Pattern 3: Middleware for Route Guard + Per-Action Auth Verification
+### Pattern 3: Scroll-Triggered Stagger with whileInView (Gallery)
 
-**What:** `middleware.ts` redirects unauthenticated users away from `/admin/*` to the login page. Each Server Action also independently re-checks auth.
-**When to use:** This dual-layer is mandatory — CVE-2025-29927 proved that middleware alone can be bypassed. Defense in depth.
-**Trade-offs:** Slightly redundant code, but protects against middleware bypass attacks.
+**What:** Each `GalleryCard` wraps its content in a `motion.div` with `initial={{ opacity: 0, y: 20 }}`, `whileInView={{ opacity: 1, y: 0 }}`, and `viewport={{ once: true, margin: '-50px' }}`. The parent `GalleryGrid` passes `index` to each card to produce a stagger delay.
+**When to use:** Gallery item entrance — fires once on first scroll into view, never replays.
+**Trade-offs:** `whileInView` uses Intersection Observer internally (lightweight). `once: true` means no re-animation on filter changes. For filter-change reordering, add `layout` prop to the motion.div and wrap the list in `AnimatePresence`.
 
 **Example:**
 ```typescript
-// middleware.ts
-import { NextRequest, NextResponse } from 'next/server'
-import { getSession } from '@/lib/auth'
+// GalleryCard.tsx
+<motion.div
+  layout
+  initial={{ opacity: 0, y: 24 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: '-60px' }}
+  transition={{ duration: 0.5, delay: index * 0.04, ease: 'easeOut' }}
+>
+  {/* image + hover overlay */}
+</motion.div>
+```
 
-export async function middleware(request: NextRequest) {
-  const session = await getSession(request)
-  if (!session && request.nextUrl.pathname.startsWith('/admin')) {
-    return NextResponse.redirect(new URL('/admin/login', request.url))
+### Pattern 4: Parallax Hover via useMotionValue + useSpring
+
+**What:** On `onMouseMove`, compute cursor offset from element center as a percentage. Feed into `useMotionValue`, pipe through `useSpring` for damping, then bind to `motion.div` style. On `onMouseLeave`, spring returns to zero.
+**When to use:** GalleryCard hover parallax on desktop. Gate with `window.matchMedia('(hover: hover)')` to skip on touch devices.
+**Trade-offs:** `useSpring` with `{ stiffness: 150, damping: 20 }` feels natural and not floaty. Do NOT apply `rotateX/rotateY` 3D tilt on the card container — it breaks masonry column height calculation. Translate only. Keep `overflow: hidden` on the card container to clip edge overflow.
+
+**Example:**
+```typescript
+// hooks/useParallaxHover.ts
+import { useMotionValue, useSpring } from 'motion/react'
+
+export function useParallaxHover() {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const springX = useSpring(x, { stiffness: 150, damping: 20 })
+  const springY = useSpring(y, { stiffness: 150, damping: 20 })
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const cx = (e.clientX - rect.left - rect.width / 2) / rect.width
+    const cy = (e.clientY - rect.top - rect.height / 2) / rect.height
+    x.set(cx * 16)
+    y.set(cy * 12)
   }
-  return NextResponse.next()
-}
 
-export const config = { matcher: ['/admin/:path*'] }
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  return { springX, springY, handleMouseMove, handleMouseLeave }
+}
 ```
 
-### Pattern 4: Animated Intro as a Gating Component
+### Pattern 5: Page Transitions via template.tsx
 
-**What:** The root page (`/`) renders a full-screen animated intro. After the animation completes (or user skips), it transitions to the gallery. Use `AnimatePresence` from Framer Motion with state to control visibility.
-**When to use:** The intro is the emotional hook — it must render fast. Keep it pure CSS/Framer Motion with no data fetching.
-**Trade-offs:** Adds client-side JavaScript to the initial route. Worth it for the visual impact. Use `sessionStorage` to skip the intro on return visits.
+**What:** `src/app/(frontend)/template.tsx` is a client component that wraps `children` in a `motion.div` with entrance animation. Because `template.tsx` receives a new React key on every navigation, Motion sees it as a new element and plays the entrance animation fresh on each route change.
+**When to use:** All cross-page transitions in App Router. This is the correct and officially supported pattern.
+**Trade-offs:** Exit animations do NOT work reliably in App Router because Next.js unmounts the old page before AnimatePresence can intercept. Use entrance-only animations (fade + subtle y slide). Complex coordinated exit+enter transitions require the View Transitions API or a page-transition context — both add fragility not worth the complexity here.
+
+**Example:**
+```typescript
+// (frontend)/template.tsx
+'use client'
+import { motion } from 'motion/react'
+
+export default function Template({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+```
+
+### Pattern 6: AnimatePresence for Mobile Menu (NavBar)
+
+**What:** The mobile overlay currently uses a plain conditional render `{menuOpen && <div>}`. Wrapping it in `AnimatePresence` with a keyed `motion.div` child enables a proper exit animation when the menu closes.
+**When to use:** Any conditional UI needing exit animations — modal, drawer, menu.
+**Trade-offs:** NavBar is already `'use client'`. This works correctly as-is. Menu backdrop animates from `opacity: 0, scale: 0.97` on open, reverses on close via `exit` prop.
+
+### Pattern 7: Lightbox Cinematic Entrance via CSS Override
+
+**What:** YARL renders its portal into a `div.yarl__portal`. Overriding `.yarl__portal` and `.yarl__portal_open` in globals.css with `transform: scale(0.95); opacity: 0` → `scale(1); opacity: 1` via CSS transition achieves a cinematic open without modifying the YARL JS render.
+**When to use:** When the library exposes CSS class hooks but not a JS animation API for the container itself.
+**Trade-offs:** CSS transition timing cannot be sequenced with Motion animations. The scale entrance (300ms ease-out) is sufficient and requires no new dependencies.
 
 ## Data Flow
 
-### Public Gallery Request Flow
+### Animation State Flow
 
 ```
-User scans QR code → browser loads /
-    ↓
-Root page (Server Component) renders AnimatedIntro
-    ↓
-AnimatedIntro plays (client-side, Framer Motion)
-    ↓
-User interaction or timeout → navigate to /gallery
-    ↓
-Gallery Server Component fetches art pieces from Postgres
-    ↓
-GalleryGrid (Client Component) receives pieces as props
-    ↓
-User clicks tag filter → client-side state update, no network call
-    ↓
-Filtered art renders from in-memory array
+User Enters Viewport
+       |
+Intersection Observer (Motion whileInView, built-in)
+       |
+GalleryCard motion.div triggers animate variant
+       |
+opacity 0->1, y 24->0 with index * 0.04s stagger delay
+
+Mouse Moves Over GalleryCard
+       |
+onMouseMove handler computes cursor offset from element center
+       |
+useMotionValue.set(x, y) → useSpring interpolates toward target
+       |
+motion.img style={ x: springX, y: springY } — GPU composited
+       |
+onMouseLeave → spring returns to 0
+
+Route Change (Gallery -> About)
+       |
+Next.js App Router unmounts old template.tsx, mounts new instance
+       |
+New template.tsx gets fresh React key
+       |
+motion.div entrance animation plays (fade + y slide)
+
+Tag Filter Changes
+       |
+GalleryGrid setState(activeTag)
+       |
+sorted array recomputed in memory
+       |
+AnimatePresence detects changed keys in children
+       |
+Exiting cards fade out; entering cards use whileInView
+       |
+layout prop on motion.div animates position changes
 ```
 
-### Admin Art Upload Flow
+### Z-Index Stacking Order
+
+All z-index values added as CSS variables in `globals.css` `@theme` block for single-source control.
 
 ```
-Admin fills ArtForm → selects image file
-    ↓
-Client uploads image directly to Cloudinary (unsigned preset)
-    ↓
-Cloudinary returns { public_id, secure_url }
-    ↓
-Client submits form with metadata + Cloudinary URL
-    ↓
-Server Action: requireAuth() check
-    ↓
-Server Action: validate fields with Zod
-    ↓
-Server Action: insert row into Postgres (title, medium, tags, cloudinary_url)
-    ↓
-revalidatePath('/gallery') clears Next.js cache
-    ↓
-Admin sees updated list
+--z-particles: 1    ParticleCanvas (below all content, above bg color)
+--z-texture:   2    TextureOverlay grain (above particles, below content)
+--z-base:     10    regular page content
+--z-gallery:  20    gallery hover overlays
+--z-nav:      40    NavBar (existing z-40 class)
+--z-intro:    50    IntroAnimation (existing z-50 class)
+--z-menu:     50    Mobile menu overlay (same level as intro — mutually exclusive)
+--z-lightbox: 60    YARL lightbox portal (override --yarl__z_index in GalleryLightbox styles)
 ```
 
-### Contact Form Flow
+### Key Data Flows
 
-```
-Visitor fills ContactForm → submits
-    ↓
-Client Component calls Server Action (contact.ts)
-    ↓
-Server Action: validate with Zod (name, email, message)
-    ↓
-Server Action: Resend API sends email to Anna's address
-    ↓
-Returns success/error state to client
-    ↓
-Form shows confirmation message (no page reload)
-```
-
-### Authentication Flow
-
-```
-Admin navigates to /admin/*
-    ↓
-middleware.ts reads session cookie
-    → No valid session → redirect to /admin/login
-    → Valid session → pass through
-    ↓
-/admin/login: Admin submits password
-    ↓
-Server Action auth.ts: compare against ADMIN_PASSWORD env var (bcrypt or direct compare)
-    ↓
-Create signed JWT → set as HttpOnly, Secure, SameSite=Strict cookie
-    ↓
-Redirect to /admin dashboard
-```
+1. **Texture + Particles into layout:** Both are mounted in `(frontend)/layout.tsx` as siblings before `<main>`. They use `position: fixed` and do not affect document flow. Server components (pages) are not affected.
+2. **GalleryGrid to GalleryCard:** GalleryGrid retains all existing state (filter, lightbox index). GalleryCard receives `piece`, `index` (for stagger delay), and `onOpen` callback. No new state is introduced.
+3. **IntroAnimation exit to page reveal:** Enhanced particle burst triggered in the existing `skip()` function before `setDone(true)`. The `done` state already controls the reveal — no structural change needed.
+4. **TagFilter to GalleryGrid with layout animation:** Tag filter drives the `sorted` array. Wrapping Masonry children in `AnimatePresence` with `layout` prop on each GalleryCard produces smooth position transitions when items reorder.
 
 ## Scaling Considerations
 
 | Scale | Architecture Adjustments |
 |-------|--------------------------|
-| 0-1k visitors/month | Current architecture is fine. Vercel free tier handles this comfortably. |
-| 1k-100k visitors/month | Postgres connection pooling (PgBouncer via Neon/Supabase already included). Consider image CDN caching headers. |
-| 100k+ visitors/month | Vercel Pro tier or migrate to self-hosted. Unlikely for a personal portfolio. |
+| Single portfolio (current) | All patterns as described — no scaling concerns |
+| Low-end mobile devices | Disable ParticleCanvas when `prefers-reduced-motion` is set; reduce grain opacity below 0.04 if needed |
+| Many gallery items (200+) | `viewport={{ once: true }}` means Intersection Observer fires once per card and stops tracking. No cumulative performance issue. |
 
 ### Scaling Priorities
 
-1. **First bottleneck: Images.** Cloudinary handles resize/format/CDN. Using `next/image` with a Cloudinary loader passes through Cloudinary's CDN, not Vercel's image optimization quota.
-2. **Second bottleneck: Database connections.** Neon and Supabase both include connection pooling on free tiers. Not an issue at portfolio scale.
+1. **Mobile GPU:** Canvas particles + CSS grain + Motion transforms compete for GPU compositing budget. Keep particle count under 30, grain opacity under 0.05, and avoid `will-change: transform` applied statically (Motion handles this internally only during active animations).
+2. **Bundle size:** Motion is already installed. Adding tsParticles would be wrong. Hand-written canvas loop costs zero bytes in the npm dependency graph. TextureOverlay is pure CSS.
 
 ## Anti-Patterns
 
-### Anti-Pattern 1: Using API Routes Instead of Server Actions
+### Anti-Pattern 1: Page Transitions in layout.tsx
 
-**What people do:** Create `app/api/pieces/route.ts` for every CRUD operation, then fetch from client components.
-**Why it's wrong:** Adds unnecessary network round-trips, requires manual CSRF handling, duplicates auth logic. Server Actions handle all of this natively in Next.js 14+.
-**Do this instead:** Use `'use server'` functions called directly from components or forms.
+**What people do:** Wrap children in `AnimatePresence` inside `(frontend)/layout.tsx` expecting exit animations to fire on navigation.
+**Why it's wrong:** `layout.tsx` persists between routes. Next.js does not unmount it on navigation. AnimatePresence never detects its children leaving, so exit animations never run. The first page load animates; all subsequent navigations do nothing.
+**Do this instead:** Use `template.tsx`. It gets a new React key on every navigation, causing a fresh mount. Use entrance-only animations.
 
-### Anti-Pattern 2: Uploading Images Through the Next.js Server
+### Anti-Pattern 2: Fixed Overlay Without pointer-events Disabled
 
-**What people do:** Stream the image file through a Server Action or API route to Cloudinary.
-**Why it's wrong:** Next.js serverless functions have a 4.5MB request body limit on Vercel. Large art images will fail. Adds latency (client → server → Cloudinary vs client → Cloudinary).
-**Do this instead:** Upload directly from the browser to Cloudinary using an unsigned upload preset or a short-lived signed upload token generated by a Server Action.
+**What people do:** Mount a `position: fixed` grain or particle overlay and forget `pointer-events: none`.
+**Why it's wrong:** The entire site becomes unclickable. Gallery cards, nav links, and form inputs are silently blocked. This fails with no error in the console.
+**Do this instead:** `pointer-events: none` is a mandatory, non-negotiable class on every fixed overlay. Apply it at component definition time, not as an afterthought.
 
-### Anti-Pattern 3: Storing Images on the Next.js Server Filesystem
+### Anti-Pattern 3: 3D Tilt on Masonry Card Container
 
-**What people do:** Save uploaded images to `/public/uploads/` on the server.
-**Why it's wrong:** Vercel (and all serverless environments) have ephemeral filesystems. Files written at runtime disappear on the next deploy or function cold start.
-**Do this instead:** Always use an external image store (Cloudinary, Vercel Blob, S3). Store only the URL/public_id in the database.
+**What people do:** Apply `rotateX` / `rotateY` 3D CSS tilt transforms to the GalleryCard container element for a parallax tilt effect.
+**Why it's wrong:** `react-masonry-css` calculates column height from natural element height. `transform-style: preserve-3d` on a masonry child can trigger compositing issues that misalign column heights and cause unintended overflow clipping or layout gaps.
+**Do this instead:** Translate only (`x`, `y`) on the image element inside the card. Apply `overflow: hidden` on the card container to clip any edge movement from the translate.
 
-### Anti-Pattern 4: Relying Only on Middleware for Authentication
+### Anti-Pattern 4: Using tsParticles for Custom Ink Aesthetics
 
-**What people do:** Check the session only in `middleware.ts` and assume Server Actions are therefore protected.
-**Why it's wrong:** CVE-2025-29927 (March 2025) demonstrated that middleware can be bypassed by manipulating the `x-middleware-subrequest` header. Any Server Action that mutates data must independently verify auth.
-**Do this instead:** Call `requireAuth()` at the top of every Server Action that writes data, in addition to middleware.
+**What people do:** Install `@tsparticles/react` (200kb+) and attempt to configure its preset system to approximate ink smoke behavior.
+**Why it's wrong:** tsParticles is optimized for generic presets (snow, confetti, fire). Custom ink smoke requires velocity curves, alpha falloff, and opacity profiles that map awkwardly onto the preset configuration API. Result: large bundle, compromise aesthetic, less control than desired.
+**Do this instead:** Write a 40-50 line canvas loop. Full control over particle behavior, zero dependency overhead, exactly the ink aesthetic the project needs.
 
-### Anti-Pattern 5: Fetching Gallery Data Client-Side
+### Anti-Pattern 5: Running Animations Without Reduced Motion Guard
 
-**What people do:** Build the gallery as a pure Client Component that fetches art pieces via `useEffect` + fetch.
-**Why it's wrong:** Causes a layout shift (empty grid → populated grid), hurts SEO, and adds a network waterfall.
-**Do this instead:** Fetch in a Server Component, pass data as props. Only the filter interaction is client-side state.
+**What people do:** Add `whileInView`, `whileHover`, and canvas loops without checking `prefers-reduced-motion`.
+**Why it's wrong:** Vestibular disorders make motion-heavy sites inaccessible and physically uncomfortable. Ignoring this is both an accessibility failure and sends a poor professional signal.
+**Do this instead:** Motion's `whileInView` and `animate` props are not automatically gated. Use `useReducedMotion()` from Motion to get a boolean, then short-circuit animated variants. Canvas loop and CSS grain animation must be manually gated in each component's `useEffect`.
+
+### Anti-Pattern 6: Stacking Multiple motion.div Wrappers on GalleryCard
+
+**What people do:** Add a `motion.div` for scroll entrance, another for parallax hover, and another for layout animation — all nested.
+**Why it's wrong:** Each `motion.div` creates a new compositing layer. Three nested motion wrappers on every gallery card multiplies layer count by the number of images and can degrade paint performance on mobile.
+**Do this instead:** One `motion.div` per card. Compose all effects onto that single element: `initial/whileInView` for entrance, `layout` for filter reordering, and the spring-based `style={{ x, y }}` for parallax. Motion supports all of these simultaneously on a single element.
 
 ## Integration Points
 
-### External Services
+### Existing Component Integration Detail
 
-| Service | Integration Pattern | Notes |
-|---------|---------------------|-------|
-| Cloudinary | Direct browser upload (unsigned preset) + `next/image` with Cloudinary loader | Free tier: 25GB storage, 25GB bandwidth/month. Sufficient for a portfolio. |
-| Neon (Postgres) | Drizzle ORM, connection string in env var | Free tier: 0.5GB storage, 1 project. Fine for portfolio scale. Supabase is an equivalent alternative. |
-| Resend | Server Action calls Resend SDK, sends to Anna's email | Free tier: 3,000 emails/month. Vastly more than needed. |
-| Vercel (hosting) | Git push deploys automatically | Free Hobby tier: 100GB bandwidth, 150k function invocations/month. |
-| NextAuth.js / custom JWT | Session cookie set on login, read in middleware + Server Actions | For a single admin user, a custom lightweight JWT avoids NextAuth complexity. |
+| Existing Component | What to Add | What NOT to Touch |
+|-------------------|-------------|-------------------|
+| `IntroAnimation.tsx` | More SVG ink strokes with varied widths, particle burst on `skip()`, more dramatic exit `{ opacity: 0, scale: 0.98 }` | localStorage logic, reduced-motion skip, `AnimatePresence mode="wait"` structure |
+| `GalleryGrid.tsx` | Import `GalleryCard` instead of inline div, wrap sorted array in `AnimatePresence`, add `layout` prop support | Filter state, lightbox state, Masonry breakpoints, sort logic |
+| `GalleryLightbox.tsx` | CSS override on `.yarl__portal` for scale + opacity entrance, override `--yarl__z_index: 60` | Custom `render.slide` implementation, blur placeholder logic, YARL plugin config |
+| `NavBar.tsx` | `motion.nav` entrance on first render, `AnimatePresence` around mobile menu div, `motion.span` with `layoutId` for active link indicator | Pathname logic, link structure, z-40 class, backdrop-blur |
+| `TagFilter.tsx` | `motion.button` wrapper with `layoutId="active-pill"` shared layout background for sliding active state | Tag list, `onTagChange` callback, scroll container overflow classes |
+| `ContactForm.tsx` | `motion.div` wrapping success/error states with fade-in, subtle CSS border-glow on field focus | Server action, email integration, form validation logic |
 
-### Internal Boundaries
+### New Component Integration
 
-| Boundary | Communication | Notes |
-|----------|---------------|-------|
-| Public pages ↔ Admin pages | No direct communication — completely separate route trees under /admin/ | Admin layout applies auth wrapper; public layout never imports admin components |
-| Gallery Client Component ↔ Server Data | Server Component fetches, passes as props | Filter state lives entirely in client memory — no re-fetch on tag change |
-| Server Actions ↔ Database | Direct Drizzle calls inside server actions | No intermediate service layer needed at this scale |
-| Admin forms ↔ Cloudinary | Browser ↔ Cloudinary directly (bypass server) | Server Action only receives the resulting URL, not the binary file |
-| Contact form ↔ Resend | Server Action → Resend SDK | Email address stored in environment variable, not hardcoded |
+| New Component | Mounted In | Communicates With |
+|---------------|------------|-------------------|
+| `TextureOverlay` | `(frontend)/layout.tsx` | None — pure CSS, completely isolated |
+| `ParticleCanvas` | `(frontend)/layout.tsx` | None — standalone RAF loop, no shared state |
+| `GalleryCard` | `GalleryGrid.tsx` map | GalleryGrid passes `piece`, `index`, `onOpen` callback |
+| `template.tsx` | Automatic by App Router | Wraps all pages in the `(frontend)` route group |
+| `useParallaxHover.ts` | Consumed by `GalleryCard` | Returns `springX`, `springY`, `handleMouseMove`, `handleMouseLeave` |
 
-## Build Order Implications
+### Z-Index Conflict Prevention
 
-The component dependencies drive a natural build sequence:
+| Component | Z-Index | Action |
+|-----------|---------|--------|
+| `ParticleCanvas` | `--z-particles: 1` (new) | Must sit below all page content |
+| `TextureOverlay` | `--z-texture: 2` (new) | Must sit above particles, below content |
+| `NavBar` | `z-40` (existing) | Already correct — no change |
+| `IntroAnimation` | `z-50` (existing) | Already correct — no change |
+| `GalleryLightbox` | Override `--yarl__z_index` to `60` in styles prop | Ensures lightbox renders above NavBar |
 
-1. **Database schema + Drizzle setup** — Everything else depends on the data model being defined first.
-2. **Authentication (login + middleware + requireAuth)** — Must exist before any admin functionality can be tested safely.
-3. **Image upload to Cloudinary** — Art CRUD depends on images being storable before pieces can be created.
-4. **Art CRUD Server Actions** — Needed before gallery can display real data.
-5. **Public Gallery** — Can now display real data from the database.
-6. **Animated Intro** — Standalone Client Component, no data dependencies. Can be built any time after project setup.
-7. **About page + Admin About Editor** — Simpler than art CRUD (no image resize complexity).
-8. **Contact Form + Resend** — Isolated feature with no dependencies on gallery or admin art.
-9. **QR Code page** — Trivial Client Component, build last.
+## Build Order (Effect Dependencies)
+
+Effects have hard dependencies that determine implementation sequence. Building out of order causes integration blockers.
+
+```
+Phase 1 — Foundation (no deps, everything else builds on this)
+  - globals.css: add --z-* CSS vars and @keyframes grain
+  - TextureOverlay.tsx: NEW, uses only CSS vars
+  - template.tsx: NEW, uses only Motion (already installed)
+  - (frontend)/layout.tsx: mount TextureOverlay
+
+Phase 2 — NavBar + TagFilter (Motion micro-interactions, no other deps)
+  - NavBar.tsx: add Motion entrance + AnimatePresence mobile menu
+  - TagFilter.tsx: add layoutId shared pill background
+
+Phase 3 — GalleryCard + parallax hook (deps: Phase 1 foundation)
+  - useParallaxHover.ts: NEW hook
+  - GalleryCard.tsx: NEW, deps on hook + motion
+  - GalleryGrid.tsx: refactor to use GalleryCard + whileInView stagger
+
+Phase 4 — Lightbox + ContactForm (isolated, no deps on Phase 3)
+  - GalleryLightbox.tsx: CSS cinematic entrance override
+  - ContactForm.tsx: field focus micro-interactions
+
+Phase 5 — ParticleCanvas + IntroAnimation (saved last — highest complexity)
+  - ParticleCanvas.tsx: NEW standalone canvas loop
+  - (frontend)/layout.tsx: add ParticleCanvas mount
+  - IntroAnimation.tsx: enhance SVG strokes + exit particle burst
+
+Phase 6 — Integration QA
+  - Test prefers-reduced-motion across all components
+  - Mobile performance audit (particles off, grain opacity)
+  - Z-index audit across all stacking contexts
+  - Verify pointer-events none on all fixed overlays
+```
 
 ## Sources
 
-- Next.js App Router architecture patterns: [SoftwareMill — Modern Full Stack App Architecture with Next.js 15](https://softwaremill.com/modern-full-stack-application-architecture-using-next-js-15/) (MEDIUM confidence — third party, verified against Next.js docs patterns)
-- Admin auth with single password + JWT cookie: [Alex Chan — Password Protecting Next.js Routes](https://www.alexchantastic.com/password-protecting-next) (MEDIUM confidence)
-- CVE-2025-29927 middleware bypass, defense-in-depth requirement: [WorkOS — Next.js App Router Authentication Guide 2026](https://workos.com/blog/nextjs-app-router-authentication-guide-2026) (HIGH confidence — multiple sources corroborate)
-- Image upload anti-pattern (serverless filesystem): multiple Vercel/Next.js sources (HIGH confidence)
-- Cloudinary direct upload pattern: [next-cloudinary GitHub](https://github.com/cloudinary-community/next-cloudinary) (HIGH confidence — official community library)
-- Resend + Server Actions for contact email: [Resend official Next.js docs](https://resend.com/nextjs) (HIGH confidence — official)
-- QR code: [qrcode.react on npm](https://www.npmjs.com/package/qrcode/v/1.4.2) (HIGH confidence)
-- Real-world Next.js artist portfolio structure: [satvikvirmani/nextjs-artist-portfolio](https://github.com/satvikvirmani/nextjs-artist-portfolio) (MEDIUM confidence — open source reference)
-- Vercel free tier limits: [Vercel Limits docs](https://vercel.com/docs/limits) (HIGH confidence — official)
+- [Motion useScroll documentation](https://motion.dev/docs/react-use-scroll) — HIGH confidence, official docs
+- [Motion useInView documentation](https://motion.dev/docs/react-use-in-view) — HIGH confidence, official docs
+- [Motion useSpring documentation](https://motion.dev/docs/react-use-spring) — HIGH confidence, official docs
+- [Motion stagger documentation](https://motion.dev/docs/stagger) — HIGH confidence, official docs
+- [React scroll animations — Motion](https://motion.dev/docs/react-scroll-animations) — HIGH confidence, official docs
+- [Next.js Layouts vs Templates — Builder.io](https://www.builder.io/blog/nextjs-14-layouts-templates) — MEDIUM confidence, verified against Next.js discussion threads
+- [App Router page transitions discussion — Next.js GitHub](https://github.com/vercel/next.js/discussions/42658) — MEDIUM confidence, community verified
+- [YARL Customization docs](https://yet-another-react-lightbox.com/customization) — HIGH confidence, official docs
+- [tsParticles GitHub](https://github.com/tsparticles/tsparticles) — MEDIUM confidence, used only to confirm it is the wrong choice for this use case
+- [Grainy Gradients — CSS-Tricks](https://css-tricks.com/grainy-gradients/) — MEDIUM confidence, established technique
 
 ---
-*Architecture research for: Artist portfolio web app (Anna Blomgren)*
-*Researched: 2026-03-13*
+*Architecture research for: Anna Portfolio v1.1 Dark & Dangerous — visual/UX effects integration*
+*Researched: 2026-03-14*

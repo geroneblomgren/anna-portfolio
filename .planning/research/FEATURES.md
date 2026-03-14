@@ -1,208 +1,243 @@
 # Feature Research
 
-**Domain:** Tattoo Artist Apprenticeship Portfolio Website
-**Researched:** 2026-03-13
-**Confidence:** MEDIUM-HIGH (verified across multiple industry sources; architecture-specific confidence noted per feature)
+**Domain:** Dark & Dangerous Visual/UX Overhaul — Tattoo Artist Portfolio (v1.1)
+**Researched:** 2026-03-14
+**Confidence:** MEDIUM-HIGH (visual/UX patterns well-established in award-winning portfolios; tattoo-industry specifics inferred from practitioner guidance + portfolio-design community)
 
 ---
 
 ## Context
 
-Anna is pursuing a tattoo apprenticeship. Her primary audience is tattoo shop owners evaluating her skills. The site is entered via QR code scan on mobile. The goal is not to get bookings — it is to impress a professional evaluator enough to invite Anna for a conversation. This context sharply focuses which features matter and which are irrelevant noise.
+This milestone is a transformation, not a feature addition. v1.0 delivered all functional requirements. v1.1 is purely a visual and UX overhaul. Every feature below is a visual/interaction enhancement applied to existing components — no new pages, no new data models, no new admin flows.
+
+**Existing hooks to build on:**
+- `IntroAnimation.tsx` — Framer Motion (`motion/react`) already imported; 4 animated SVG paths + fade text reveal
+- `GalleryGrid.tsx` — masonry grid with `group` hover overlay; no scroll or motion behavior yet
+- `GalleryLightbox.tsx` — YARL; currently default styled
+- `NavBar.tsx` — fixed top, backdrop-blur-sm, mobile overlay; purely CSS/state today
+- `globals.css` — Tailwind v4 `@theme`; cold graphite tokens defined (`#0a0a0a` bg, `#e0e0e0` accent)
+- `motion/react` — already a project dependency (imported in IntroAnimation.tsx)
 
 ---
 
 ## Feature Landscape
 
-### Table Stakes (Users Expect These)
+### Table Stakes (Viewers Expect These on a Dark Artist Site)
 
-Features that must exist. A tattoo shop owner scanning a QR code will bounce immediately if these are missing or broken.
+Features a dark, high-craft portfolio must have or it reads as "someone applied a dark theme" rather than "someone built a dark experience." Tattoo masters and art-curious viewers who click from an Instagram QR code have calibrated eyes. Missing these makes the site feel half-finished.
 
-| Feature | Why Expected | Complexity | Notes |
-|---------|--------------|------------|-------|
-| Image gallery — full-screen quality images | The work IS the portfolio; evaluators need to see technique, line work, shading, color at full resolution | MEDIUM | Lightbox essential; thumbnails are not enough for professional evaluation |
-| Gallery category/tag filtering | Shop owners want to see specific styles (black & grey, color, realism, traditional, tattoo designs vs other media) — scrolling an unfiltered feed wastes their limited time | MEDIUM | Filter by style/medium is industry standard on all professional tattoo sites |
-| About section with bio and photo | Establishes Anna as a person, not just an anonymous portfolio; story of pursuing tattooing signals seriousness | LOW | Bio + professional-ish photo; narrative about her artistic journey matters to evaluators |
-| Contact information / contact form | Every professional portfolio must have a way to reach out; missing this = dead end | LOW | Email notification on form submission is required; evaluator won't remember to come back |
-| Social media links | Instagram is the de facto standard for tattoo artists — evaluators will want to follow/verify activity | LOW | Instagram minimum; possibly TikTok/Pinterest depending on where Anna posts |
-| Mobile-responsive layout | QR code → phone is the PRIMARY entry path; non-mobile site signals technical incompetence | MEDIUM | Mobile-first design is non-negotiable, not an enhancement |
-| Fast image loading | Images are the product; slow loads = bounce before work is seen; Google research: 40% higher bounce rate above 3s | MEDIUM | Image optimization (WebP, lazy loading, responsive srcset) is required infrastructure |
-| Individual piece detail view | Evaluators need to see title, medium, style, and description per piece — context shows professional thinking | LOW | Implemented as lightbox overlay or dedicated piece page |
-| Dark/moody visual aesthetic | Tattoo industry aesthetic expectation; a light pastel portfolio signals cultural mismatch to shop owners | LOW | Theme-level decision, not a feature per se, but its absence would tank credibility |
+| Feature | Why Expected | Complexity | Existing Hook | Notes |
+|---------|--------------|------------|---------------|-------|
+| Film grain / noise overlay | Every premium dark site uses it; smooths harsh OLED blacks, adds analog depth; viewers feel its absence as "too digital" | LOW | `globals.css` pseudo-element | CSS-only: `::before` on `<body>` with SVG `feTurbulence` filter, `fixed`, `pointer-events-none`, `mix-blend-mode: overlay`, opacity ~0.04–0.06. Zero JS. |
+| Vignette overlay | Darkens screen edges, focuses eye on artwork center; standard in photography/film dark UIs; absence makes the page feel like an app not a gallery | LOW | `globals.css` or layout wrapper | Radial gradient from transparent center to `rgba(0,0,0,0.45)` at edges, `fixed`, `pointer-events-none`. One CSS rule. |
+| Scroll-reveal on gallery items | Users expect cards to "arrive" — flat render of 30 images simultaneously reads as a directory, not a curated gallery | MEDIUM | `GalleryGrid.tsx` — wrap each card in `motion.div` | `whileInView={{ opacity:1, y:0 }}` with staggered delay per column index. Use `viewport={{ once:true, amount:0.15 }}`. Framer Motion already in project. |
+| Hover depth on gallery cards | Static cards feel inert; cursor should feel like it has gravity over artwork; current hover is plain opacity change | MEDIUM | `GalleryGrid.tsx` — existing `group` class | Replace plain opacity overlay with compound scale + shadow + gradient. Foundation for 3D tilt if that ships later. |
+| Enhanced intro animation | Current intro (4 thin SVG strokes + fade text) is competent but safe — thin lines are not ink; name fades in as a block rather than arriving | HIGH | `IntroAnimation.tsx` — rewrite SVG paths and timing | Thicker strokes (5–12px), SVG turbulence filter for bleed texture, splatter scatter marks, letter-by-letter stagger on name reveal. Still pure Framer Motion + SVG. |
+| Typography with attitude | Bodoni Moda is chosen — table stakes is using it aggressively (large tracking, uppercase, weight contrast) not cautiously; currently nav and headers are timid | LOW | `NavBar.tsx`, page headers | Add `letter-spacing`, strategic `italic`, size contrast between heading and body labels. Zero new dependencies. |
 
-### Differentiators (Competitive Advantage)
+### Differentiators (What Makes It Stop-You-in-Your-Tracks)
 
-Features that set Anna apart from artists who just hand shop owners their phone with an Instagram grid.
+These are the effects tattoo masters and design-aware people will actually remember. None are required by convention — they are what separates "polished dark portfolio" from "experience."
 
-| Feature | Value Proposition | Complexity | Notes |
-|---------|-------------------|------------|-------|
-| Animated intro / opening sequence | Creates a memorable first impression that a static grid cannot; signals craft and attention to presentation — the kind of intentionality tattoo shops value | HIGH | GSAP or Framer Motion; must be skippable; must not delay content access on slow connections; the intro transitions into the gallery, not away from it |
-| Rich piece metadata (title, medium, description, tags) | Demonstrates Anna thinks about her work analytically, not just aesthetically; shows professionalism shop owners respond to | LOW | Most artist social profiles show zero context — this is a clear differentiator |
-| QR code generation built into admin | Anna can regenerate/download a QR code pointing to the site any time; print it, put it on business cards, hand it at events — the QR IS the delivery mechanism for this portfolio | LOW | Can be a static QR pointing to the domain; admin just displays/downloads it |
-| Password-protected admin panel | Anna controls her own content without a developer; she can add new pieces, update her bio, and change her contact info after apprenticeship outreach evolves | MEDIUM | Single-user, simple auth — not a full CMS; just enough to manage content |
-| Curated gallery experience (not Instagram grid) | Purpose-built portfolio presentation vs social media grid signals that Anna takes her professional image seriously | MEDIUM | Custom ordering, featured/hero pieces, intentional curation controls in admin |
-| Piece count and variety visible at a glance | Shop owners want to see 20-50 strong pieces across styles; a well-organized gallery makes this assessment instant | LOW | Gallery overview with category counts helps evaluators see breadth quickly |
+| Feature | Value Proposition | Complexity | Existing Hook | Notes |
+|---------|-------------------|------------|---------------|-------|
+| Ink-bleed SVG page transition | Navigation between pages feels like ink bleeding across the screen — brand-coherent and cinematic; rare enough that people screenshot it | HIGH | `(frontend)/layout.tsx` — requires converting to `template.tsx` | Use Next.js `template.tsx` (not `layout.tsx`) so it remounts per route. Framer `AnimatePresence` exit animation: SVG flood fill with morphing blob paths. Key challenge: App Router + AnimatePresence requires `template.tsx` — this is a known footgun. |
+| Magnetic / inertial cursor dot | Cursor gains a trailing ink-dot that lags behind with elastic physics — communicates craft and control; signature of high-end creative studios | HIGH | None — new `<CursorDot>` component in frontend layout | `motion.div` with `useSpring` for smooth lag. Must be `pointer-events-none`, desktop-only (gate with `@media (hover: hover) and (pointer: fine)`), and `prefers-reduced-motion` safe. |
+| Gallery card 3D tilt parallax | Each artwork card tilts on its Z-axis toward cursor, inner image shifts in opposite direction — simulates holding physical art; deeply satisfying on desktop | HIGH | `GalleryGrid.tsx` — replace plain hover with mouse-tracked CSS perspective transforms | CSS `perspective: 800px` on container, `rotateX`/`rotateY` driven by mouse offset from card center. Shine radial-gradient overlay tracks cursor. Pure CSS + small vanilla event listener. No new library needed. |
+| Ink-bleed / turbulence filter on intro SVG paths | Intro strokes gain ink weight and bleed edges — not clean beziers but actual mark-making feel; transforms the intro from "animation" to "drawing" | MEDIUM | `IntroAnimation.tsx` — add `<filter>` defs to SVG | Define `<filter id="ink">` with `feTurbulence baseFrequency="0.04"` + `feDisplacementMap scale="8"`. Apply to path group. Stays in SVG. GPU-composited. |
+| Lightbox atmospheric backdrop | When a piece opens in YARL, the backdrop isn't flat black — it has subtle animated grain + vignette making the image feel lit from a darkroom | MEDIUM | `GalleryLightbox.tsx` — YARL custom styles | YARL exposes a `styles` prop and CSS variables. Override backdrop opacity and layer grain pseudo-element over `.yarl__root`. Inherits body grain if grain is on `body::before`. |
+| About/Contact page stagger reveals | Bio text and contact elements entrance from slight vertical offset — communicates precision and intent; currently pages render instantaneously | MEDIUM | `about/page.tsx`, `contact/page.tsx` — wrap elements in motion components | Framer Motion `variants` with stagger on a container. Line-level animation (not character-level) — enough drama, cheaper computation. |
+| Ink-stain decorative dividers | SVG blob shapes (asymmetric ink-stain silhouettes) between sections, slowly morphing between states — adds brand texture without competing with artwork | MEDIUM | Page layout — decorative `<svg>` inserts | Animate SVG `d` attribute between 3–4 stored path variants using Framer `animate`. 8–12s loop, subtle and slow. Paths must have identical node count for morphing. |
 
-### Anti-Features (Commonly Requested, Often Problematic)
+### Anti-Features (Avoid These)
 
-Features that seem reasonable but would be scope traps, technical debt, or category errors for this specific project.
-
-| Feature | Why Requested | Why Problematic | Alternative |
-|---------|---------------|-----------------|-------------|
-| Online booking / appointment scheduling | Many tattoo websites have booking; seems professional | Anna is seeking an apprenticeship, not booking clients; a booking form signals she's already operating as a professional tattoo artist, which could undermine the "I want to learn from you" framing — and it's massive complexity for zero value | Contact form with clear apprenticeship inquiry context |
-| E-commerce / print shop | Portfolio sites sometimes sell prints | Completely off-brand for this use case; adds legal/payment complexity; distracts from portfolio focus | Explicitly out of scope per PROJECT.md |
-| Blog / news section | Artists share process content | High ongoing content maintenance burden; Anna needs to focus on her artwork, not writing; adds technical complexity for minimal evaluation benefit | Artist statement in About section covers her voice |
-| User accounts / registration | Seems like a natural CMS feature | Only Anna needs admin access; multi-user auth is unnecessary complexity that adds attack surface | Single admin user with a strong password is sufficient |
-| Real-time chat / messaging | Modern sites have live chat | No value for this audience; shop owners won't live-chat a portfolio; adds third-party complexity, privacy concerns, ongoing cost | Contact form with fast email notification |
-| Comments / social features on gallery | Visitor engagement feels nice | Creates moderation burden; tattoo industry doesn't use portfolio sites for feedback; adds spam risk | Social links send people to Instagram where social interaction already exists |
-| Analytics dashboard in admin | Knowing who visits sounds useful | Adds complexity to admin panel; basic analytics from a static hosting provider (Vercel, Netlify) are sufficient and free | Use hosting provider's built-in analytics or Google Analytics tag |
-| Video gallery / process videos | Some tattoo artists post process videos | High bandwidth cost, complex video hosting (need YouTube/Vimeo embed or pay for CDN), mobile performance impact | Keep video content on Instagram/TikTok; link from social section |
-| Multi-language support | Globalization is "best practice" | Anna is targeting local tattoo shops; adds translation maintenance burden indefinitely | Single language (English) is correct scope |
-| Progressive Web App (PWA) / offline mode | PWA is modern web best practice | No use case for offline portfolio viewing; adds service worker complexity without benefit for this QR-scan audience | Standard web app with fast loads covers the need |
+| Feature | Why Requested | Why Problematic | Better Approach |
+|---------|---------------|-----------------|-----------------|
+| WebGL / Three.js particle system | "Ink particles floating across screen" sounds impressive | 300–500KB bundle on Vercel free tier; kills mobile performance; competes visually with the actual artwork | CSS `feTurbulence` SVG filters + Framer spring physics — same mood, zero extra KB |
+| Autoplay ambient sound / music | Immersive sites use sound design | Jarring on a QR-scanned phone in a tattoo shop; immediately divisive; no mute = instant back-button | No audio. Visual design carries atmosphere entirely. |
+| Cursor sparkle / glitter trails | Adds playfulness and movement | Wrong brand register — Anna's work is dark and precise, not whimsical; sparkles read as a portfolio template | Single ink-dot cursor with inertial lag instead |
+| Full scroll-jacking (CSS snap sections) | Creates dramatic cinematic feel | Breaks accessibility, destroys mobile UX, conflicts with masonry gallery's natural scroll flow | Scroll-triggered reveals (`whileInView`) not scroll-jacking |
+| Canvas confetti / ink splatter on click | Click interactions feel reactive | Draws attention away from artwork | Subtle `scale` press + ripple on click is sufficient |
+| Loading spinner / progress bar | Signals assets are heavy | Contradicts the image optimization already built (WebP + blur placeholders are instant); adds waiting psychology | Trust the blur placeholder + fade-in already in Next.js Image |
+| Dark-mode toggle | Users might prefer light | The dark graphite palette IS the brand; a toggle communicates lack of design conviction | Respect `prefers-color-scheme` at system level but never expose a toggle in UI |
+| Parallax background-attachment: fixed | Makes bg image scroll at different speed | Causes serious jank on iOS Safari — long-standing known bug; mobile-first site cannot accept this | Use `transform: translateY` driven by Framer `useScroll` — desktop only, skipped on mobile |
+| Heavy type animations (character-by-character on every heading) | Looks like award-winning sites | Causes cumulative layout shift; reads as slow on mobile; becomes annoying on return visits | Reserve letter-stagger for the intro only; body text uses line-level reveals |
 
 ---
 
 ## Feature Dependencies
 
 ```
-[Admin Panel — Auth]
-    └──enables──> [Admin: Manage Gallery Pieces]
-                       └──populates──> [Public Gallery]
-                                           └──enables──> [Gallery Filtering]
-                                           └──enables──> [Piece Detail / Lightbox]
+[Film grain overlay]
+    └── no dependencies — pure CSS, ships first
+    └── implicitly enhances: [Lightbox atmospheric backdrop] (inherits body grain)
 
-[Admin: Manage Gallery Pieces]
-    └──requires──> [Image Upload + Storage]
-                       └──requires──> [Image Optimization Pipeline]
+[Vignette overlay]
+    └── no dependencies — pure CSS, ships first
 
-[Admin: Edit About Section]
-    └──populates──> [Public About Page]
+[Typography tightening]
+    └── no dependencies — CSS/className changes only
 
-[Admin: Manage Contact/Social]
-    └──populates──> [Contact Form]
-    └──populates──> [Social Links]
+[Scroll-reveal on gallery cards]
+    └── requires: motion/react (confirmed present)
+    └── is prerequisite for: [Gallery card 3D tilt parallax]
 
-[Contact Form]
-    └──requires──> [Email Notification Service]
+[Gallery card hover depth (compound)]
+    └── conflicts-with: [Gallery card 3D tilt parallax] — tilt subsumes lift; ship one not both
+    └── ship this as P1 fallback; replace with tilt if tilt ships
 
-[Animated Intro]
-    └──transitions-into──> [Public Gallery]
-    └──conflicts-with──> [Slow connection / no skip option]
+[Enhanced intro animation]
+    └── requires: existing motion/react in IntroAnimation.tsx
+    └── is prerequisite for: [Ink-bleed / turbulence filter on intro SVG paths]
 
-[QR Code]
-    └──points-to──> [Site URL / Domain]
-    └──lives-in──> [Admin Panel — display only]
+[Ink-bleed / turbulence filter on intro SVG paths]
+    └── requires: enhanced intro (same file, same SVG canvas, same animation timing)
 
-[Dark Aesthetic]
-    └──informs──> [Animated Intro]
-    └──informs──> [Gallery Presentation]
+[Ink-bleed SVG page transition]
+    └── requires: converting (frontend)/layout.tsx to template.tsx pattern
+    └── requires: AnimatePresence wrapping route content
+    └── warning: Next.js App Router + AnimatePresence has known lifecycle challenges; build last
+
+[Magnetic cursor dot]
+    └── requires: desktop detection — @media (hover: hover) and (pointer: fine)
+    └── requires: prefers-reduced-motion check
+    └── enhances: [Gallery card 3D tilt parallax] — cursor dot + card tilt compound the depth illusion
+
+[Gallery card 3D tilt parallax]
+    └── requires: [Scroll-reveal on gallery cards] complete first
+    └── conflicts-with: [Gallery card hover depth (compound)] — choose tilt OR compound hover, not both
+
+[Lightbox atmospheric backdrop]
+    └── requires: YARL styles prop / CSS variable override API
+    └── enhances: implicitly from [Film grain overlay] if grain is on body
+
+[About/Contact page stagger reveals]
+    └── requires: motion/react (confirmed present)
+    └── no conflicts
+
+[Ink-stain section dividers]
+    └── requires: SVG path morphing (Framer Motion d attribute animation)
+    └── note: source and target paths must have identical node count
 ```
 
 ### Dependency Notes
 
-- **Gallery requires image storage infrastructure:** Choosing a storage approach (Cloudinary, Supabase Storage, local filesystem) must happen before admin image upload is built.
-- **Admin auth gates all content management:** Auth must be the first admin feature built; nothing else in admin is buildable without it.
-- **Animated intro must transition into gallery:** The intro is not a separate page — it resolves into the gallery. This means the gallery page and the intro must share state or be the same route.
-- **Animated intro conflicts with slow connections:** Must include a skip mechanism and should not block gallery content from loading in the background.
-- **Contact form requires external email service:** Sending email from a static/serverless site requires a service (Resend, SendGrid, Formspree, etc.) — this is infrastructure, not just a form.
-- **Image optimization is not optional infrastructure:** It must be designed in from the start. Retrofitting image optimization after launch is painful and potentially requires re-uploading all assets.
+- **Film grain + vignette first.** These are CSS-only and foundational — they transform the baseline feel of every page immediately. Every subsequent effect layers on a better canvas.
+- **Scroll-reveal before tilt.** Tilt physics only make sense once cards are visible in DOM; building reveal first also validates the Framer integration pattern before adding complexity.
+- **Compound hover is the fallback for tilt.** If 3D tilt ships, remove the simpler compound hover. If tilt is deferred, keep compound hover. Do not ship both simultaneously.
+- **template.tsx is a structural change.** Page transitions require the frontend layout to switch from `layout.tsx` (persistent, does not remount) to `template.tsx` (remounts per navigation). This is a deliberate architectural change — build it deliberately after simpler animations are stable, as it can break other layout behavior if done wrong.
+- **Cursor dot is desktop-only.** No cursor exists on mobile/touch. Must be entirely absent from the DOM on touch devices, not merely invisible.
 
 ---
 
-## MVP Definition
+## MVP Definition (v1.1 Dark & Dangerous)
 
-### Launch With (v1)
+### Phase 1 — Atmospheric Foundation (Ship First)
 
-Minimum viable product — what a shop owner needs to see when they scan Anna's QR code.
+Highest impact-to-effort ratio. These CSS effects transform the baseline feel of the entire site. Build order: grain → vignette → typography → done with phase.
 
-- [ ] Dark/moody visual aesthetic and layout — the aesthetic IS part of the first impression
-- [ ] Animated intro sequence that transitions into gallery — core differentiator, should ship with v1 because it is the stated primary impression mechanism
-- [ ] Image gallery with lightbox — the whole point of the site
-- [ ] Gallery filtering by category/style — enables evaluators to find the work relevant to them
-- [ ] Individual piece metadata (title, medium, description, tags) — differentiates from Instagram
-- [ ] About section with bio and photo — establishes Anna as a real person pursuing this seriously
-- [ ] Contact form with email notification — necessary for any follow-up
-- [ ] Social media links — evaluators will want to verify/follow on Instagram
-- [ ] Mobile-first responsive design — primary entry path is QR → phone
-- [ ] Password-protected admin panel with content management (gallery + about + contact/social) — Anna must be able to manage content independently post-launch
-- [ ] QR code display/download in admin — the delivery mechanism for the whole product
+- [ ] Film grain overlay — CSS only, site-wide, always visible. Turns flat OLED black into textured graphite.
+- [ ] Vignette overlay — CSS only, site-wide. Pulls focus to center, frames artwork naturally.
+- [ ] Typography tightening — Letter-spacing, size contrast, strategic italic in nav + page headers.
 
-### Add After Validation (v1.x)
+### Phase 2 — Gallery Comes Alive (Ship Second)
 
-Features to add once the core portfolio is live and Anna is actively using it.
+The gallery IS the product. These effects make the artwork feel earned.
 
-- [ ] Featured/hero piece designation — allow Anna to pin her best work to appear first; add when she has enough pieces to need curation priority control
-- [ ] Gallery sort order control in admin — add when piece count grows large enough that ordering matters
-- [ ] SEO metadata (title, description, OG image per piece) — add after domain is established and Anna wants discoverability beyond QR code use
+- [ ] Scroll-reveal stagger on gallery cards — Framer `whileInView`, staggered delay per card index.
+- [ ] Gallery card hover depth (compound scale + shadow + gradient) — Replaces plain opacity overlay.
+- [ ] Enhanced intro animation — Thicker SVG strokes, letter-stagger on name, extended drama arc.
+- [ ] Ink-bleed turbulence filter on intro SVG paths — SVG `<filter>` defs in IntroAnimation.tsx.
 
-### Future Consideration (v2+)
+### Phase 3 — Signature Effects (Ship Third)
 
-Features to defer indefinitely unless a clear need emerges.
+These are the differentiators. Build after phases 1–2 are visually validated on a real device.
 
-- [ ] Analytics beyond hosting provider defaults — defer unless Anna actively wants to track traffic patterns
-- [ ] Instagram feed embed — technically tricky (API auth), often breaks, adds third-party dependency for marginal value
-- [ ] Print-ready portfolio export (PDF) — may be valuable for in-person visits; defer until Anna signals need
+- [ ] Gallery card 3D tilt parallax (replaces compound hover) — Mouse-tracked perspective transform.
+- [ ] Lightbox atmospheric backdrop — YARL styles override.
+- [ ] About + Contact page entrance stagger — Framer variants on text blocks.
+
+### Phase 4 — Cinematic Layer (Ship Last)
+
+High complexity, high reward. Build last so simpler effects can be QA'd before investing here.
+
+- [ ] Ink-bleed SVG page transition — template.tsx pattern, AnimatePresence, SVG flood morph.
+- [ ] Magnetic inertial cursor dot — useSpring, desktop-only, reduced-motion-safe.
+- [ ] Ink-stain decorative section dividers — SVG path morphing, purely decorative.
+
+### Defer to v1.2+ (Only If Needed)
+
+- [ ] WebGL/Three.js particles — Only if SVG/CSS effects feel insufficient after v1.1 ships. Unlikely.
+- [ ] Sound design — Only if Anna specifically requests. Low probability of adding value.
 
 ---
 
 ## Feature Prioritization Matrix
 
-| Feature | User Value | Implementation Cost | Priority |
-|---------|------------|---------------------|----------|
-| Image gallery with lightbox | HIGH | MEDIUM | P1 |
-| Gallery filtering | HIGH | MEDIUM | P1 |
-| Animated intro (dark moody) | HIGH | HIGH | P1 |
-| Mobile-first responsive | HIGH | MEDIUM | P1 |
-| Admin — auth + content management | HIGH | MEDIUM | P1 |
-| About section | HIGH | LOW | P1 |
-| Contact form + email notification | HIGH | LOW | P1 |
-| Social links | MEDIUM | LOW | P1 |
-| QR code in admin | MEDIUM | LOW | P1 |
-| Image optimization pipeline | HIGH | MEDIUM | P1 (infrastructure) |
-| Piece metadata (title, desc, tags) | HIGH | LOW | P1 |
-| Featured piece / hero control | MEDIUM | LOW | P2 |
-| Gallery sort order in admin | MEDIUM | LOW | P2 |
-| SEO metadata per piece | LOW | MEDIUM | P3 |
-| Analytics dashboard | LOW | MEDIUM | P3 |
+| Feature | Viewer Impact | Implementation Cost | Priority |
+|---------|--------------|---------------------|----------|
+| Film grain overlay | HIGH | LOW | P1 |
+| Vignette overlay | HIGH | LOW | P1 |
+| Typography tightening | HIGH | LOW | P1 |
+| Scroll-reveal on gallery cards | HIGH | MEDIUM | P1 |
+| Gallery card hover depth (compound) | MEDIUM | LOW | P1 |
+| Enhanced intro animation | HIGH | HIGH | P1 |
+| Ink-bleed turbulence filter on intro SVG | MEDIUM | MEDIUM | P1 |
+| Gallery card 3D tilt parallax | HIGH | HIGH | P2 |
+| Lightbox atmospheric backdrop | MEDIUM | MEDIUM | P2 |
+| About/Contact stagger reveals | MEDIUM | LOW | P2 |
+| Ink-bleed SVG page transition | HIGH | HIGH | P2 |
+| Magnetic cursor dot | MEDIUM | HIGH | P3 |
+| Ink-stain section dividers | LOW | MEDIUM | P3 |
 
 **Priority key:**
-- P1: Must have for launch
-- P2: Should have, add when possible
-- P3: Nice to have, future consideration
+- P1: Must ship — transformation reads as incomplete without it
+- P2: Should ship in v1.1; add when P1 stable
+- P3: Nice to have; can slip to v1.2 without loss
+
+---
+
+## Tattoo Industry Context
+
+Research from practitioner guidance and portfolio-design community (MEDIUM confidence) reveals a tension worth resolving explicitly:
+
+**What masters say they want:** Clean, professional, focused. Work quality over presentation flash. Easy to scroll on mobile.
+
+**What the site must actually do:** When a master scans a QR code at an event, they see dozens of portfolios. "Clean and professional" is the baseline — everyone has it. The visual experience must communicate that Anna has a point of view and craft precision that extends beyond the artwork itself. A dead gallery grid is instantly forgettable. A site that opens with an ink-bleed intro and a gallery that feels like walking into a dark studio is memorable.
+
+**The resolution:** Effects must serve the work, not compete with it. Film grain, vignette, scroll-reveals — these frame the artwork. They make each piece feel deliberate and curated. 3D card tilt makes handling the portfolio feel like holding physical drawings. None of these draw the eye away from the art; they contextualize it.
+
+**What to avoid from the industry guidance:** Messy navigation, autoplay audio, heavy loading, anything that obscures the work or slows the scroll. The tattoo master is time-constrained and unimpressed by technical novelty for its own sake.
 
 ---
 
 ## Competitor Feature Analysis
 
-| Feature | Squarespace/Wix Portfolio | Raw Instagram Profile | Anna's Site |
-|---------|--------------------------|----------------------|-------------|
-| Animated intro | Rarely, template-dependent | No | YES — core differentiator |
-| Dark/moody aesthetic | Template option | Grid only | YES — intentional design |
-| Gallery filtering by style | Basic/clunky | Highlights only | YES — custom category filter |
-| Piece metadata/context | Limited | Caption only | YES — rich per-piece data |
-| Contact form | YES (with booking bloat) | DM only | YES — apprenticeship-focused |
-| Admin / content control | YES (expensive) | YES (native) | YES — custom, simple |
-| Mobile performance | Mediocre (Wix especially) | Good | YES — mobile-first priority |
-| QR code integration | No | No | YES — purpose-built for this |
-| Free/low cost | $17-23/month | Free | YES — self-hosted target |
-| Booking system | YES (irrelevant) | No | NO — deliberate anti-feature |
+| Feature | Generic Squarespace Dark Template | Awwwards Creative Portfolio | Our Approach |
+|---------|----------------------------------|----------------------------|--------------|
+| Background | Flat #000 or dark image | Animated gradient or textured dark | CSS grain + vignette on graphite base |
+| Gallery interaction | Static grid, hover caption | Scroll-triggered reveals, magnetic hover | Scroll-reveal stagger + 3D tilt |
+| Page transition | Instant / browser default | Custom WebGL or CSS clip-path | SVG ink flood (brand-coherent, no WebGL) |
+| Intro | Fade-in logo | Custom WebGL scene or text morph | Enhanced ink-stroke SVG (already built, push further) |
+| Cursor | Browser default | Custom trailing dot or morph | Inertial ink dot, desktop only |
+| Typography | Template default sizing | Aggressive type hierarchy | Bodoni Moda pushed harder — size, tracking, italic weight |
 
 ---
 
 ## Sources
 
-- [Tattoo Apprenticeship Portfolio: What to Include (Certified Tattoo Studios)](https://certifiedtattoo.com/blog/how-to-put-together-a-portfolio-for-tattoo-apprenticeships) — MEDIUM confidence (industry blog)
-- [How to Create a Tattoo Apprenticeship Portfolio (Format.com)](https://www.format.com/magazine/resources/photography/tattoo-apprenticeship-portfolio) — MEDIUM confidence (platform vendor, verified multiple times)
-- [Tattoo Websites: 25+ Examples (Site Builder Report)](https://www.sitebuilderreport.com/inspiration/tattoo-websites) — MEDIUM confidence (pattern analysis across 27 real sites)
-- [Best Tattoo Artist Portfolio Examples (Format.com)](https://www.format.com/online-portfolio-website/tattoo-artist/best) — MEDIUM confidence
-- [Apprenticeship Portfolio: What Tattoo Artists Look For (Creative Ink)](https://creativeinktattoo.com/2025/03/12/how-to-build-your-apprenticeship-portfolio/) — MEDIUM confidence (practitioner perspective)
-- [Static vs Dynamic QR Codes Guide (Scanova)](https://scanova.io/blog/static-vs-dynamic-qr-codes/) — HIGH confidence (technical reference)
-- [Portfolio Filter Gallery — W3Schools How To](https://www.w3schools.com/howto/howto_js_portfolio_filter.asp) — HIGH confidence (implementation reference)
-- [React Image Gallery Libraries 2026 (ReactScript)](https://reactscript.com/best-image-gallery/) — MEDIUM confidence (library survey)
-- [Framer Motion animation trends 2026 (Medium/Orpetron)](https://medium.com/orpetron/web-design-innovation-trends-driven-by-framer-motion-movement-5b29c24df52d) — LOW confidence (single source, community blog)
-- [Artist Portfolio Website Must-Haves 2026 (Lovable)](https://lovable.dev/guides/best-art-portfolio-websites-2026) — MEDIUM confidence (aggregator, cross-referenced with other sources)
+- Motion for React official docs — [whileInView / useScroll](https://motion.dev/docs/react-scroll-animations) — HIGH confidence
+- Awwwards dark portfolio patterns — [awwwards.com portfolio winners](https://www.awwwards.com/websites/winner_category_portfolio/) — MEDIUM confidence (examples, not prescriptive)
+- CSS film grain implementation — [Grainy Gradients, CSS-Tricks](https://css-tricks.com/grainy-gradients/) + [Frontend Masters Blog](https://frontendmasters.com/blog/grainy-gradients/) — HIGH confidence
+- SVG feTurbulence ink bleed — [Andy Jakubowski tutorial](https://andyjakubowski.com/tutorial/ink-bleed-effect-with-svg-filters) — HIGH confidence
+- Next.js App Router + Framer Motion page transitions — [imcorfitz.com](https://www.imcorfitz.com/posts/adding-framer-motion-page-transitions-to-next-js-app-router) — MEDIUM confidence (known complexity, needs testing in our layout)
+- Tattoo apprenticeship portfolio guidance — [Certified Tattoo Studios](https://certifiedtattoo.com/blog/how-to-put-together-a-portfolio-for-tattoo-apprenticeships), [Creative Ink Tattoo](https://creativeinktattoo.com/2025/03/12/how-to-build-your-apprenticeship-portfolio/) — MEDIUM confidence
+- 3D parallax hover cards — [CSS Script card3d](https://www.cssscript.com/parallax-tilt-hover-effect-card/), [CodePen parallax gallery](https://codepen.io/cs13/pen/jOyPGNw) — MEDIUM confidence
+- Gooey/drip SVG performance warning — [SVG Animation Encyclopedia 2025, SVG AI](https://www.svgai.org/blog/research/svg-animation-encyclopedia-complete-guide) — MEDIUM confidence
+- CSS noise generator + pointer-events pattern — [emile.sh](https://emile.sh/blog/how-to-add-noise-to-element-css), [Frontend Hero noise tool](https://frontend-hero.com/css-noise-generator) — HIGH confidence
+- Animated film grain CodePen — [CodePen ooblek animated grain](https://codepen.io/ooblek/pen/vYxYomx) — MEDIUM confidence
 
 ---
 
-*Feature research for: Tattoo Artist Apprenticeship Portfolio Website*
-*Researched: 2026-03-13*
+*Feature research for: Dark & Dangerous Visual/UX Overhaul — Anna Blomgren Artist Portfolio*
+*Researched: 2026-03-14*
