@@ -11,7 +11,7 @@ Requirements for Dark & Dangerous visual/UX overhaul. Each maps to roadmap phase
 
 - [x] **ATMO-01**: Site displays a persistent film grain noise overlay across all pages, creating textured graphite depth instead of flat black
 - [x] **ATMO-02**: Site displays a persistent vignette overlay darkening screen edges to focus the eye on central content
-- [ ] **ATMO-03**: Typography uses aggressive letter-spacing, size contrast, and strategic italic on Bodoni Moda headings — commanding, not cautious
+- [x] **ATMO-03**: Typography uses aggressive letter-spacing, size contrast, and strategic italic on Bodoni Moda headings — commanding, not cautious
 
 ### Intro
 
@@ -83,7 +83,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | ATMO-01 | Phase 4 | Complete |
 | ATMO-02 | Phase 4 | Complete |
-| ATMO-03 | Phase 4 | Pending |
+| ATMO-03 | Phase 4 | Complete |
 | INTR-03 | Phase 4 | Complete |
 | GLRY-01 | Phase 5 | Pending |
 | GLRY-02 | Phase 5 | Pending |

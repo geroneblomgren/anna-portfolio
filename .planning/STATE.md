@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Dark & Dangerous
 status: unknown
-last_updated: "2026-03-14T18:21:49.162Z"
+last_updated: "2026-03-14T18:28:26.845Z"
 progress:
   total_phases: 1
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 4 of 7 (Atmospheric Foundation)
-Plan: 1 of TBD in current phase (Plan 01 complete)
+Plan: 2 of TBD in current phase (Plan 02 checkpoint — awaiting human visual verification)
 Status: In progress
-Last activity: 2026-03-14 — Plan 04-01 complete: AnimatePresence refactor + film grain/vignette overlays
+Last activity: 2026-03-14 — Plan 04-02 Task 1 complete: brand tracking tokens + commanding typography across all pages
 
-Progress: [████░░░░░░] 35% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plan 01 done)
+Progress: [████░░░░░░] 40% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 done pending verification)
 
 ## Performance Metrics
 
@@ -46,6 +46,7 @@ Progress: [████░░░░░░] 35% (v1.0 phases 1-3 complete; v1.1 P
 
 *Updated after each plan completion*
 | Phase 04-atmospheric-foundation P01 | 3 | 2 tasks | 2 files |
+| Phase 04-atmospheric-foundation P02 | 8 | 1 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -60,6 +61,7 @@ Recent decisions affecting v1.1:
 - [v1.1 research]: 3D tilt fallback — if tilt fails mobile performance QA in Phase 6, reinstate compound hover from Phase 5 and defer tilt
 - [Phase 04-atmospheric-foundation]: AnimatePresence removed from IntroAnimation in Phase 4; exit fade-out restored in Phase 7 via layout-level AnimatePresence
 - [Phase 04-atmospheric-foundation]: Film grain opacity 0.035 (hard cap 0.05) to avoid dirty-noise on OLED displays
+- [Phase 04-atmospheric-foundation]: tracking-brand-wide (0.12em) for headings; tracking-brand-widest (0.2em) for uppercase subtitle labels
 
 ### Pending Todos
 
@@ -73,5 +75,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: Completed 04-atmospheric-foundation/04-01-PLAN.md
+Stopped at: 04-02 checkpoint — Task 2 human-verify (full atmospheric foundation visual check)
 Resume file: None

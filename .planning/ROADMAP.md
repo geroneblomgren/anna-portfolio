@@ -22,7 +22,7 @@ Full details archived: `.planning/milestones/v1.0-ROADMAP.md`
 
 **Milestone Goal:** Transform the portfolio from polished-but-safe to dark, dangerous, and immersive — the kind of site that makes a tattoo master stop and lean in.
 
-- [ ] **Phase 4: Atmospheric Foundation** — CSS texture overlays, typography attitude, and AnimatePresence audit
+- [x] **Phase 4: Atmospheric Foundation** — CSS texture overlays, typography attitude, and AnimatePresence audit (completed 2026-03-14)
 - [ ] **Phase 5: Gallery Interactions** — Scroll-reveal stagger, compound hover, and enhanced intro animation
 - [ ] **Phase 6: Signature Effects** — 3D tilt parallax, lightbox atmosphere, stagger reveals, ink-stain dividers
 - [ ] **Phase 7: Cinematic Layer** — Ink-bleed page transitions and ambient particle canvas
@@ -38,7 +38,7 @@ Full details archived: `.planning/milestones/v1.0-ROADMAP.md`
   2. Vignette darkens screen edges on every page, visually focusing the eye on central content
   3. Bodoni Moda headings display with aggressive letter-spacing, strong size contrast, and strategic italic — visibly more commanding than v1.0
   4. IntroAnimation skip, localStorage memory, and prefers-reduced-motion behavior work identically to v1.0 after AnimatePresence refactor
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 04-01-PLAN.md — AnimatePresence refactor + film grain and vignette CSS overlays
@@ -88,7 +88,7 @@ Phases execute in numeric order: 4 → 5 → 6 → 7
 | 1. Foundation | v1.0 | 2/2 | Complete | 2026-03-13 |
 | 2. Admin + Image Pipeline | v1.0 | 3/3 | Complete | 2026-03-13 |
 | 3. Public Site | v1.0 | 4/4 | Complete | 2026-03-14 |
-| 4. Atmospheric Foundation | 1/2 | In Progress|  | - |
+| 4. Atmospheric Foundation | 2/2 | Complete   | 2026-03-14 | - |
 | 5. Gallery Interactions | v1.1 | 0/TBD | Not started | - |
 | 6. Signature Effects | v1.1 | 0/TBD | Not started | - |
 | 7. Cinematic Layer | v1.1 | 0/TBD | Not started | - |
