@@ -42,7 +42,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Infrastructure
 
 - [x] **INF-01**: Images are processed on upload (resize, compress, convert to WebP)
-- [ ] **INF-02**: Site deploys on Vercel free tier with zero monthly cost
+- [x] **INF-02**: Site deploys on Vercel free tier with zero monthly cost
 - [x] **INF-03**: Database stores art piece metadata, about content, and admin credentials
 
 ## v2 Requirements
@@ -97,7 +97,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PUB-02 | Phase 3 | Complete |
 | PUB-03 | Phase 3 | Complete |
 | INF-01 | Phase 2 | Complete |
-| INF-02 | Phase 1 | Pending |
+| INF-02 | Phase 1 | Complete |
 | INF-03 | Phase 1 | Complete |
 
 **Coverage:**
