@@ -54,7 +54,11 @@ Plans:
   3. Intro animation SVG strokes are visibly thicker with feathered/bleed edges and the name "Anna Blomgren" reveals letter-by-letter, not as a block
   4. On a throttled mobile profile, scrolling through the full gallery does not stutter — GPU layers stay bounded because off-screen cards are deactivated
   5. Cursor-based (hover: hover) effects are absent on touch-only devices — no broken parallax flicker on phone
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Scroll-reveal stagger and compound hover effects on gallery cards
+- [ ] 05-02-PLAN.md — Thick ink strokes with SVG displacement filter and letter-by-letter name reveal
 
 ### Phase 6: Signature Effects
 **Goal**: The site's differentiating moments are in place — 3D card handling, darkroom lightbox atmosphere, precision stagger on content pages, and ink-stain section texture
@@ -89,6 +93,6 @@ Phases execute in numeric order: 4 → 5 → 6 → 7
 | 2. Admin + Image Pipeline | v1.0 | 3/3 | Complete | 2026-03-13 |
 | 3. Public Site | v1.0 | 4/4 | Complete | 2026-03-14 |
 | 4. Atmospheric Foundation | 2/2 | Complete   | 2026-03-14 | - |
-| 5. Gallery Interactions | v1.1 | 0/TBD | Not started | - |
+| 5. Gallery Interactions | v1.1 | 0/2 | Planned | - |
 | 6. Signature Effects | v1.1 | 0/TBD | Not started | - |
 | 7. Cinematic Layer | v1.1 | 0/TBD | Not started | - |
