@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Dark & Dangerous
-status: ready_to_plan
-last_updated: "2026-03-14T15:30:00.000Z"
+status: unknown
+last_updated: "2026-03-14T18:21:49.162Z"
 progress:
-  total_phases: 4
+  total_phases: 1
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 4 of 7 (Atmospheric Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-14 — v1.1 roadmap created, phases 4-7 defined, 22 requirements mapped
+Plan: 1 of TBD in current phase (Plan 01 complete)
+Status: In progress
+Last activity: 2026-03-14 — Plan 04-01 complete: AnimatePresence refactor + film grain/vignette overlays
 
-Progress: [███░░░░░░░] 30% (v1.0 phases 1-3 complete; v1.1 not started)
+Progress: [████░░░░░░] 35% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plan 01 done)
 
 ## Performance Metrics
 
@@ -45,6 +45,7 @@ Progress: [███░░░░░░░] 30% (v1.0 phases 1-3 complete; v1.1 n
 | 3. Public Site | 4 | ~210 min | ~52 min |
 
 *Updated after each plan completion*
+| Phase 04-atmospheric-foundation P01 | 3 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -57,6 +58,8 @@ Recent decisions affecting v1.1:
 - [v1.1 research]: IntroAnimation AnimatePresence refactor is a hard prerequisite — must occur in Phase 4 before any outer wrappers are added anywhere in the tree
 - [v1.1 research]: Entrance-only page transitions — exit animations silently break in App Router production (confirmed Next.js #42658, #59349)
 - [v1.1 research]: 3D tilt fallback — if tilt fails mobile performance QA in Phase 6, reinstate compound hover from Phase 5 and defer tilt
+- [Phase 04-atmospheric-foundation]: AnimatePresence removed from IntroAnimation in Phase 4; exit fade-out restored in Phase 7 via layout-level AnimatePresence
+- [Phase 04-atmospheric-foundation]: Film grain opacity 0.035 (hard cap 0.05) to avoid dirty-noise on OLED displays
 
 ### Pending Todos
 
@@ -70,5 +73,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-14
-Stopped at: Roadmap created — ready to plan Phase 4 (Atmospheric Foundation)
+Stopped at: Completed 04-atmospheric-foundation/04-01-PLAN.md
 Resume file: None

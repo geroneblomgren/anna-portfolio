@@ -9,15 +9,15 @@ Requirements for Dark & Dangerous visual/UX overhaul. Each maps to roadmap phase
 
 ### Atmosphere
 
-- [ ] **ATMO-01**: Site displays a persistent film grain noise overlay across all pages, creating textured graphite depth instead of flat black
-- [ ] **ATMO-02**: Site displays a persistent vignette overlay darkening screen edges to focus the eye on central content
+- [x] **ATMO-01**: Site displays a persistent film grain noise overlay across all pages, creating textured graphite depth instead of flat black
+- [x] **ATMO-02**: Site displays a persistent vignette overlay darkening screen edges to focus the eye on central content
 - [ ] **ATMO-03**: Typography uses aggressive letter-spacing, size contrast, and strategic italic on Bodoni Moda headings — commanding, not cautious
 
 ### Intro
 
 - [ ] **INTR-01**: Intro animation uses thicker ink strokes (5-12px) with SVG turbulence filter for bleed/feathered edges — feels like actual mark-making
 - [ ] **INTR-02**: Name reveal uses letter-by-letter stagger animation instead of block fade
-- [ ] **INTR-03**: Intro maintains skip, localStorage memory, and prefers-reduced-motion support from v1.0
+- [x] **INTR-03**: Intro maintains skip, localStorage memory, and prefers-reduced-motion support from v1.0
 
 ### Gallery
 
@@ -81,10 +81,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ATMO-01 | Phase 4 | Pending |
-| ATMO-02 | Phase 4 | Pending |
+| ATMO-01 | Phase 4 | Complete |
+| ATMO-02 | Phase 4 | Complete |
 | ATMO-03 | Phase 4 | Pending |
-| INTR-03 | Phase 4 | Pending |
+| INTR-03 | Phase 4 | Complete |
 | GLRY-01 | Phase 5 | Pending |
 | GLRY-02 | Phase 5 | Pending |
 | INTR-01 | Phase 5 | Pending |
