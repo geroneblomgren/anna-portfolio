@@ -58,7 +58,12 @@ Plans:
   3. Tapping any piece opens a full-resolution lightbox showing the image, title, medium, description, and tags
   4. Gallery thumbnail images load with blur placeholders and no layout shift; a mobile Lighthouse run scores CLS ≤ 0.1
   5. About page displays Anna's bio, photo, and story; contact form submits successfully and Anna receives an email notification; Instagram link is visible and navigates correctly
-**Plans**: TBD
+**Plans**: 4 plans
+Plans:
+- [ ] 03-01-PLAN.md — Install dependencies, navigation shell, gallery masonry grid with tag filtering
+- [ ] 03-02-PLAN.md — Ink-bleed intro animation and full-screen lightbox with piece details
+- [ ] 03-03-PLAN.md — About page with CMS content and contact form with Resend email
+- [ ] 03-04-PLAN.md — Human verification of complete Phase 3 public site
 
 ## Progress
 
