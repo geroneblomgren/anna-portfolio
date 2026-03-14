@@ -38,6 +38,22 @@ export function IntroAnimation({ children }: IntroAnimationProps) {
   // showIntro flips to false. The fade-out transition will be restored in Phase 7 when
   // layout-level AnimatePresence is added.
 
+  const letterVariants = {
+    hidden: { opacity: 0, y: 8 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.08, ease: 'easeOut' as const },
+    },
+  }
+
+  const nameVariants = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: 0.06, delayChildren: 1.5 },
+    },
+  }
+
   // Hydration state: return null until client-side useEffect has run
   if (!showIntro && !done) {
     return null
@@ -137,14 +153,26 @@ export function IntroAnimation({ children }: IntroAnimationProps) {
 
         {/* Text reveal */}
         <div className="relative z-10 text-center">
-          <motion.h1
-            className="font-heading text-text-heading text-5xl md:text-8xl tracking-brand-wide"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.5 }}
-          >
-            Anna Blomgren
-          </motion.h1>
+          <h1 className="font-heading text-text-heading text-5xl md:text-8xl tracking-brand-wide">
+            <span className="sr-only">Anna Blomgren</span>
+            <motion.span
+              aria-hidden="true"
+              className="inline-flex flex-wrap justify-center"
+              variants={nameVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {"Anna Blomgren".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  className="inline-block"
+                  variants={letterVariants}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </motion.span>
+          </h1>
           <motion.p
             className="font-heading text-accent text-xl italic tracking-brand-widest mt-3 uppercase"
             initial={{ opacity: 0, y: 20 }}
