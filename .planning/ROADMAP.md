@@ -25,7 +25,7 @@ Full details archived: `.planning/milestones/v1.0-ROADMAP.md`
 - [x] **Phase 4: Atmospheric Foundation** — CSS texture overlays, typography attitude, and AnimatePresence audit (completed 2026-03-14)
 - [x] **Phase 5: Gallery Interactions** — Scroll-reveal stagger, compound hover, and enhanced intro animation (completed 2026-03-14)
 - [x] **Phase 6: Signature Effects** — 3D tilt parallax, lightbox atmosphere, stagger reveals, ink-stain dividers (completed 2026-03-15)
-- [ ] **Phase 7: Cinematic Layer** — Ink-bleed page transitions and ambient particle canvas
+- [x] **Phase 7: Cinematic Layer** — Ink-bleed page transitions and ambient particle canvas (completed 2026-03-15)
 
 ## Phase Details
 
@@ -99,4 +99,4 @@ Phases execute in numeric order: 4 → 5 → 6 → 7
 | 4. Atmospheric Foundation | 2/2 | Complete   | 2026-03-14 | - |
 | 5. Gallery Interactions | 2/2 | Complete   | 2026-03-14 | - |
 | 6. Signature Effects | 2/2 | Complete   | 2026-03-15 | - |
-| 7. Cinematic Layer | v1.1 | 0/TBD | Not started | - |
+| 7. Cinematic Layer | 2/2 | Complete   | 2026-03-15 | - |

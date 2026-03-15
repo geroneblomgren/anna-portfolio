@@ -48,7 +48,7 @@ Requirements for Dark & Dangerous visual/UX overhaul. Each maps to roadmap phase
 - [x] **PERF-02**: All overlay effects use pointer-events: none — no blocking of user interaction
 - [x] **PERF-03**: Gallery scroll-reveal uses whileInView (not mount-all) to prevent GPU layer explosion on mobile
 - [x] **PERF-04**: 3D tilt and cursor effects are desktop-only — gated by @media (hover: hover) and (pointer: fine)
-- [ ] **PERF-05**: Total new bundle size stays under 5KB gzip (lenis is the only new dependency)
+- [x] **PERF-05**: Total new bundle size stays under 5KB gzip (lenis is the only new dependency)
 
 ## v1.2 Requirements
 
@@ -102,7 +102,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PERF-02 | Phase 6 | Complete |
 | PAGE-03 | Phase 7 | Pending |
 | PAGE-04 | Phase 7 | Pending |
-| PERF-05 | Phase 7 | Pending |
+| PERF-05 | Phase 7 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 22 total
