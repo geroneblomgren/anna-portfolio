@@ -34,8 +34,8 @@ Requirements for Dark & Dangerous visual/UX overhaul. Each maps to roadmap phase
 
 - [x] **PAGE-01**: About page elements entrance with staggered vertical motion — precision feel
 - [x] **PAGE-02**: Contact page elements entrance with staggered vertical motion
-- [ ] **PAGE-03**: Ink-bleed SVG page transitions between routes — navigation feels like ink bleeding across the screen
-- [ ] **PAGE-04**: Page transitions use entrance-only pattern (no exit animations) to avoid App Router limitations
+- [x] **PAGE-03**: Ink-bleed SVG page transitions between routes — navigation feels like ink bleeding across the screen
+- [x] **PAGE-04**: Page transitions use entrance-only pattern (no exit animations) to avoid App Router limitations
 
 ### Decorative
 
@@ -100,8 +100,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DECR-02 | Phase 6 | Complete |
 | PERF-01 | Phase 6 | Complete |
 | PERF-02 | Phase 6 | Complete |
-| PAGE-03 | Phase 7 | Pending |
-| PAGE-04 | Phase 7 | Pending |
+| PAGE-03 | Phase 7 | Complete |
+| PAGE-04 | Phase 7 | Complete |
 | PERF-05 | Phase 7 | Complete |
 
 **Coverage:**

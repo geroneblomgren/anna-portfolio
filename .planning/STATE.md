@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Dark & Dangerous
-status: complete
-last_updated: "2026-03-15T11:55:17Z"
+status: unknown
+last_updated: "2026-03-15T12:04:33.261Z"
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 14
-  completed_plans: 14
+  total_phases: 4
+  completed_phases: 4
+  total_plans: 8
+  completed_plans: 8
 ---
 
 # Project State
