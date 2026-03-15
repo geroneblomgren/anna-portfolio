@@ -24,7 +24,7 @@ Full details archived: `.planning/milestones/v1.0-ROADMAP.md`
 
 - [x] **Phase 4: Atmospheric Foundation** — CSS texture overlays, typography attitude, and AnimatePresence audit (completed 2026-03-14)
 - [x] **Phase 5: Gallery Interactions** — Scroll-reveal stagger, compound hover, and enhanced intro animation (completed 2026-03-14)
-- [ ] **Phase 6: Signature Effects** — 3D tilt parallax, lightbox atmosphere, stagger reveals, ink-stain dividers
+- [x] **Phase 6: Signature Effects** — 3D tilt parallax, lightbox atmosphere, stagger reveals, ink-stain dividers (completed 2026-03-15)
 - [ ] **Phase 7: Cinematic Layer** — Ink-bleed page transitions and ambient particle canvas
 
 ## Phase Details
@@ -70,7 +70,7 @@ Plans:
   3. About and Contact page elements entrance with visible vertical stagger — each section arrives in deliberate sequence, not all at once
   4. Ink-stain SVG blob dividers appear between sections, slowly morphing shape — they add organic texture without displacing any content
   5. With prefers-reduced-motion enabled, tilt, stagger, and divider morph are all disabled or simplified — no animation plays against the user's system preference
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 06-01-PLAN.md — MotionProvider, 3D tilt parallax on gallery cards, lightbox grain/vignette
@@ -98,5 +98,5 @@ Phases execute in numeric order: 4 → 5 → 6 → 7
 | 3. Public Site | v1.0 | 4/4 | Complete | 2026-03-14 |
 | 4. Atmospheric Foundation | 2/2 | Complete   | 2026-03-14 | - |
 | 5. Gallery Interactions | 2/2 | Complete   | 2026-03-14 | - |
-| 6. Signature Effects | 1/2 | In Progress|  | - |
+| 6. Signature Effects | 2/2 | Complete   | 2026-03-15 | - |
 | 7. Cinematic Layer | v1.1 | 0/TBD | Not started | - |

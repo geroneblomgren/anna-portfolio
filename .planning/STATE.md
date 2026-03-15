@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Dark & Dangerous
 status: unknown
-last_updated: "2026-03-15T03:27:15.184Z"
+last_updated: "2026-03-15T05:08:13.312Z"
 progress:
-  total_phases: 2
-  completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
+  total_phases: 3
+  completed_phases: 3
+  total_plans: 6
+  completed_plans: 6
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 6 of 7 (Signature Effects)
-Plan: 1 of TBD in current phase (Plan 01 complete)
+Plan: 2 of 2 in current phase (Plan 02 complete — Phase 6 complete)
 Status: In progress
-Last activity: 2026-03-15 — Plan 06-01 complete: MotionProvider + 3D tilt on gallery cards + lightbox darkroom atmosphere
+Last activity: 2026-03-15 — Plan 06-02 complete: staggered entrance animations + morphing ink-blob dividers on About and Contact pages
 
-Progress: [██████░░░░] 60% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 verified; Phase 5 Plans 01-02 complete; Phase 6 Plan 01 complete)
+Progress: [███████░░░] 70% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 verified; Phase 5 Plans 01-02 complete; Phase 6 Plans 01-02 complete)
 
 ## Performance Metrics
 
@@ -50,6 +50,7 @@ Progress: [██████░░░░] 60% (v1.0 phases 1-3 complete; v1.1 P
 | Phase 05-gallery-interactions P01 | 7 | 2 tasks | 2 files |
 | Phase 05-gallery-interactions P02 | 7 | 2 tasks | 1 files |
 | Phase 06-signature-effects P01 | 7 | 2 tasks | 4 files |
+| Phase 06-signature-effects P02 | 4 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,9 @@ Recent decisions affecting v1.1:
 - [Phase 05-gallery-interactions]: Auto-complete timer (3500ms) unchanged — total letter stagger duration (~2.7s) fits within existing window
 - [Phase 06-signature-effects]: motion/react does not export a Viewport type — defined inline as { once?: boolean; margin?: string; amount?: number | 'some' | 'all' }
 - [Phase 06-signature-effects]: useReducedMotion() guards imperative animate() calls in TiltCard — MotionConfig alone doesn't suppress imperative animations
+- [Phase 06-signature-effects]: animate='visible' (not whileInView) for About/Contact stagger — single-screen pages stagger immediately on arrival
+- [Phase 06-signature-effects]: InkBlob uses explicit useReducedMotion guard — MotionConfig may not cover d-attribute morphing
+- [Phase 06-signature-effects]: BLOB_PATHS all use identical M+4C+Z structure — mismatched path commands cause snapping not smooth morphing
 
 ### Pending Todos
 
@@ -83,5 +87,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-15
-Stopped at: Completed 06-01-PLAN.md — Phase 6 Plan 01 fully complete, ready for next plan
+Stopped at: Completed 06-02-PLAN.md — Phase 6 Plan 02 fully complete, Phase 6 done, ready for Phase 7
 Resume file: None

@@ -32,15 +32,15 @@ Requirements for Dark & Dangerous visual/UX overhaul. Each maps to roadmap phase
 
 ### Page Experience
 
-- [ ] **PAGE-01**: About page elements entrance with staggered vertical motion — precision feel
-- [ ] **PAGE-02**: Contact page elements entrance with staggered vertical motion
+- [x] **PAGE-01**: About page elements entrance with staggered vertical motion — precision feel
+- [x] **PAGE-02**: Contact page elements entrance with staggered vertical motion
 - [ ] **PAGE-03**: Ink-bleed SVG page transitions between routes — navigation feels like ink bleeding across the screen
 - [ ] **PAGE-04**: Page transitions use entrance-only pattern (no exit animations) to avoid App Router limitations
 
 ### Decorative
 
-- [ ] **DECR-01**: SVG ink-stain blob dividers between page sections, slowly morphing between shape variants
-- [ ] **DECR-02**: Ink-stain dividers are purely decorative and do not affect layout or content flow
+- [x] **DECR-01**: SVG ink-stain blob dividers between page sections, slowly morphing between shape variants
+- [x] **DECR-02**: Ink-stain dividers are purely decorative and do not affect layout or content flow
 
 ### Accessibility & Performance
 
@@ -94,10 +94,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GLRY-03 | Phase 6 | Complete |
 | GLRY-04 | Phase 6 | Complete |
 | LBOX-01 | Phase 6 | Complete |
-| PAGE-01 | Phase 6 | Pending |
-| PAGE-02 | Phase 6 | Pending |
-| DECR-01 | Phase 6 | Pending |
-| DECR-02 | Phase 6 | Pending |
+| PAGE-01 | Phase 6 | Complete |
+| PAGE-02 | Phase 6 | Complete |
+| DECR-01 | Phase 6 | Complete |
+| DECR-02 | Phase 6 | Complete |
 | PERF-01 | Phase 6 | Complete |
 | PERF-02 | Phase 6 | Complete |
 | PAGE-03 | Phase 7 | Pending |
