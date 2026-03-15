@@ -3,6 +3,8 @@ import config from '@payload-config'
 import { GalleryGrid } from '@/components/frontend/GalleryGrid'
 import { IntroAnimation } from '@/components/frontend/IntroAnimation'
 
+export const revalidate = 60
+
 export const metadata = {
   title: 'Anna Blomgren — Artist & Illustrator',
 }

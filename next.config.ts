@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: false,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
+      },
+    ],
+  },
   // Include native libsql binary in Vercel serverless function output tracing.
   // Without this, the libsql native addon is excluded from the serverless bundle.
   outputFileTracingIncludes: {
