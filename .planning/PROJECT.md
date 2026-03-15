@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A self-managed artist portfolio web app for Anna Blomgren, a mixed-media artist seeking a tattoo apprenticeship. Features a cinematic ink-bleed intro, CMS-powered gallery with tag filtering and full-resolution lightbox, about page, contact form, and a branded QR code for in-person networking. Built with Next.js 15 + Payload CMS 3 + Turso SQLite, deployed on Vercel.
+A self-managed artist portfolio web app for Anna Blomgren, a mixed-media artist seeking a tattoo apprenticeship. Features a cinematic ink-bleed intro, CMS-powered gallery with tag filtering, full-resolution darkroom lightbox, 3D tilt parallax on gallery cards, ink-bleed page transitions, ambient particle atmosphere, staggered page entrances, and morphing ink-stain dividers. Built with Next.js 15 + Payload CMS 3 + Turso SQLite, deployed on Vercel.
 
 ## Core Value
 
@@ -26,18 +26,20 @@ When someone scans Anna's QR code, the site must make an immediate, powerful vis
 - ✓ QR code generation that links directly to the site — v1.0
 - ✓ Mobile-first responsive design (QR codes → phones) — v1.0
 - ✓ Fast image loading with optimized WebP + blur placeholders — v1.0
+- ✓ Full visual/UX overhaul — dark, dangerous, immersive atmosphere — v1.1
+- ✓ Film grain noise + vignette overlays across all pages — v1.1
+- ✓ Gallery scroll-reveal stagger, compound hover, 3D tilt parallax — v1.1
+- ✓ Ink stroke intro with SVG displacement filter + letter-by-letter reveal — v1.1
+- ✓ Darkroom lightbox atmosphere with grain + vignette — v1.1
+- ✓ Page entrance stagger on About/Contact + ink-stain blob dividers — v1.1
+- ✓ Ink-bleed SVG page transitions (entrance-only, App Router safe) — v1.1
+- ✓ Ambient CSS particle drift (zero client JS, server component) — v1.1
+- ✓ Full reduced-motion coverage across all 9 animation systems — v1.1
+- ✓ All overlays use pointer-events: none — v1.1
 
 ### Active
 
-<!-- Current scope: v1.1 Dark & Dangerous -->
-
-- [ ] Full visual/UX overhaul — dark, dangerous, immersive atmosphere
-- [ ] Ink & smoke effects — particles, drips, fog textures
-- [ ] Dramatic gallery interactions — scroll reveals, parallax hover, cinematic lightbox
-- [ ] Motion system — page transitions, micro-interactions, nothing static
-- [ ] Texture layer — grain, vignette, ink splatter, depth
-- [ ] Enhanced intro animation
-- [ ] Branded navigation and interaction design
+(None — ready for next milestone planning)
 
 ### Out of Scope
 
@@ -48,13 +50,20 @@ When someone scans Anna's QR code, the site must make an immediate, powerful vis
 - Video gallery — high bandwidth cost; keep video on Instagram/TikTok
 - Multi-language support — targeting local shops, English only
 - PWA / offline mode — no use case for offline portfolio viewing
+- WebGL / Three.js effects — 300-500KB bundle kills mobile performance on Vercel free tier
+- Autoplay audio — jarring on QR-scanned phone in tattoo shop
+- Cursor sparkles / glitter trails — wrong brand register; Anna's work is dark and precise
+- Full scroll-jacking (CSS snap) — breaks accessibility, destroys mobile UX
+- Dark-mode toggle — dark graphite IS the brand; toggle signals lack of conviction
+- background-attachment: fixed parallax — causes serious jank on iOS Safari
 
 ## Context
 
-Shipped v1.0 with 2,458 LOC TypeScript/TSX/CSS.
-Tech stack: Next.js 15.3.9, Payload CMS 3.79.0, Turso SQLite, Tailwind v4, Vercel Blob, Resend.
-Cold graphite design system (#0a0a0a bg, #e0e0e0 accent) — user-approved aesthetic.
+Shipped v1.1 with 3,002 LOC TypeScript/TSX/CSS.
+Tech stack: Next.js 15.3.9, Payload CMS 3.79.0, Turso SQLite, Tailwind v4, Motion 12.36.0, Vercel Blob, Resend.
+Cold graphite design system (#121212 bg, #e0e0e0 accent) — user-approved aesthetic.
 Deployed to Vercel free tier at anna-portfolio-blush.vercel.app.
+Zero new npm dependencies added in v1.1 — all effects use existing Motion + CSS + SVG filters.
 
 ## Constraints
 
@@ -62,6 +71,7 @@ Deployed to Vercel free tier at anna-portfolio-blush.vercel.app.
 - **Admin simplicity**: Anna is the only user — Payload CMS handles CRUD
 - **Performance**: Images processed at upload (Sharp → WebP + blur) — no runtime optimization cost
 - **Mobile-first**: QR code → phone is the primary entry path
+- **Bundle budget**: Total new JS per milestone must stay under 5KB gzip
 
 ## Key Decisions
 
@@ -77,19 +87,11 @@ Deployed to Vercel free tier at anna-portfolio-blush.vercel.app.
 | Vercel Blob for image storage | CDN-backed, integrates with Payload storage adapter | ✓ Good — conditional plugin allows local dev without token |
 | react-masonry-css for gallery | Simple masonry without CSS columns complexity | ✓ Good — 3/3/2/1 column breakpoints work responsively |
 | YARL for lightbox | Full-featured with captions, keyboard nav, swipe | ✓ Good — custom next/image render for blur placeholders |
-
-## Current Milestone: v1.1 Dark & Dangerous
-
-**Goal:** Transform the portfolio's visual experience from polished-but-safe to dark, dangerous, and immersive — the kind of site that makes a tattoo master stop and lean in.
-
-**Target features:**
-- Ink & smoke particle effects, drip textures, fog atmosphere
-- Dramatic scroll-triggered gallery reveals with parallax hover
-- Cinematic page transitions and micro-interactions throughout
-- Film grain, vignette, depth textures across all pages
-- Enhanced intro animation with more drama
-- Branded, edgy navigation and interaction design
-- No new pages/features — pure visual/UX transformation
+| #121212 bg instead of #0a0a0a | Near-pure black hides grain/vignette; #121212 makes both visible | ✓ Good — visible texture without losing dark mood |
+| Entrance-only page transitions | Exit animations silently break in App Router production | ✓ Good — template.tsx remount pattern confirmed reliable |
+| MotionConfig reducedMotion="user" | Global reduced-motion coverage for all Motion components | ✓ Good — combined with useReducedMotion guards for imperative code |
+| AmbientParticles as server component | Zero client JS for particle drift (CSS-only animation) | ✓ Good — PERF-05 budget preserved |
+| Double-guard InkTransition | localStorage + sessionStorage prevents intro conflict and first-load flash | ✓ Good — no false-positive transitions observed |
 
 ---
-*Last updated: 2026-03-14 after v1.1 milestone started*
+*Last updated: 2026-03-15 after v1.1 milestone shipped*

@@ -45,6 +45,54 @@
 
 ---
 
+## Milestone: v1.1 — Dark & Dangerous
+
+**Shipped:** 2026-03-15
+**Phases:** 4 | **Plans:** 8 | **Sessions:** ~2
+
+### What Was Built
+- Atmospheric foundation: film grain noise overlay, vignette edge-darkening, commanding Bodoni Moda typography tokens
+- Gallery interactions: scroll-reveal stagger, compound hover (scale + shadow + gradient), 3D cursor-tracking tilt parallax with touch fallback
+- Enhanced intro: thick ink strokes with SVG displacement filter, letter-by-letter name reveal with screen reader accessibility
+- Signature effects: darkroom lightbox atmosphere, page entrance stagger on About/Contact, morphing ink-stain SVG blob dividers
+- Cinematic layer: ink-bleed SVG page transitions via template.tsx, ambient CSS particle drift (zero client JS server component)
+- Accessibility: 9 animation systems with complete reduced-motion coverage (CSS media queries + MotionConfig + useReducedMotion guards)
+
+### What Worked
+- **Wave-based parallel execution**: Phases 6 and 7 both had Wave 1 parallel plans — 2 agents executing simultaneously cut wall-clock time nearly in half
+- **Research → Plan → Verify loop**: The plan-checker caught real issues (missing key_links, scope concerns) before execution started
+- **Zero new dependencies**: Entire v1.1 built with existing Motion 12.36 + CSS + SVG filters — PERF-05 (5KB gzip budget) was never at risk
+- **template.tsx for transitions**: Next.js gives template.tsx a unique key per navigation — entrance-only pattern is bulletproof without AnimatePresence
+- **Server component for particles**: AmbientParticles has no 'use client' — ships zero client JS while delivering visual atmosphere
+
+### What Was Inefficient
+- **SUMMARY frontmatter gaps**: Plans 05-02, 06-01, 06-02, 07-01 all shipped with empty `requirements_completed` arrays — made 3-source cross-reference harder during audit
+- **IntroAnimation exit fade deferred but not delivered**: Phase 7 was supposed to restore the exit fade (removed in Phase 4). The plan noted it but the executor didn't implement it — the dead `exit={{ opacity: 0 }}` prop remains
+- **No CONTEXT.md for any phase**: All 4 phases planned without discuss-phase — design preferences defaulted to research + requirements only. No issues arose, but if the aesthetic had been wrong, there was no gate to catch it early
+- **Audit ran twice**: First audit at Phase 6 completion (before Phase 7), then again after Phase 7 — could have waited for all phases to complete
+
+### Patterns Established
+- `MotionProvider` in layout.tsx wrapping `<main>` — single `MotionConfig reducedMotion="user"` covers all declarative Motion animations
+- `useReducedMotion()` guards on all imperative `animate()` calls — MotionConfig doesn't reach imperative code
+- CSS `@media (prefers-reduced-motion: no-preference)` wrapping entire animation blocks — particles don't exist in DOM for reduced-motion users
+- `template.tsx` for route-change-triggered components (remounts per navigation); `layout.tsx` for persistent components
+- Double-guard pattern: `localStorage` + `sessionStorage` to prevent false-positive animation triggers
+- All decorative overlays: `pointer-events: none` + `aria-hidden="true"` + `z-index` layering with `isolation: isolate` containment
+
+### Key Lessons
+1. SUMMARY frontmatter must include `requirements_completed` — empty arrays cause "partial" status in 3-source cross-reference even when code is verified
+2. template.tsx is the correct vehicle for entrance-only page transitions in App Router — confirmed by official docs and 2 GitHub issues
+3. Server components can deliver visual effects with zero client JS cost — CSS keyframes + inline styles are sufficient for ambient animations
+4. Plan-checker verification loop is worth the extra agent spawn — caught scope issues and missing key_links before execution
+5. When removing a feature (AnimatePresence) with a promise to restore it later, create a tracked todo — otherwise it falls through the cracks
+
+### Cost Observations
+- Model mix: ~65% sonnet (research/execution/verification), ~35% opus (orchestration/auditing)
+- Sessions: ~2 (phases 4-6 + audit, phase 7 + final audit + completion)
+- Notable: Parallel Wave 1 execution in Phase 7 completed both plans in ~9 min wall-clock (vs ~17 min sequential)
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -52,14 +100,18 @@
 | Milestone | Sessions | Phases | Key Change |
 |-----------|----------|--------|------------|
 | v1.0 | ~3 | 3 | Initial project — yolo mode, quick depth, 2-day delivery |
+| v1.1 | ~2 | 4 | Research → Plan → Verify loop, parallel wave execution, zero new deps |
 
 ### Cumulative Quality
 
 | Milestone | Audit Score | Requirements | Tech Debt Items |
 |-----------|-------------|-------------|-----------------|
 | v1.0 | 22/23 → 23/23 | All satisfied | 3 deployment config items |
+| v1.1 | 22/22 | All satisfied (19/22 at mid-audit) | 3 documentation items + 1 dead code |
 
 ### Top Lessons (Verified Across Milestones)
 
 1. Lock aesthetic/design decisions before execution starts
 2. Human verification plans catch bugs that static analysis cannot
+3. SUMMARY frontmatter must be complete — incomplete metadata compounds across phases and makes audits harder
+4. Parallel wave execution significantly reduces wall-clock time for independent plans

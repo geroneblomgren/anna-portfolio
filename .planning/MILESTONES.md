@@ -1,5 +1,31 @@
 # Milestones
 
+## v1.1 Dark & Dangerous (Shipped: 2026-03-15)
+
+**Phases completed:** 4 phases, 8 plans, 16 tasks
+**Timeline:** 2 days (2026-03-14 → 2026-03-15)
+**Codebase:** 3,002 LOC TypeScript/TSX/CSS, 28 milestone commits
+**Requirements:** 22/22 satisfied
+
+**Delivered:** A complete visual/UX transformation — film grain, vignette, 3D tilt gallery, ink-bleed page transitions, ambient particles, and precision stagger animations turn the portfolio from polished-but-safe to dark, dangerous, and immersive.
+
+**Key accomplishments:**
+1. Film grain noise + vignette overlays transform every page from flat black to textured graphite depth
+2. Gallery cards with scroll-reveal stagger, compound hover, and 3D cursor-tracking tilt parallax
+3. Ink stroke intro animation with SVG displacement filter and letter-by-letter name reveal
+4. Darkroom lightbox atmosphere with grain + vignette pseudo-elements on YARL backdrop
+5. Page entrance stagger on About/Contact with morphing ink-stain SVG blob dividers
+6. Ink-bleed SVG page transitions on every route change (entrance-only, App Router safe)
+7. Ambient CSS particle drift across all pages — zero client JS via server component
+8. Full reduced-motion coverage: 9 animation systems with CSS/MotionConfig/useReducedMotion guards
+
+**Known tech debt:**
+- IntroAnimation exit={{ opacity: 0 }} is dead code (no AnimatePresence wrapper)
+- --tracking-brand-tight CSS token defined but unused
+- SUMMARY frontmatter missing requirements_completed in phases 5-7
+
+---
+
 ## v1.0 MVP (Shipped: 2026-03-14)
 
 **Phases completed:** 3 phases, 9 plans

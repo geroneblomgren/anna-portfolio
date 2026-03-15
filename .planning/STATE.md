@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Dark & Dangerous
 status: unknown
-last_updated: "2026-03-15T12:04:33.261Z"
+last_updated: "2026-03-15T12:42:46.665Z"
 progress:
   total_phases: 4
   completed_phases: 4
@@ -15,19 +15,16 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-14)
+See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** When someone scans Anna's QR code, the site makes an immediate, powerful visual impression — versatility, personal voice, dead serious about this career.
-**Current focus:** v1.1 Dark & Dangerous — COMPLETE
+**Current focus:** Planning next milestone
 
 ## Current Position
 
-Phase: 7 of 7 (Cinematic Layer)
-Plan: 2 of 2 in current phase (Plan 02 complete — v1.1 MILESTONE COMPLETE)
-Status: Complete
-Last activity: 2026-03-15 — Plan 07-02 complete: ambient CSS ink particles on all pages, PERF-05 verified
-
-Progress: [██████████] 100% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 verified; Phase 5 Plans 01-02 complete; Phase 6 Plans 01-02 complete; Phase 7 Plans 01-02 complete)
+Milestone: v1.1 Dark & Dangerous — SHIPPED 2026-03-15
+Status: Between milestones
+Last activity: 2026-03-15 — v1.1 milestone archived and tagged
 
 ## Performance Metrics
 
