@@ -2,6 +2,8 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { ContactForm } from '@/components/frontend/ContactForm'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Contact — Anna Blomgren',
 }

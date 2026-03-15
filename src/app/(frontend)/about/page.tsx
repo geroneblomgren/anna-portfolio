@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Media } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'About — Anna Blomgren',
 }
