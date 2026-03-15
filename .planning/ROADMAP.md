@@ -70,7 +70,7 @@ Plans:
   3. About and Contact page elements entrance with visible vertical stagger — each section arrives in deliberate sequence, not all at once
   4. Ink-stain SVG blob dividers appear between sections, slowly morphing shape — they add organic texture without displacing any content
   5. With prefers-reduced-motion enabled, tilt, stagger, and divider morph are all disabled or simplified — no animation plays against the user's system preference
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 06-01-PLAN.md — MotionProvider, 3D tilt parallax on gallery cards, lightbox grain/vignette
@@ -98,5 +98,5 @@ Phases execute in numeric order: 4 → 5 → 6 → 7
 | 3. Public Site | v1.0 | 4/4 | Complete | 2026-03-14 |
 | 4. Atmospheric Foundation | 2/2 | Complete   | 2026-03-14 | - |
 | 5. Gallery Interactions | 2/2 | Complete   | 2026-03-14 | - |
-| 6. Signature Effects | v1.1 | 0/2 | Not started | - |
+| 6. Signature Effects | 1/2 | In Progress|  | - |
 | 7. Cinematic Layer | v1.1 | 0/TBD | Not started | - |

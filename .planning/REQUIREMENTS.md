@@ -23,12 +23,12 @@ Requirements for Dark & Dangerous visual/UX overhaul. Each maps to roadmap phase
 
 - [x] **GLRY-01**: Gallery cards fade and slide in on scroll with staggered timing per card — curated reveal, not static dump
 - [x] **GLRY-02**: Gallery cards gain compound hover effect with scale, shadow, and gradient depth
-- [ ] **GLRY-03**: Gallery cards respond to cursor position with 3D tilt parallax (perspective transform) — like holding physical art
-- [ ] **GLRY-04**: 3D tilt replaces compound hover on desktop; compound hover remains as mobile/touch fallback
+- [x] **GLRY-03**: Gallery cards respond to cursor position with 3D tilt parallax (perspective transform) — like holding physical art
+- [x] **GLRY-04**: 3D tilt replaces compound hover on desktop; compound hover remains as mobile/touch fallback
 
 ### Lightbox
 
-- [ ] **LBOX-01**: Lightbox backdrop displays subtle grain and vignette — images feel lit from a darkroom, not floating on flat black
+- [x] **LBOX-01**: Lightbox backdrop displays subtle grain and vignette — images feel lit from a darkroom, not floating on flat black
 
 ### Page Experience
 
@@ -44,8 +44,8 @@ Requirements for Dark & Dangerous visual/UX overhaul. Each maps to roadmap phase
 
 ### Accessibility & Performance
 
-- [ ] **PERF-01**: All animations respect prefers-reduced-motion — effects disabled or simplified for users who request it
-- [ ] **PERF-02**: All overlay effects use pointer-events: none — no blocking of user interaction
+- [x] **PERF-01**: All animations respect prefers-reduced-motion — effects disabled or simplified for users who request it
+- [x] **PERF-02**: All overlay effects use pointer-events: none — no blocking of user interaction
 - [x] **PERF-03**: Gallery scroll-reveal uses whileInView (not mount-all) to prevent GPU layer explosion on mobile
 - [x] **PERF-04**: 3D tilt and cursor effects are desktop-only — gated by @media (hover: hover) and (pointer: fine)
 - [ ] **PERF-05**: Total new bundle size stays under 5KB gzip (lenis is the only new dependency)
@@ -91,15 +91,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INTR-02 | Phase 5 | Complete |
 | PERF-03 | Phase 5 | Complete |
 | PERF-04 | Phase 5 | Complete |
-| GLRY-03 | Phase 6 | Pending |
-| GLRY-04 | Phase 6 | Pending |
-| LBOX-01 | Phase 6 | Pending |
+| GLRY-03 | Phase 6 | Complete |
+| GLRY-04 | Phase 6 | Complete |
+| LBOX-01 | Phase 6 | Complete |
 | PAGE-01 | Phase 6 | Pending |
 | PAGE-02 | Phase 6 | Pending |
 | DECR-01 | Phase 6 | Pending |
 | DECR-02 | Phase 6 | Pending |
-| PERF-01 | Phase 6 | Pending |
-| PERF-02 | Phase 6 | Pending |
+| PERF-01 | Phase 6 | Complete |
+| PERF-02 | Phase 6 | Complete |
 | PAGE-03 | Phase 7 | Pending |
 | PAGE-04 | Phase 7 | Pending |
 | PERF-05 | Phase 7 | Pending |

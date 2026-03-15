@@ -22,12 +22,12 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 
 ## Current Position
 
-Phase: 5 of 7 (Gallery Interactions)
-Plan: 2 of TBD in current phase (Plan 02 complete)
+Phase: 6 of 7 (Signature Effects)
+Plan: 1 of TBD in current phase (Plan 01 complete)
 Status: In progress
-Last activity: 2026-03-14 — Plan 05-02 complete: SVG ink-bleed filter on thickened strokes and letter-by-letter name reveal in IntroAnimation
+Last activity: 2026-03-15 — Plan 06-01 complete: MotionProvider + 3D tilt on gallery cards + lightbox darkroom atmosphere
 
-Progress: [█████░░░░░] 50% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 verified; Phase 5 Plans 01-02 complete)
+Progress: [██████░░░░] 60% (v1.0 phases 1-3 complete; v1.1 Phase 4 Plans 01-02 verified; Phase 5 Plans 01-02 complete; Phase 6 Plan 01 complete)
 
 ## Performance Metrics
 
@@ -49,6 +49,7 @@ Progress: [█████░░░░░] 50% (v1.0 phases 1-3 complete; v1.1 P
 | Phase 04-atmospheric-foundation P02 | 8 | 1 tasks | 4 files |
 | Phase 05-gallery-interactions P01 | 7 | 2 tasks | 2 files |
 | Phase 05-gallery-interactions P02 | 7 | 2 tasks | 1 files |
+| Phase 06-signature-effects P01 | 7 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,8 @@ Recent decisions affecting v1.1:
 - [Phase 04-atmospheric-foundation]: --color-bg #121212 not #0a0a0a — near-pure black hides grain/vignette; #121212 makes both visible without losing dark mood
 - [Phase 05-gallery-interactions]: ease: 'easeOut' as const required in letterVariants — TypeScript motion/react types need explicit const assertion on string literals
 - [Phase 05-gallery-interactions]: Auto-complete timer (3500ms) unchanged — total letter stagger duration (~2.7s) fits within existing window
+- [Phase 06-signature-effects]: motion/react does not export a Viewport type — defined inline as { once?: boolean; margin?: string; amount?: number | 'some' | 'all' }
+- [Phase 06-signature-effects]: useReducedMotion() guards imperative animate() calls in TiltCard — MotionConfig alone doesn't suppress imperative animations
 
 ### Pending Todos
 
@@ -79,6 +82,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-14
-Stopped at: Completed 05-02-PLAN.md — Phase 5 Plan 02 fully complete, ready for Plan 03
+Last session: 2026-03-15
+Stopped at: Completed 06-01-PLAN.md — Phase 6 Plan 01 fully complete, ready for next plan
 Resume file: None
