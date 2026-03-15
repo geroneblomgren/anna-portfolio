@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Masonry from 'react-masonry-css'
-import { motion } from 'motion/react'
+import { motion, useMotionValue, useTransform, animate, useReducedMotion } from 'motion/react'
+import type { Target, TargetAndTransition, Transition } from 'motion/react'
 import { TagFilter } from './TagFilter'
 import { GalleryLightbox } from './GalleryLightbox'
 import type { ArtPiece, Media } from '@/payload-types'
@@ -21,10 +22,78 @@ interface GalleryGridProps {
   pieces: ArtPiece[]
 }
 
+function useIsHoverDevice() {
+  const [isHover, setIsHover] = useState(false)
+  useEffect(() => {
+    setIsHover(window.matchMedia('(hover: hover) and (pointer: fine)').matches)
+  }, [])
+  return isHover
+}
+
+interface TiltCardProps {
+  children: React.ReactNode
+  className?: string
+  style?: React.CSSProperties
+  onClick?: () => void
+  initial?: Target | boolean
+  whileInView?: TargetAndTransition
+  viewport?: { once?: boolean; margin?: string; amount?: number | 'some' | 'all' }
+  transition?: Transition
+}
+
+function TiltCard({ children, className, onClick, initial, whileInView, viewport, transition }: TiltCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const prefersReducedMotion = useReducedMotion()
+  const dampen = 25
+
+  const rotateX = useTransform(mouseY, (y) => {
+    if (!cardRef.current) return 0
+    const rect = cardRef.current.getBoundingClientRect()
+    return -(y - rect.top - rect.height / 2) / dampen
+  })
+
+  const rotateY = useTransform(mouseX, (x) => {
+    if (!cardRef.current) return 0
+    const rect = cardRef.current.getBoundingClientRect()
+    return (x - rect.left - rect.width / 2) / dampen
+  })
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion) return
+    animate(mouseX, e.clientX, { duration: 0 })
+    animate(mouseY, e.clientY, { duration: 0 })
+  }, [prefersReducedMotion, mouseX, mouseY])
+
+  const handleMouseLeave = useCallback(() => {
+    animate(mouseX, 0, { type: 'spring', stiffness: 300, damping: 30 })
+    animate(mouseY, 0, { type: 'spring', stiffness: 300, damping: 30 })
+  }, [mouseX, mouseY])
+
+  return (
+    <motion.div
+      ref={cardRef}
+      className={className}
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+      initial={initial}
+      whileInView={whileInView}
+      viewport={viewport}
+      transition={transition}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 export function GalleryGrid({ pieces }: GalleryGridProps) {
   const [activeTag, setActiveTag] = useState<Tag | null>(null)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
+  const isHoverDevice = useIsHoverDevice()
 
   const filtered =
     activeTag === null
@@ -60,15 +129,21 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
           const width = media.sizes?.gallery?.width ?? media.width ?? 1200
           const height = media.sizes?.gallery?.height ?? media.height ?? 800
 
+          const scrollRevealProps = {
+            initial: { opacity: 0, y: 24 } as const,
+            whileInView: { opacity: 1, y: 0 } as const,
+            viewport: { once: true, margin: '-60px' } as const,
+            transition: { duration: 0.55, ease: 'easeOut' as const, delay: Math.min(idx, 12) * 0.07 },
+          }
+
+          const CardWrapper = isHoverDevice ? TiltCard : motion.div
+
           return (
-            <motion.div
+            <CardWrapper
               key={piece.id}
               className="gallery-card relative group cursor-pointer overflow-hidden rounded-sm"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.025 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.55, ease: 'easeOut', delay: Math.min(idx, 12) * 0.07 }}
+              {...scrollRevealProps}
+              {...(!isHoverDevice && { whileHover: { scale: 1.025 } })}
               onClick={() => { setLightboxIndex(idx); setLightboxOpen(true) }}
             >
               <Image
@@ -92,7 +167,7 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
                   </p>
                 )}
               </div>
-            </motion.div>
+            </CardWrapper>
           )
         })}
       </Masonry>
