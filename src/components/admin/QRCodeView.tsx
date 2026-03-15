@@ -2,7 +2,6 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import QRCode from 'qrcode'
-import sharp from 'sharp'
 
 export const QRCodeView = async () => {
   // Get Payload instance and read site-settings global
@@ -18,40 +17,14 @@ export const QRCodeView = async () => {
     // Fall back to default URL if global not available
   }
 
-  // Generate QR code PNG buffer with cold graphite palette (#e0e0e0 on #0a0a0a)
-  const qrBuffer = await QRCode.toBuffer(qrUrl, {
+  // Generate QR code as base64 data URL (no Sharp needed — avoids font issues)
+  const dataURL = await QRCode.toDataURL(qrUrl, {
     width: 1024,
     margin: 2,
     color: { dark: '#e0e0e0', light: '#0a0a0a' },
     errorCorrectionLevel: 'H',
-    type: 'png',
+    type: 'image/png',
   })
-
-  // Create branded "DARK ARTS BY ANNA" wordmark using Sharp text (Pango)
-  // Sharp's text API uses Pango/fontconfig directly — more reliable than SVG text
-  // which depends on librsvg font availability (often missing on serverless)
-  const textOverlay = await sharp({
-    text: {
-      text: '<span foreground="#e0e0e0" letter_spacing="8000">DARK ARTS BY ANNA</span>',
-      font: 'sans-serif',
-      width: 1024,
-      height: 80,
-      align: 'centre',
-      rgba: true,
-    },
-  })
-    .png()
-    .toBuffer()
-
-  // Add branded footer below the QR code using Sharp
-  const finalBuffer = await sharp(qrBuffer)
-    .extend({ bottom: 100, background: '#0a0a0a' })
-    .composite([{ input: textOverlay, gravity: 'south' }])
-    .png()
-    .toBuffer()
-
-  // Convert to base64 data URL for inline display and download
-  const dataURL = `data:image/png;base64,${finalBuffer.toString('base64')}`
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
@@ -66,21 +39,44 @@ export const QRCodeView = async () => {
         QR Code
       </h1>
 
-      <p style={{ color: 'var(--theme-text-secondary)', marginBottom: '1.5rem', fontSize: '0.875rem' }}>
+      <p
+        style={{
+          color: 'var(--theme-text-secondary)',
+          marginBottom: '1.5rem',
+          fontSize: '0.875rem',
+        }}
+      >
         Encoding: <code style={{ fontFamily: 'monospace' }}>{qrUrl}</code>
       </p>
 
-      <div style={{ marginBottom: '1.5rem' }}>
+      {/* QR code with branded wordmark rendered as HTML (font-independent) */}
+      <div
+        style={{
+          maxWidth: '512px',
+          width: '100%',
+          marginBottom: '1.5rem',
+          border: '1px solid var(--theme-border-color)',
+          background: '#0a0a0a',
+        }}
+      >
         <img
           src={dataURL}
           alt="Dark Arts by Anna QR Code"
-          style={{
-            maxWidth: '512px',
-            width: '100%',
-            display: 'block',
-            border: '1px solid var(--theme-border-color)',
-          }}
+          style={{ width: '100%', display: 'block' }}
         />
+        <div
+          style={{
+            padding: '0.75rem 0 1rem',
+            textAlign: 'center',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fontSize: '0.875rem',
+            fontWeight: 300,
+            letterSpacing: '0.5em',
+            color: '#e0e0e0',
+          }}
+        >
+          DARK ARTS BY ANNA
+        </div>
       </div>
 
       <a
