@@ -126,6 +126,29 @@ body::after {
   }
 }
 
+/* Ambient ink particles — compositor-only CSS animation (PERF-05: zero JS cost) */
+@media (prefers-reduced-motion: no-preference) {
+  .particle {
+    position: fixed;
+    width: var(--particle-size, 3px);
+    height: var(--particle-size, 3px);
+    border-radius: 50%;
+    background: var(--color-text-muted, #888);
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform, opacity;
+    animation: particle-drift var(--particle-duration, 18s) var(--particle-delay, 0s) infinite ease-in-out;
+    z-index: 1;
+  }
+
+  @keyframes particle-drift {
+    0%   { transform: translate(0, 0) scale(1);          opacity: 0;    }
+    15%  { opacity: var(--particle-peak-opacity, 0.12);  }
+    70%  { transform: translate(var(--dx, 30px), var(--dy, -60px)) scale(0.6); opacity: 0.06; }
+    100% { transform: translate(var(--dx2, -20px), var(--dy2, -120px)) scale(0.3); opacity: 0; }
+  }
+}
+
 @theme {
   /* Color system — cold dark palette inspired by graphite & ink */
   --color-bg: #121212;
