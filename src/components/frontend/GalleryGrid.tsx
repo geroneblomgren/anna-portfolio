@@ -95,6 +95,10 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const isHoverDevice = useIsHoverDevice()
 
+  const usedTags = Array.from(
+    new Set(pieces.flatMap((p) => (p.tags ?? []) as Tag[])),
+  )
+
   const filtered =
     activeTag === null
       ? pieces
@@ -107,7 +111,7 @@ export function GalleryGrid({ pieces }: GalleryGridProps) {
 
   return (
     <div className="space-y-6">
-      <TagFilter activeTag={activeTag} onTagChange={setActiveTag} />
+      <TagFilter activeTag={activeTag} onTagChange={setActiveTag} usedTags={usedTags} />
 
       {sorted.length === 0 && (
         <p className="font-body text-text-muted text-center py-20">

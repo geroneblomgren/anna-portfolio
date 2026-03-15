@@ -2,24 +2,29 @@
 
 type Tag = 'drawings' | 'paintings' | 'tattoo-designs' | 'digital-art' | 'mixed-media'
 
-const TAG_OPTIONS: { label: string; value: Tag | null }[] = [
-  { label: 'All', value: null },
-  { label: 'Drawings', value: 'drawings' },
-  { label: 'Paintings', value: 'paintings' },
-  { label: 'Tattoo Designs', value: 'tattoo-designs' },
-  { label: 'Digital Art', value: 'digital-art' },
-  { label: 'Mixed Media', value: 'mixed-media' },
-]
+const TAG_LABELS: Record<Tag, string> = {
+  drawings: 'Drawings',
+  paintings: 'Paintings',
+  'tattoo-designs': 'Tattoo Designs',
+  'digital-art': 'Digital Art',
+  'mixed-media': 'Mixed Media',
+}
 
 interface TagFilterProps {
   activeTag: Tag | null
   onTagChange: (tag: Tag | null) => void
+  usedTags: Tag[]
 }
 
-export function TagFilter({ activeTag, onTagChange }: TagFilterProps) {
+export function TagFilter({ activeTag, onTagChange, usedTags }: TagFilterProps) {
+  const options: { label: string; value: Tag | null }[] = [
+    { label: 'All', value: null },
+    ...usedTags.map((tag) => ({ label: TAG_LABELS[tag], value: tag as Tag | null })),
+  ]
+
   return (
     <div className="tag-filter-scroll flex gap-2 overflow-x-auto pb-2">
-      {TAG_OPTIONS.map((option) => (
+      {options.map((option) => (
         <button
           key={option.label}
           onClick={() => onTagChange(option.value)}
