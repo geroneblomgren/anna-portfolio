@@ -27,25 +27,26 @@ export const QRCodeView = async () => {
     type: 'png',
   })
 
-  // Create branded "DARK ARTS BY ANNA" wordmark as SVG overlay
-  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="80">
-    <rect width="1024" height="80" fill="#0a0a0a"/>
-    <text
-      x="512"
-      y="52"
-      font-family="Arial, Helvetica, sans-serif"
-      font-size="28"
-      font-weight="300"
-      letter-spacing="8"
-      fill="#e0e0e0"
-      text-anchor="middle"
-    >DARK ARTS BY ANNA</text>
-  </svg>`
+  // Create branded "DARK ARTS BY ANNA" wordmark using Sharp text (Pango)
+  // Sharp's text API uses Pango/fontconfig directly — more reliable than SVG text
+  // which depends on librsvg font availability (often missing on serverless)
+  const textOverlay = await sharp({
+    text: {
+      text: '<span foreground="#e0e0e0" letter_spacing="8000">DARK ARTS BY ANNA</span>',
+      font: 'sans-serif',
+      width: 1024,
+      height: 80,
+      align: 'centre',
+      rgba: true,
+    },
+  })
+    .png()
+    .toBuffer()
 
   // Add branded footer below the QR code using Sharp
   const finalBuffer = await sharp(qrBuffer)
     .extend({ bottom: 100, background: '#0a0a0a' })
-    .composite([{ input: Buffer.from(svgString), gravity: 'south' }])
+    .composite([{ input: textOverlay, gravity: 'south' }])
     .png()
     .toBuffer()
 
