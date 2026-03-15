@@ -44,6 +44,12 @@
   .gallery-card:hover::after {
     opacity: 1;
   }
+
+  /* Perspective on masonry column enables 3D tilt on gallery cards (GLRY-03) */
+  /* Must be on parent, not on the card — CSS perspective only applies to children */
+  .masonry-grid_column {
+    perspective: 1000px;
+  }
 }
 
 /* Vignette overlay — darkens screen edges on every page */
@@ -83,6 +89,38 @@ body::after {
 /* Disable grain animation for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   body::after {
+    animation: none;
+    opacity: 0.02;
+  }
+}
+
+/* Lightbox darkroom atmosphere — grain + vignette on YARL backdrop (LBOX-01) */
+.yarl__container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+.yarl__container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+  animation: grain 0.2s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yarl__container::after {
     animation: none;
     opacity: 0.02;
   }
